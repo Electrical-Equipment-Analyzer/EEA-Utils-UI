@@ -39,9 +39,15 @@ public class PanelWave extends JPanel implements Monitor {
             return;
         }
         g.setColor(channel.getColor());
-        int[] data = channel.getData();
+        paintData(g, channel.getData());
+    }
+
+    private void paintData(Graphics g, Integer[] data) {
         for (int i = 1; i < data.length; i++) {
-            g.drawLine(i - 1, data[i - 1], i, data[i]);
+            try {
+                g.drawLine(i - 1, data[i - 1], i, data[i]);
+            } catch (java.lang.NullPointerException ex) {
+            }
         }
     }
 
