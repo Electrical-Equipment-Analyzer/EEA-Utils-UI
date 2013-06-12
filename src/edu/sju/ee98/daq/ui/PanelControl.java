@@ -13,6 +13,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -46,10 +47,7 @@ public class PanelControl extends JPanel {
         this.setLayout(null);
         this.setSize(500, 150);
         this.setBackground(Color.white);
-        //Title
-        JLabel title = new JLabel("Channel " + this.index);
-        title.setBounds(10, 10, 80, 30);
-        this.add(title);
+        this.setBorder(BorderFactory.createTitledBorder("Channel " + this.index));
         //Colors
         colorSelect = new JComboBox(COLORS.keySet().toArray());
         colorSelect.setBounds(10, 60, 80, 30);
