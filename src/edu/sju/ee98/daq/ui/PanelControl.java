@@ -6,6 +6,7 @@ package edu.sju.ee98.daq.ui;
 
 import edu.sju.ee98.daq.data.Channel;
 import edu.sju.ee98.daq.data.Monitor;
+import edu.sju.ee98.ni.daqmx.DAQmx;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -75,6 +76,7 @@ public class PanelControl extends JPanel {
     }
 
     public void sync() {
+//        this.channel.setData(new DAQmx().acqIntClk());
         if (monitor != null) {
             monitor.setChannel(index, channel);
             monitor.repaint();
@@ -83,10 +85,10 @@ public class PanelControl extends JPanel {
 
     public void test() {
         this.channel.setVerticalPostion(0);
-        this.channel.setVerticalDiv(0);
+        this.channel.setVerticalDiv(5);
         this.channel.setHorizontalPostion(0);
-        this.channel.setHorizontalDiv(0);
-        this.channel.setData(genData(100, 50));
+        this.channel.setHorizontalDiv(2);
+        this.channel.setData(genData(2, 50));
         this.sync();
     }
 

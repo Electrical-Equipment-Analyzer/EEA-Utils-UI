@@ -13,9 +13,9 @@ import java.awt.Color;
 public class Channel {
 
     private Color color;
-    private int verticalDiv;
+    private double verticalDiv;
     private int verticalPostion;
-    private int horizontalDiv;
+    private double horizontalDiv;
     private int horizontalPostion;
     private Integer data[];
 
@@ -31,7 +31,7 @@ public class Channel {
         this.color = color;
     }
 
-    public void setVerticalDiv(int verticalDiv) {
+    public void setVerticalDiv(double verticalDiv) {
         this.verticalDiv = verticalDiv;
     }
 
@@ -39,7 +39,7 @@ public class Channel {
         this.verticalPostion = verticalPostion;
     }
 
-    public void setHorizontalDiv(int horizontalDiv) {
+    public void setHorizontalDiv(double horizontalDiv) {
         this.horizontalDiv = horizontalDiv;
     }
 
@@ -51,7 +51,7 @@ public class Channel {
         this.data = new Integer[500];
         for (int i = 0; i < this.data.length; i++) {
             try {
-                this.data[i] = (int) (data[i + 250 + this.horizontalPostion] * -1) + 200 - this.verticalPostion;
+                this.data[i] = (int) (data[(int) ((i - (this.data.length - data.length / this.horizontalDiv) / 2) * this.horizontalDiv) + this.horizontalPostion] * -20 * this.verticalDiv) + 200 - this.verticalPostion;
             } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
                 this.data[i] = null;
             }
