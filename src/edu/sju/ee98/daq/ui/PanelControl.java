@@ -59,7 +59,7 @@ public class PanelControl extends JPanel {
         this.add(vertical);
         
         PanelPostionDiv horizontal = new PanelPostionDiv("Horizontal");
-        horizontal.setLocation(350, 20);
+        horizontal.setLocation(370, 20);
         horizontal.setPDListener(this.channel.getHorizontal());
         this.add(horizontal);
         
