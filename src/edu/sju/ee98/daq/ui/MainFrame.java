@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         panelWave.setLocation(0, 25);
         this.add(panelWave);
         
-        panelControl_0.setLocation(600, 25);
+        panelControl_0.setLocation(520, 25);
         panelControl_0.setMonitor(panelWave);
         this.add(panelControl_0);
         

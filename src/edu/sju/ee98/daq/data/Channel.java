@@ -13,14 +13,20 @@ import java.awt.Color;
 public class Channel {
 
     private Color color;
-    private double verticalDiv;
-    private int verticalPostion;
-    private double horizontalDiv;
-    private int horizontalPostion;
-    private Integer data[];
+    private PostionDiv vertical = new PostionDiv(0, 5);
+    private PostionDiv horizontal = new PostionDiv(0, 2);
+//    private double verticalDiv;
+//    private int verticalPostion;
+//    private double horizontalDiv;
+//    private int horizontalPostion;
+    private double data[];
+
+    public void setData(double[] data) {
+        this.data = data;
+    }
 
     public Integer[] getData() {
-        return data;
+        return this.transferData(data);
     }
 
     public Color getColor() {
@@ -31,30 +37,40 @@ public class Channel {
         this.color = color;
     }
 
-    public void setVerticalDiv(double verticalDiv) {
-        this.verticalDiv = verticalDiv;
+    public PostionDiv getVertical() {
+        return vertical;
     }
 
-    public void setVerticalPostion(int verticalPostion) {
-        this.verticalPostion = verticalPostion;
+    public PostionDiv getHorizontal() {
+        return horizontal;
     }
 
-    public void setHorizontalDiv(double horizontalDiv) {
-        this.horizontalDiv = horizontalDiv;
-    }
-
-    public void setHorizontalPostion(int horizontalPostion) {
-        this.horizontalPostion = horizontalPostion;
-    }
-
-    public void setData(double[] data) {
-        this.data = new Integer[500];
-        for (int i = 0; i < this.data.length; i++) {
+//    public void setVerticalDiv(double verticalDiv) {
+//        this.verticalDiv = verticalDiv;
+//    }
+//
+//    public void setVerticalPostion(int verticalPostion) {
+//        this.verticalPostion = verticalPostion;
+//    }
+//
+//    public void setHorizontalDiv(double horizontalDiv) {
+//        this.horizontalDiv = horizontalDiv;
+//    }
+//
+//    public void setHorizontalPostion(int horizontalPostion) {
+//        this.horizontalPostion = horizontalPostion;
+//    }
+    public Integer[] transferData(double[] data) {
+        System.out.println(this.vertical);
+        System.out.println(this.horizontal);
+        Integer[] transfer = new Integer[500];
+        for (int i = 0; i < transfer.length; i++) {
             try {
-                this.data[i] = (int) (data[(int) ((i - (this.data.length - data.length / this.horizontalDiv) / 2) * this.horizontalDiv) + this.horizontalPostion] * -20 * this.verticalDiv) + 200 - this.verticalPostion;
+                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / this.horizontal.getDiv()) / 2) * this.horizontal.getDiv()) + this.horizontal.getPostion()] * -10 * this.vertical.getDiv()) + 200 - this.vertical.getPostion();
             } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
-                this.data[i] = null;
+                transfer[i] = null;
             }
         }
+        return transfer;
     }
 }
