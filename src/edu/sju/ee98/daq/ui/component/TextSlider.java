@@ -19,13 +19,13 @@ import javax.swing.event.ChangeListener;
  */
 public class TextSlider extends JPanel implements ActionListener, ChangeListener {
 
-    private TextSliderValue value;
+    private TextSliderValue option;
     private JTextField text;
     private JSlider slider;
 
-    public TextSlider(String title, TextSliderValue value) {
+    public TextSlider(String title, TextSliderValue option) {
         super(null);
-        this.value = value;
+        this.option = option;
         this.setSize(250, 60);
         this.setBorder(BorderFactory.createTitledBorder(title));
         //
@@ -36,20 +36,23 @@ public class TextSlider extends JPanel implements ActionListener, ChangeListener
         //
         slider = new JSlider();
         slider.setBounds(45, 20, 200, 30);
-        value.setSlider(slider);
+        option.setSlider(slider);
         slider.addChangeListener(this);
         this.add(slider);
+        
+        Object value = this.option.valueChange(this.slider.getValue());
+        this.text.setText(this.option.toText(value));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object value = this.value.valueChange(this.text.getText());
-        this.slider.setValue(this.value.toSlider(value));
+        Object value = this.option.valueChange(this.text.getText());
+        this.slider.setValue(this.option.toSlider(value));
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        Object value = this.value.valueChange(this.slider.getValue());
-        this.text.setText(this.value.toText(value));
+        Object value = this.option.valueChange(this.slider.getValue());
+        this.text.setText(this.option.toText(value));
     }
 }

@@ -6,13 +6,9 @@ package edu.sju.ee98.daq.ui;
 
 import edu.sju.ee98.daq.ui.component.TextSlider;
 import edu.sju.ee98.daq.ui.component.TextSliderValue;
-import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -46,7 +42,9 @@ public class PanelPostionDiv extends JPanel {
 
             @Override
             public Integer valueChange(int slider) {
-                pdListener.postionPerformed(slider);
+                if (pdListener != null) {
+                    pdListener.postionPerformed(slider);
+                }
                 return slider;
             }
 
@@ -79,11 +77,18 @@ public class PanelPostionDiv extends JPanel {
                 pdListener.divPerformed((int) value);
                 return value;
             }
+            private final int[] DIV = {1, 2, 5};
 
             @Override
             public Double valueChange(int slider) {
-                pdListener.divPerformed(slider);
-                return (double) slider;
+                double step = 0;
+                step = Math.pow(10, (slider / 3)) / 1000000000;
+                step = DIV[slider % DIV.length] * (step == 0 ? 1 : step);
+                step = 5 / step;
+                if (pdListener != null) {
+                    pdListener.divPerformed(step/5);
+                }
+                return step;
             }
 
             @Override

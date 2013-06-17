@@ -66,7 +66,7 @@ public class Channel {
         Integer[] transfer = new Integer[500];
         for (int i = 0; i < transfer.length; i++) {
             try {
-                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / this.horizontal.getDiv()) / 2) * this.horizontal.getDiv()) + this.horizontal.getPostion()] * -10 * this.vertical.getDiv()) + 200 - this.vertical.getPostion();
+                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / this.horizontal.getDiv()) / 2) * this.horizontal.getDiv()) + this.horizontal.getPostion()] * -10 / this.vertical.getDiv()) + 200 - this.vertical.getPostion();
             } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
                 transfer[i] = null;
             }

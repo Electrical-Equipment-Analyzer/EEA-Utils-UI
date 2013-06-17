@@ -26,14 +26,15 @@ public class PostionDiv implements PostionDivListener {
         this.postion = postion;
     }
     
-    private static final int[] DIV = {1, 2, 5};
+//    private static final int[] DIV = {1, 2, 5};
 
     @Override
-    public void divPerformed(int div) {
-        double step = 0;
-        step = Math.pow(10, (div / 3)) / 1000000000;
-        step = DIV[div % 3] * (step == 0 ? 1 : step);
-        this.div = 5 / step;
+    public void divPerformed(double  div) {
+        this.div = div;
+//        double step = 0;
+//        step = Math.pow(10, (div / 3)) / 1000000000;
+//        step = DIV[div % 3] * (step == 0 ? 1 : step);
+//        this.div = 5 / step;
     }
 
     public int getPostion() {

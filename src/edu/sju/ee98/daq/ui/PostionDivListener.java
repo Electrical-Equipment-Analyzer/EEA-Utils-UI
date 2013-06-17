@@ -12,5 +12,5 @@ public interface PostionDivListener {
 
     public void postionPerformed(int postion);
 
-    public void divPerformed(int div);
+    public void divPerformed(double  div);
 }
