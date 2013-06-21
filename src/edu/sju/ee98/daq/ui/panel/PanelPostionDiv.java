@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sju.ee98.daq.ui;
+package edu.sju.ee98.daq.ui.panel;
 
 import edu.sju.ee98.daq.ui.component.TextSlider;
 import edu.sju.ee98.daq.ui.component.TextSliderValue;

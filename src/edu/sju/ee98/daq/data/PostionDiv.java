@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.data;
 
-import edu.sju.ee98.daq.ui.PostionDivListener;
+import edu.sju.ee98.daq.ui.panel.PostionDivListener;
 
 /**
  *
