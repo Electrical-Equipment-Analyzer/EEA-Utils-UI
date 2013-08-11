@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sju.ee98.daq.ui.panel;
+package edu.sju.ee98.daq.oscilloscope.ui.panel;
 
+import java.awt.Color;
 import javax.swing.JPanel;
 
 /**
@@ -17,6 +18,7 @@ public class Oscilloscope extends JPanel {
 
     public Oscilloscope() {
         this.setSize(1200, 600);
+        this.setBackground(Color.red);
         this.setLayout(null);
 
         panelWave.setLocation(0, 25);

@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sju.ee98.daq.ui.panel;
+package edu.sju.ee98.daq.oscilloscope.ui.panel;
 
-import edu.sju.ee98.daq.data.Channel;
-import edu.sju.ee98.daq.data.Monitor;
+import edu.sju.ee98.daq.oscilloscope.data.Channel;
+import edu.sju.ee98.daq.oscilloscope.data.Monitor;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;

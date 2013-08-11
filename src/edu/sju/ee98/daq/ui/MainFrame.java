@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.ui;
 
-import edu.sju.ee98.daq.ui.panel.Oscilloscope;
+import edu.sju.ee98.daq.oscilloscope.ui.panel.Oscilloscope;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
 

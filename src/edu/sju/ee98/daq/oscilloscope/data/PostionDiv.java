@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sju.ee98.daq.data;
+package edu.sju.ee98.daq.oscilloscope.data;
 
-import edu.sju.ee98.daq.ui.panel.PostionDivListener;
+import edu.sju.ee98.daq.oscilloscope.ui.panel.PostionDivListener;
 
 /**
  *

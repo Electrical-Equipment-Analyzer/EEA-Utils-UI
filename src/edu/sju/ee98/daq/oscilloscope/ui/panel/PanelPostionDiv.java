@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sju.ee98.daq.ui.panel;
+package edu.sju.ee98.daq.oscilloscope.ui.panel;
 
-import edu.sju.ee98.daq.ui.component.TextSlider;
-import edu.sju.ee98.daq.ui.component.TextSliderValue;
+import edu.sju.ee98.daq.oscilloscope.ui.component.TextSlider;
+import edu.sju.ee98.daq.oscilloscope.ui.component.TextSliderValue;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
