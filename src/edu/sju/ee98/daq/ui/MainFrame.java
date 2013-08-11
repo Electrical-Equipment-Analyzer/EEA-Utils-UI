@@ -5,6 +5,7 @@
 package edu.sju.ee98.daq.ui;
 
 import edu.sju.ee98.daq.oscilloscope.ui.panel.Oscilloscope;
+import edu.sju.ee98.daq.ui.fft.FFTPanel;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
 
@@ -21,8 +22,9 @@ public class MainFrame extends JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLayout(null);
 
-        Oscilloscope o = new Oscilloscope();
-        o.setLocation(0, 0);
+//        Oscilloscope o = new Oscilloscope();
+        FFTPanel o = new FFTPanel();
+        o.setLocation(0, 25);
         this.add(o);
 
         this.repaint();
