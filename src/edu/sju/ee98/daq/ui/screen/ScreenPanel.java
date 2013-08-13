@@ -23,7 +23,10 @@ public class ScreenPanel extends JPanel {
         this.setSize(1366, 300);
         this.setBackground(Color.white);
         this.setLayout(null);
-        this.grid = new SampleGrid();
+    }
+
+    public void setGrid(ScreenGrid grid) {
+        this.grid = grid;
     }
 
     protected void paintComponent(Graphics g) {
