@@ -5,7 +5,6 @@
 package edu.sju.ee98.daq.ui.screen;
 
 import edu.sju.ee98.daq.oscilloscope.data.Channel;
-import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
