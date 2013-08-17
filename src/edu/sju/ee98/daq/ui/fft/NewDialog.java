@@ -17,6 +17,7 @@ public class NewDialog extends JDialog {
     public NewDialog(JFrame frame) {
         super(frame, "New Source", true);
         this.setSize(350, 300);
+        this.setResizable(false);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);

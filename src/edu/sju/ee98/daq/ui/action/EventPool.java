@@ -12,12 +12,7 @@ import java.util.HashMap;
  */
 public class EventPool<String, Event> extends HashMap<String, Event> {
 
-//    @Override
-//    public EventListener put(String key, EventListener value) {
-//        return super.put(key, value); //To change body of generated methods, choose Tools | Templates.
-//    }
-
-    
-    
-    
+    public Event put(Event value) {
+        return super.put((String) value.getClass().getName(), value);
+    }
 }

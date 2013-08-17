@@ -12,5 +12,4 @@ import java.awt.event.ActionListener;
  */
 public interface Event {
 
-    public String name();
 }

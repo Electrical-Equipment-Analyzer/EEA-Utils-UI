@@ -13,10 +13,6 @@ import java.awt.event.ActionListener;
  */
 public class EventExit implements Event, ActionListener {
 
-    @Override
-    public String name() {
-        return "exit";
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

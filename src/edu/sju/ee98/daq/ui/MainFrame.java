@@ -4,9 +4,6 @@
  */
 package edu.sju.ee98.daq.ui;
 
-import edu.sju.ee98.daq.ui.action.EventExit;
-import edu.sju.ee98.daq.ui.action.EventFileNew;
-import edu.sju.ee98.daq.ui.action.EventPool;
 import edu.sju.ee98.daq.ui.fft.FFTPanel;
 import edu.sju.ee98.daq.ui.menu.FFTBar;
 import java.awt.HeadlessException;
@@ -19,23 +16,19 @@ import javax.swing.JMenuBar;
  */
 public class MainFrame extends JFrame {
     
-    public static final EventPool EVENT_POOL = new EventPool();
-    public static final JFrame THIS = new MainFrame();
-    
+//     JFrame THIS = new MainFrame();
+    private Manager managet;
     private JMenuBar menuBar;
 
-    private MainFrame() throws HeadlessException {
+    public MainFrame(Manager manager) throws HeadlessException {
         super("SJU Data Acquisition");
-        this.setVisible(false);
+        this.managet = manager;
+        this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setResizable(false);
         this.setLayout(null);
 
-        //Action==============
-        EventExit eventExit = new EventExit();
-        MainFrame.EVENT_POOL.put(eventExit.name(), eventExit);
-        EventFileNew eventFileNew = new EventFileNew();
-        MainFrame.EVENT_POOL.put(eventFileNew.name(), eventFileNew);
         
         menuBar = new FFTBar();
         //MenuBar============
