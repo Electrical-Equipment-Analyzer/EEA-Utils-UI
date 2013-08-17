@@ -5,6 +5,7 @@
 package edu.sju.ee98.daq.ui;
 
 import edu.sju.ee98.daq.ui.action.EventExit;
+import edu.sju.ee98.daq.ui.action.EventFileNew;
 import edu.sju.ee98.daq.ui.action.EventPool;
 import edu.sju.ee98.daq.ui.fft.FFTPanel;
 import edu.sju.ee98.daq.ui.menu.FFTBar;
@@ -19,11 +20,13 @@ import javax.swing.JMenuBar;
 public class MainFrame extends JFrame {
     
     public static final EventPool EVENT_POOL = new EventPool();
-    private JMenuBar menuBar = new FFTBar();
+    public static final JFrame THIS = new MainFrame();
+    
+    private JMenuBar menuBar;
 
-    public MainFrame() throws HeadlessException {
+    private MainFrame() throws HeadlessException {
         super("SJU Data Acquisition");
-        this.setVisible(true);
+        this.setVisible(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLayout(null);
@@ -31,7 +34,10 @@ public class MainFrame extends JFrame {
         //Action==============
         EventExit eventExit = new EventExit();
         MainFrame.EVENT_POOL.put(eventExit.name(), eventExit);
+        EventFileNew eventFileNew = new EventFileNew();
+        MainFrame.EVENT_POOL.put(eventFileNew.name(), eventFileNew);
         
+        menuBar = new FFTBar();
         //MenuBar============
         this.setJMenuBar(menuBar);
         

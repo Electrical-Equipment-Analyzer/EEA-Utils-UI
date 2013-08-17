@@ -25,48 +25,47 @@ public class FFTBar extends JMenuBar {
     private void menuFile() {
         JMenu menu = new JMenu("File");
         menu.setMnemonic('F');
-        
-        menu.add(new MenuItem("New", 'N'));
+
+        menu.add(new MenuItem("New", 'N', "file_new"));
         menu.add(new MenuItem("Open", 'O'));
         menu.addSeparator();
         menu.add(new MenuItem("Exit", 'x'));
-        
+
         this.add(menu);
     }
-    
-    
+
     private void menuEdit() {
         JMenu menu = new JMenu("Edit");
         menu.setMnemonic('E');
-        
+
         menu.add(new MenuItem("FFT", 'F'));
-        
+
         this.add(menu);
     }
-    
+
     private void menuHelp() {
         JMenu menu = new JMenu("Help");
         menu.setMnemonic('H');
-        
+
         menu.add(new MenuItem("About", 'A'));
-        
+
         this.add(menu);
     }
-    
+
     private class MenuItem extends JMenuItem {
 
-        public MenuItem(String text, char mnemonic) {
-            super(text);
-            this.setMnemonic(mnemonic);
-            this.addActionListener((ActionListener) MainFrame.EVENT_POOL.get(text.toLowerCase()));
-        }
-        
         public MenuItem(String text, char mnemonic, ActionListener l) {
             super(text);
             this.setMnemonic(mnemonic);
             this.addActionListener(l);
         }
-        
+
+        public MenuItem(String text, char mnemonic, String l) {
+            this(text, mnemonic, (ActionListener) MainFrame.EVENT_POOL.get(l));
+        }
+
+        public MenuItem(String text, char mnemonic) {
+            this(text, mnemonic, text.toLowerCase());
+        }
     }
-    
 }
