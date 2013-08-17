@@ -4,7 +4,6 @@
  */
 package edu.sju.ee98.daq.ui;
 
-import edu.sju.ee98.daq.ui.fft.FFTPanel;
 import edu.sju.ee98.daq.ui.menu.FFTBar;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
@@ -26,7 +25,7 @@ public class MainFrame extends JFrame {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setResizable(false);
+//        this.setResizable(false);
         this.setLayout(null);
 
         
@@ -35,7 +34,7 @@ public class MainFrame extends JFrame {
         this.setJMenuBar(menuBar);
         
 //        Oscilloscope o = new Oscilloscope();
-        FFTPanel o = new FFTPanel();
+        WorkPanel o = new WorkPanel();
         o.setLocation(0, 0);
         this.add(o);
 

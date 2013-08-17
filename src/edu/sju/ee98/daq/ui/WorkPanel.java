@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sju.ee98.daq.ui.fft;
+package edu.sju.ee98.daq.ui;
 
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
@@ -13,9 +13,9 @@ import javax.swing.JTabbedPane;
  *
  * @author Leo
  */
-public class FFTPanel extends JTabbedPane {
+public class WorkPanel extends JTabbedPane {
 
-    public FFTPanel() {
+    public WorkPanel() {
         this.setSize(1366, 655);
 
         tabSource();
