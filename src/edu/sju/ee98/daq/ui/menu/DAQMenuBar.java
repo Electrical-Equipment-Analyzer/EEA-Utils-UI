@@ -4,8 +4,6 @@
  */
 package edu.sju.ee98.daq.ui.menu;
 
-import edu.sju.ee98.daq.ui.action.EventFile;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;

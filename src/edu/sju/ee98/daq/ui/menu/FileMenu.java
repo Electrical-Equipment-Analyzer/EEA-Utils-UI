@@ -5,7 +5,6 @@
 package edu.sju.ee98.daq.ui.menu;
 
 import edu.sju.ee98.daq.ui.Manager;
-import edu.sju.ee98.daq.ui.action.EventFile;
 import edu.sju.ee98.daq.ui.fft.DAQDialog;
 import edu.sju.ee98.daq.ui.text.Format;
 import edu.sju.ee98.ni.daqmx.NIAnalogConfig;
@@ -14,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 /**
  *

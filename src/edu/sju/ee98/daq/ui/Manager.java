@@ -4,9 +4,6 @@
  */
 package edu.sju.ee98.daq.ui;
 
-import edu.sju.ee98.daq.ui.action.EventFile;
-import edu.sju.ee98.daq.ui.action.EventPool;
-
 /**
  *
  * @author Leo
@@ -14,11 +11,11 @@ import edu.sju.ee98.daq.ui.action.EventPool;
 public abstract class Manager {
 
     public static Manager MANAGER;
-    public EventPool EVENT_POOL = new EventPool();
+//    public EventPool EVENT_POOL = new EventPool();
     protected MainFrame mainFrame;
 
     protected Manager() {
-        initEvent();
+//        initEvent();
         Manager.MANAGER = this;
     }
 
@@ -27,9 +24,9 @@ public abstract class Manager {
         
     }
 
-    private void initEvent() {
-
-        //Action==============
-        EVENT_POOL.put(new EventFile());
-    }
+//    private void initEvent() {
+//
+//        //Action==============
+//        EVENT_POOL.put(new EventFile());
+//    }
 }

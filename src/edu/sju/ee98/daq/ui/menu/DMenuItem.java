@@ -4,8 +4,6 @@
  */
 package edu.sju.ee98.daq.ui.menu;
 
-import edu.sju.ee98.daq.ui.Manager;
-import edu.sju.ee98.daq.ui.action.Event;
 import edu.sju.ee98.daq.ui.text.Format;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
@@ -22,25 +20,26 @@ class DMenuItem extends JMenuItem {
         this.addActionListener(l);
     }
     
-    public DMenuItem(String text, char mnemonic, ActionListener l) {
-        super(text);
-        this.setMnemonic(mnemonic);
-        this.addActionListener(l);
-    }
+//    public DMenuItem(String text, char mnemonic, ActionListener l) {
+//        super(text);
+//        this.setMnemonic(mnemonic);
+//        this.addActionListener(l);
+//    }
 
-    public DMenuItem(String text, char mnemonic, Event e) {
-        super(text);
-        this.setMnemonic(mnemonic);
-        if (e != null) {
-            this.addActionListener(e.get(text));
-        }
-    }
+//    public DMenuItem(String text, char mnemonic, Event e) {
+//        super(text);
+//        this.setMnemonic(mnemonic);
+//        if (e != null) {
+//            this.addActionListener(e.get(text));
+//        }
+//    }
 
-    public DMenuItem(String text, char mnemonic, String l) {
-        this(text, mnemonic, Manager.MANAGER.EVENT_POOL.get(l));
-    }
+//    public DMenuItem(String text, char mnemonic, String l) {
+//        this(text, mnemonic, Manager.MANAGER.EVENT_POOL.get(l));
+//    }
 
     public DMenuItem(String text, char mnemonic) {
-        this(text, mnemonic, text.toLowerCase());
+        super(text);
+        this.setMnemonic(mnemonic);
     }
 }
