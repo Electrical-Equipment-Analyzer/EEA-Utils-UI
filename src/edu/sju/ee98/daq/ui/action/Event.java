@@ -5,11 +5,15 @@
 package edu.sju.ee98.daq.ui.action;
 
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 /**
  *
+ * @param <String>
+ * @param <ActionListener>
  * @author Leo
  */
-public interface Event {
+public abstract class Event extends HashMap<String, ActionListener> {
 
+    public abstract String getName();
 }

@@ -10,9 +10,9 @@ import java.util.HashMap;
  *
  * @author Leo
  */
-public class EventPool<String, Event> extends HashMap<String, Event> {
+public class EventPool extends HashMap<String, Event> {
 
-    public Event put(Event value) {
-        return super.put((String) value.getClass().getName(), value);
+    public Event put(Event event) {
+        return super.put(event.getName(), event);
     }
 }

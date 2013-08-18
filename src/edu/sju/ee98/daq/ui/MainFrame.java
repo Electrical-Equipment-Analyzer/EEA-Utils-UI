@@ -18,6 +18,7 @@ public class MainFrame extends JFrame {
 //     JFrame THIS = new MainFrame();
     private Manager managet;
     private JMenuBar menuBar;
+    private WorkPanel work;
 
     public MainFrame(Manager manager) throws HeadlessException {
         super("SJU Data Acquisition");
@@ -34,11 +35,15 @@ public class MainFrame extends JFrame {
         this.setJMenuBar(menuBar);
         
 //        Oscilloscope o = new Oscilloscope();
-        WorkPanel o = new WorkPanel();
-        o.setLocation(0, 0);
-        this.add(o);
+        work = new WorkPanel();
+        work.setLocation(0, 0);
+        this.add(work);
 
         this.repaint();
         
+    }
+
+    public WorkPanel getWork() {
+        return work;
     }
 }

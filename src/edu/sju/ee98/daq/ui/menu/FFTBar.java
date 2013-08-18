@@ -5,8 +5,8 @@
 package edu.sju.ee98.daq.ui.menu;
 
 import edu.sju.ee98.daq.ui.Manager;
-import edu.sju.ee98.daq.ui.action.EventExit;
-import edu.sju.ee98.daq.ui.action.EventFileNew;
+import edu.sju.ee98.daq.ui.action.Event;
+import edu.sju.ee98.daq.ui.action.EventFile;
 import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -18,6 +18,8 @@ import javax.swing.JMenuItem;
  */
 public class FFTBar extends JMenuBar {
 
+    private JMenu file;
+    
     public FFTBar() {
         this.menuFile();
         this.menuEdit();
@@ -25,15 +27,21 @@ public class FFTBar extends JMenuBar {
     }
 
     private void menuFile() {
-        JMenu menu = new JMenu("File");
-        menu.setMnemonic('F');
+        String text = EventFile.NAME;
+         file = new JMenu(text);
+        file.setMnemonic(EventFile.MNEMONIC);
 
-        menu.add(new MenuItem("New", 'N', EventFileNew.class.getName()));
-        menu.add(new MenuItem("Open", 'O'));
-        menu.addSeparator();
-        menu.add(new MenuItem("Exit", 'x', EventExit.class.getName()));
+        file.add(new MenuItem("New", 'N', text));
+        file.add(new MenuItem("Open", 'O', text));
+        file.addSeparator();
+        file.add(new MenuItem("Save", 'S', text));
+        file.add(new MenuItem("Save As", 'A', text));
+        file.addSeparator();
+        file.add(new MenuItem("Close", 'c', text));
+        file.addSeparator();
+        file.add(new MenuItem("Exit", 'x', text));
 
-        this.add(menu);
+        this.add(file);
     }
 
     private void menuEdit() {
@@ -54,6 +62,10 @@ public class FFTBar extends JMenuBar {
         this.add(menu);
     }
 
+    public JMenu getFile() {
+        return file;
+    }
+
     private class MenuItem extends JMenuItem {
 
         public MenuItem(String text, char mnemonic, ActionListener l) {
@@ -62,8 +74,16 @@ public class FFTBar extends JMenuBar {
             this.addActionListener(l);
         }
 
+        public MenuItem(String text, char mnemonic, Event e) {
+            super(text);
+            this.setMnemonic(mnemonic);
+            if (e != null) {
+                this.addActionListener(e.get(text));
+            }
+        }
+
         public MenuItem(String text, char mnemonic, String l) {
-            this(text, mnemonic, (ActionListener) Manager.MANAGER.EVENT_POOL.get(l));
+            this(text, mnemonic, Manager.MANAGER.EVENT_POOL.get(l));
         }
 
         public MenuItem(String text, char mnemonic) {

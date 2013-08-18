@@ -4,8 +4,7 @@
  */
 package edu.sju.ee98.daq.ui;
 
-import edu.sju.ee98.daq.ui.action.EventExit;
-import edu.sju.ee98.daq.ui.action.EventFileNew;
+import edu.sju.ee98.daq.ui.action.EventFile;
 import edu.sju.ee98.daq.ui.action.EventPool;
 
 /**
@@ -23,14 +22,13 @@ public abstract class Manager {
         Manager.MANAGER = this;
     }
 
-    public MainFrame getMain_frame() {
+    public MainFrame getMainFrame() {
         return mainFrame;
     }
 
     private void initEvent() {
 
         //Action==============
-        EVENT_POOL.put(new EventFileNew());
-        EVENT_POOL.put(new EventExit());
+        EVENT_POOL.put(new EventFile());
     }
 }
