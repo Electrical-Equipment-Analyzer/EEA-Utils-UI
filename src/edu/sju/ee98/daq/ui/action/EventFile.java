@@ -7,7 +7,7 @@ package edu.sju.ee98.daq.ui.action;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.action.Event;
 import edu.sju.ee98.daq.ui.action.Event;
-import edu.sju.ee98.daq.ui.fft.NewDialog;
+import edu.sju.ee98.daq.ui.fft.DAQDialog;
 import edu.sju.ee98.daq.ui.menu.DAQMenuBar;
 import edu.sju.ee98.daq.ui.menu.DAQMenuBar;
 import java.awt.event.ActionEvent;
@@ -26,7 +26,7 @@ public class EventFile extends Event {
         this.put("New", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new NewDialog(Manager.MANAGER.getMainFrame());
+//                new NewDialog(Manager.MANAGER.getMainFrame());
             }
         });
         this.put("Close", new ActionListener() {

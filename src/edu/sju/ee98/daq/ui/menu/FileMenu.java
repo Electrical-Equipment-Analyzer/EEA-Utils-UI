@@ -4,13 +4,17 @@
  */
 package edu.sju.ee98.daq.ui.menu;
 
+import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.action.EventFile;
+import edu.sju.ee98.daq.ui.fft.DAQDialog;
 import edu.sju.ee98.daq.ui.text.Format;
+import edu.sju.ee98.ni.daqmx.NIAnalogConfig;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -52,6 +56,8 @@ public class FileMenu extends JMenu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(newItem)) {
+            NIAnalogConfig showAnalogConfigPane = DAQDialog.showAnalogConfigPane(Manager.MANAGER.getMainFrame());
+            System.out.println(showAnalogConfigPane);
             System.out.println("new");
         } else if (e.getSource().equals(openItem)) {
             System.out.println("open");
