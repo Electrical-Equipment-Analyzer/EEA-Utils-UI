@@ -5,8 +5,11 @@
 package edu.sju.ee98.daq.ui.action;
 
 import edu.sju.ee98.daq.ui.Manager;
+import edu.sju.ee98.daq.ui.action.Event;
+import edu.sju.ee98.daq.ui.action.Event;
 import edu.sju.ee98.daq.ui.fft.NewDialog;
-import edu.sju.ee98.daq.ui.menu.FFTBar;
+import edu.sju.ee98.daq.ui.menu.DAQMenuBar;
+import edu.sju.ee98.daq.ui.menu.DAQMenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,7 +33,8 @@ public class EventFile extends Event {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-//                ((FFTBar) Manager.MANAGER.getMainFrame().getJMenuBar()).getFile().getItem(1);
+//                 ((DAQMenuBar) Manager.MANAGER.getMainFrame().getJMenuBar()).file_close.setEnabled(false);
+                 
                 System.out.println("exit");
             }
         });

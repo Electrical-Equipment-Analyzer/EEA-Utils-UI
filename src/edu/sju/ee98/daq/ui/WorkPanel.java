@@ -4,36 +4,26 @@
  */
 package edu.sju.ee98.daq.ui;
 
-import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
-import java.awt.Color;
-import javax.swing.JTabbedPane;
+import java.net.URL;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Leo
  */
-public class WorkPanel extends JTabbedPane {
+public class WorkPanel extends JPanel {
+
+    protected String name;
+    protected URL location;
+    protected boolean saved;
 
     public WorkPanel() {
-        this.setSize(1366, 655);
-
-        tabSource();
-        tabFastFourierTransform();
+        this.name = "new";
+        saved = false;
     }
 
-    private void tabSource() {
-        ScreenPanel screen = new ScreenPanel();
-        screen.setLocation(0, 0);
-        screen.setGrid(new SampleGrid());
-        screen.setDropTarget(null);
-        this.addTab("source", screen);
-    }
-
-    private void tabFastFourierTransform() {
-        ScreenPanel screen = new ScreenPanel();
-        screen.setLocation(0, 0);
-//        screen.setGrid(new SampleGrid());
-        this.addTab("FFT", screen);
+    public void init() {
+        Manager.MANAGER.mainFrame.menuBar.fileMenu.saveItem.setEnabled(!saved);
+        Manager.MANAGER.mainFrame.menuBar.fileMenu.saveasItem.setEnabled(!saved);
     }
 }

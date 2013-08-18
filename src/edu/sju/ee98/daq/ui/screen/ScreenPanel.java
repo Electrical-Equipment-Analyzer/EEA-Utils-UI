@@ -5,15 +5,15 @@
 package edu.sju.ee98.daq.ui.screen;
 
 import edu.sju.ee98.daq.oscilloscope.data.Channel;
+import edu.sju.ee98.daq.ui.WorkPanel;
 import java.awt.Color;
 import java.awt.Graphics;
-import javax.swing.JPanel;
 
 /**
  *
  * @author Leo
  */
-public class ScreenPanel extends JPanel {
+public class ScreenPanel extends WorkPanel {
 
     private ScreenGrid grid;
     private Channel[] channel = new Channel[4];

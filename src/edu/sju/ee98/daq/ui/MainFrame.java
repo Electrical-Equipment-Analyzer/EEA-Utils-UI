@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.ui;
 
-import edu.sju.ee98.daq.ui.menu.FFTBar;
+import edu.sju.ee98.daq.ui.menu.DAQMenuBar;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -16,13 +16,13 @@ import javax.swing.JMenuBar;
 public class MainFrame extends JFrame {
     
 //     JFrame THIS = new MainFrame();
-    private Manager managet;
-    private JMenuBar menuBar;
-    private WorkPanel work;
+//    private Manager managet;
+    public final DAQMenuBar menuBar;
+    public final MainPanel work;
 
     public MainFrame(Manager manager) throws HeadlessException {
         super("SJU Data Acquisition");
-        this.managet = manager;
+//        this.managet = manager;
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -30,20 +30,16 @@ public class MainFrame extends JFrame {
         this.setLayout(null);
 
         
-        menuBar = new FFTBar();
+        menuBar = new DAQMenuBar();
         //MenuBar============
         this.setJMenuBar(menuBar);
         
 //        Oscilloscope o = new Oscilloscope();
-        work = new WorkPanel();
+        work = new MainPanel();
         work.setLocation(0, 0);
         this.add(work);
 
         this.repaint();
         
-    }
-
-    public WorkPanel getWork() {
-        return work;
     }
 }

@@ -24,6 +24,7 @@ public abstract class Manager {
 
     public MainFrame getMainFrame() {
         return mainFrame;
+        
     }
 
     private void initEvent() {
