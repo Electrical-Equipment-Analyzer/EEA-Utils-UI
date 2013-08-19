@@ -13,6 +13,8 @@ import edu.sju.ee98.ni.daqmx.NIAnalogConfig;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
@@ -56,7 +58,7 @@ public class FileMenu extends JMenu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(newItem)) {
-            System.out.println("new");
+            Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "new");
             NIAnalogConfig showAnalogConfigPane = DAQDialog.showAnalogConfigPane(Manager.MANAGER.getMainFrame());
             System.out.println(showAnalogConfigPane);
             if (showAnalogConfigPane != null) {
@@ -68,17 +70,17 @@ public class FileMenu extends JMenu implements ActionListener {
                 Manager.MANAGER.getMainFrame().work.setSelectedComponent(screen);
             }
         } else if (e.getSource().equals(openItem)) {
-            System.out.println("open");
+            Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "open");
         } else if (e.getSource().equals(saveItem)) {
-            System.out.println("save");
+            Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "save");
         } else if (e.getSource().equals(saveasItem)) {
-            System.out.println("saveas");
+            Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "saveas");
         } else if (e.getSource().equals(closeItem)) {
-            System.out.println("close");
+            Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "close");
             int index = Manager.MANAGER.getMainFrame().work.getSelectedIndex();
             Manager.MANAGER.getMainFrame().work.removeTabAt(index);
         } else if (e.getSource().equals(exitItem)) {
-            System.out.println("exit");
+            Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "exit");
         }
     }
 }
