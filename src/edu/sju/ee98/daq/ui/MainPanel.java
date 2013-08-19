@@ -6,8 +6,8 @@ package edu.sju.ee98.daq.ui;
 
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
-import java.awt.Color;
-import java.awt.Component;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -23,10 +23,17 @@ public class MainPanel extends JTabbedPane {
         this.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                System.out.println(getSelectedIndex());
-                try {
-                    ((WorkPanel) getSelectedComponent()).init();
-                } catch (java.lang.NullPointerException ex) {
+                Logger.getLogger(MainPanel.class.getName()).log(Level.FINE, String.valueOf(getSelectedIndex()));
+                WorkPanel work = (WorkPanel) getSelectedComponent();
+                if (work != null) {
+                    work.init();
+                } else {
+                    try {
+                        Manager.MANAGER.mainFrame.menuBar.fileMenu.saveItem.setEnabled(false);
+                        Manager.MANAGER.mainFrame.menuBar.fileMenu.saveasItem.setEnabled(false);
+                        Manager.MANAGER.mainFrame.menuBar.fileMenu.closeItem.setEnabled(false);
+                    } catch (java.lang.NullPointerException ex) {
+                    }
                 }
             }
         });

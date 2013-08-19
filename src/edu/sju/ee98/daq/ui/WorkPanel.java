@@ -23,7 +23,11 @@ public class WorkPanel extends JPanel {
     }
 
     public void init() {
-        Manager.MANAGER.mainFrame.menuBar.fileMenu.saveItem.setEnabled(!saved);
-        Manager.MANAGER.mainFrame.menuBar.fileMenu.saveasItem.setEnabled(!saved);
+        try {
+            Manager.MANAGER.mainFrame.menuBar.fileMenu.closeItem.setEnabled(true);
+            Manager.MANAGER.mainFrame.menuBar.fileMenu.saveItem.setEnabled(!saved);
+            Manager.MANAGER.mainFrame.menuBar.fileMenu.saveasItem.setEnabled(!saved);
+        } catch (java.lang.NullPointerException ex) {
+        }
     }
 }

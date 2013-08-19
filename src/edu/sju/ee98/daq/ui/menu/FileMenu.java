@@ -6,6 +6,8 @@ package edu.sju.ee98.daq.ui.menu;
 
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.fft.DAQDialog;
+import edu.sju.ee98.daq.ui.screen.ScreenPanel;
+import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
 import edu.sju.ee98.daq.ui.text.Format;
 import edu.sju.ee98.ni.daqmx.NIAnalogConfig;
 import java.awt.event.ActionEvent;
@@ -54,9 +56,17 @@ public class FileMenu extends JMenu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(newItem)) {
+            System.out.println("new");
             NIAnalogConfig showAnalogConfigPane = DAQDialog.showAnalogConfigPane(Manager.MANAGER.getMainFrame());
             System.out.println(showAnalogConfigPane);
-            System.out.println("new");
+            if (showAnalogConfigPane != null) {
+                ScreenPanel screen = new ScreenPanel();
+                screen.setLocation(0, 0);
+                screen.setGrid(new SampleGrid());
+                screen.setDropTarget(null);
+                Manager.MANAGER.getMainFrame().work.addTab(screen);
+                Manager.MANAGER.getMainFrame().work.setSelectedComponent(screen);
+            }
         } else if (e.getSource().equals(openItem)) {
             System.out.println("open");
         } else if (e.getSource().equals(saveItem)) {
@@ -65,6 +75,8 @@ public class FileMenu extends JMenu implements ActionListener {
             System.out.println("saveas");
         } else if (e.getSource().equals(closeItem)) {
             System.out.println("close");
+            int index = Manager.MANAGER.getMainFrame().work.getSelectedIndex();
+            Manager.MANAGER.getMainFrame().work.removeTabAt(index);
         } else if (e.getSource().equals(exitItem)) {
             System.out.println("exit");
         }
