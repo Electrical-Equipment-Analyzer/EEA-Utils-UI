@@ -28,12 +28,12 @@ public class DAQMenuBar extends JMenuBar {
         this.menuHelp();
     }
 
-    private void menuEdit() {
-        JMenu menu = new JMenu("Edit");
-        menu.setMnemonic('E');
-        menu.add(new DMenuItem("FFT", 'F'));
-        this.add(menu);
-    }
+//    private void menuEdit() {
+//        JMenu menu = new JMenu("Edit");
+//        menu.setMnemonic('E');
+//        menu.add(new DMenuItem("FFT", 'F'));
+//        this.add(menu);
+//    }
 
     private void menuHelp() {
         JMenu menu = new JMenu("Help");

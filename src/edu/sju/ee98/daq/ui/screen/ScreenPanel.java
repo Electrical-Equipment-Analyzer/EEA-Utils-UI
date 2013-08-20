@@ -33,6 +33,10 @@ public class ScreenPanel extends WorkPanel {
         this.wave = wave;
     }
 
+    public WaveData getWave() {
+        return wave;
+    }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (this.grid != null) {

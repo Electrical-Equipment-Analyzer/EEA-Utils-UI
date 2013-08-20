@@ -17,6 +17,11 @@ public class SampleGrid implements ScreenGrid {
     private Axis horizontal;
     private Axis vertical;
 
+    public SampleGrid(Axis horizontal, Axis vertical) {
+        this.horizontal = horizontal;
+        this.vertical = vertical;
+    }
+
     public SampleGrid() {
         this.horizontal = new Axis(0, 1);
         this.vertical = new Axis(0, 1);

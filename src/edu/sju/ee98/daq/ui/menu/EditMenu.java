@@ -4,14 +4,25 @@
  */
 package edu.sju.ee98.daq.ui.menu;
 
+import edu.sju.ee98.daq.ui.Manager;
+import edu.sju.ee98.daq.ui.screen.ScreenPanel;
+import edu.sju.ee98.daq.ui.screen.grid.Axis;
+import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
 import edu.sju.ee98.daq.ui.text.Format;
+import edu.sju.ee98.ni.daqmx.data.WaveData;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import org.apache.commons.math3.complex.Complex;
+import org.apache.commons.math3.transform.DftNormalization;
+import org.apache.commons.math3.transform.FastFourierTransformer;
+import org.apache.commons.math3.transform.TransformType;
 
 /**
  *
@@ -33,6 +44,66 @@ public class EditMenu extends JMenu implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(fftItem)) {
             Logger.getLogger(EditMenu.class.getName()).log(Level.FINER, fftItem.getText());
+            Component selectedComponent = Manager.MANAGER.getMainFrame().work.getSelectedComponent();
+            if (selectedComponent instanceof ScreenPanel) {
+                ScreenPanel screen = (ScreenPanel) selectedComponent;
+                System.out.println(screen.getWave());
+                double[] transform = transform(screen.getWave().getData());
+                System.out.println(Arrays.toString(transform));
+
+
+                ScreenPanel fft = new ScreenPanel();
+                fft.setLocation(0, 0);
+                fft.setGrid(new SampleGrid(new Axis(0, 2), new Axis(0, 50)));
+                fft.setWave(new FFTWave(transform));
+                
+                fft.setDropTarget(null);
+                fft.repaint();
+                Manager.MANAGER.getMainFrame().work.addTab(fft);
+                Manager.MANAGER.getMainFrame().work.setSelectedComponent(fft);
+            }
         }
+    }
+
+    public class FFTWave implements WaveData {
+
+        private double[] data;
+
+        public FFTWave(double[] data) {
+            this.data = data;
+        }
+
+        @Override
+        public double[] getData() {
+            return data;
+        }
+
+        public void setData(double[] data) {
+            this.data = data;
+        }
+    }
+
+    private static double[] transform(double[] input) {
+
+        double[] tempConversion = new double[input.length];
+
+        FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
+        try {
+            Complex[] complx = transformer.transform(input, TransformType.FORWARD);
+//            Complex[] complx2 = transformer.transform(complx, TransformType.INVERSE);
+
+            for (int i = 0; i < complx.length; i++) {
+                System.out.println(complx[i]);
+                double rr = (complx[i].getReal());
+                double ri = (complx[i].getImaginary());
+
+                tempConversion[i] = Math.sqrt((rr * rr) + (ri * ri));
+            }
+//            System.out.println(Arrays.toString(complx2));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+
+        return tempConversion;
     }
 }
