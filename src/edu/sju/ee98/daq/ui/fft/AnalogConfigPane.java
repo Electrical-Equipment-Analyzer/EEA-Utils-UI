@@ -31,9 +31,9 @@ public class AnalogConfigPane extends DialogPanel {
     }
 
     private void testValue() {
-        minVoltage.setText("0");
+        minVoltage.setText("-20");
         maxVoltage.setText("20");
-        rate.setText("50");
+        rate.setText("10000");
         length.setText("1024");
     }
 
