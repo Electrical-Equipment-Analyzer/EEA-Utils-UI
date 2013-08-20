@@ -11,7 +11,8 @@ import java.awt.Graphics;
  * @author Leo
  */
 public interface ScreenGrid {
-    
+
     public void paintGrid(Graphics g);
-    
+
+    public Integer[] transferData(double[] data);
 }

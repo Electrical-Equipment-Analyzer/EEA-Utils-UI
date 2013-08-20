@@ -6,6 +6,7 @@ package edu.sju.ee98.daq.ui.screen;
 
 import edu.sju.ee98.daq.oscilloscope.data.Channel;
 import edu.sju.ee98.daq.ui.WorkPanel;
+import edu.sju.ee98.ni.daqmx.data.WaveData;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -16,7 +17,7 @@ import java.awt.Graphics;
 public class ScreenPanel extends WorkPanel {
 
     private ScreenGrid grid;
-    private Channel[] channel = new Channel[4];
+    private WaveData wave;
 
     public ScreenPanel() {
         this.setSize(1366, 300);
@@ -28,13 +29,17 @@ public class ScreenPanel extends WorkPanel {
         this.grid = grid;
     }
 
+    public void setWave(WaveData wave) {
+        this.wave = wave;
+    }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (this.grid != null) {
             this.grid.paintGrid(g);
         }
-        for (Channel channel : this.channel) {
-            paintChannel(g, channel);
+        if (this.wave != null) {
+            paintData(g, this.grid.transferData(this.wave.getData()));
         }
     }
 
@@ -43,10 +48,11 @@ public class ScreenPanel extends WorkPanel {
             return;
         }
         g.setColor(channel.getColor());
-        this.paintData(g, channel.getData());
+//        this.paintData(g, channel.getData());
     }
 
     private void paintData(Graphics g, Integer[] data) {
+        g.setColor(Color.RED);
         for (int i = 1; i < data.length; i++) {
             try {
                 g.drawLine(i - 1, data[i - 1], i, data[i]);

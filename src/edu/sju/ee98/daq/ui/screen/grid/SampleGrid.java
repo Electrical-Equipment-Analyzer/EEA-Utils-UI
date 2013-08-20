@@ -14,6 +14,14 @@ import java.awt.Graphics;
  */
 public class SampleGrid implements ScreenGrid {
 
+    private Axis horizontal;
+    private Axis vertical;
+
+    public SampleGrid() {
+        this.horizontal = new Axis(0, 1);
+        this.vertical = new Axis(0, 1);
+    }
+
     @Override
     public void paintGrid(Graphics g) {
         g.setColor(Color.BLACK);
@@ -38,10 +46,23 @@ public class SampleGrid implements ScreenGrid {
     }
 
     private int getHeight() {
-        return 300;
+        return 600;
     }
 
     private int getWidth() {
-        return 300;
+        return 600;
+    }
+
+    @Override
+    public Integer[] transferData(double[] data) {
+        Integer[] transfer = new Integer[this.getWidth()];
+        for (int i = 0; i < transfer.length; i++) {
+            try {
+                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / this.horizontal.getDiv()) / 2) * this.horizontal.getDiv()) + this.horizontal.getPostion()] * -10 / this.vertical.getDiv()) + (this.getHeight() / 2) - this.vertical.getPostion();
+            } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+                transfer[i] = null;
+            }
+        }
+        return transfer;
     }
 }

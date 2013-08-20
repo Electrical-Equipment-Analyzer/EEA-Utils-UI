@@ -30,8 +30,15 @@ public class AnalogConfigPane extends DialogPanel {
         initComponents();
     }
 
-    private void initComponents() {
+    private void testValue() {
+        minVoltage.setText("0");
+        maxVoltage.setText("20");
+        rate.setText("50");
+        length.setText("1000");
+    }
 
+    private void initComponents() {
+        testValue();
         minVoltage.setLocation(50, 50);
         this.add(minVoltage);
         maxVoltage.setLocation(50, 100);
@@ -84,6 +91,10 @@ public class AnalogConfigPane extends DialogPanel {
         private void setLocation(int x, int y) {
             this.label.setLocation(x, y);
             this.textField.setLocation(x + 100, y);
+        }
+
+        private void setText(String text) {
+            this.textField.setText(text);
         }
 
         private String getText() {
