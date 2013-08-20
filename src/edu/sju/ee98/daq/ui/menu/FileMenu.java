@@ -9,7 +9,6 @@ import edu.sju.ee98.daq.ui.fft.DAQDialog;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
 import edu.sju.ee98.daq.ui.text.Format;
-import edu.sju.ee98.ni.daqmx.LoadLibraryException;
 import edu.sju.ee98.ni.daqmx.NIAnalogConfig;
 import edu.sju.ee98.ni.daqmx.data.AnalogWave;
 import java.awt.event.ActionEvent;
@@ -20,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,7 +44,6 @@ public class FileMenu extends JMenu implements ActionListener {
         this.saveasItem = new DMenuItem(resource.getString(LABEL + ".saveas"), this);
         this.closeItem = new DMenuItem(resource.getString(LABEL + ".close"), this);
         this.exitItem = new DMenuItem(resource.getString(LABEL + ".exit"), this);
-
 
         this.add(newItem);
         this.add(openItem);
