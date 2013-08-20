@@ -20,7 +20,7 @@ public class DAQDialog extends JDialog {
 
     public DAQDialog(JFrame frame, DialogPanel panel) {
         super(frame, "New Source", true);
-        this.setSize(350, 300);
+//        this.setSize(350, 300);
         this.setResizable(false);
         initComponents(panel);
         this.setLocationRelativeTo(null);
@@ -28,6 +28,7 @@ public class DAQDialog extends JDialog {
     }
 
     private void initComponents(DialogPanel panel) {
+        this.setSize(panel.getSize());
         panel.setDialog(this);
         Container contentPane = getContentPane();
         contentPane.setLayout(null);
