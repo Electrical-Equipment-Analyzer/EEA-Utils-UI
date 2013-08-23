@@ -65,22 +65,27 @@ public class FileMenu extends JMenu implements ActionListener {
             NIAnalogConfig config = DAQDialog.showAnalogConfigPane(Manager.MANAGER.getMainFrame());
             System.out.println(config);
             AnalogWave analogWave = new AnalogWave(config);
-            try {
-                if (config != null) {
+            if (config != null) {
+                try {
                     analogWave.read();
-//                    analogWave.gen();
-                    System.out.println(Arrays.toString(analogWave.getData()));
-                    ScreenPanel screen = new ScreenPanel();
-                    screen.setLocation(0, 0);
-                    screen.setGrid(new SampleGrid());
-                    screen.setWave(analogWave);
-                    screen.setDropTarget(null);
-                    screen.repaint();
-                    Manager.MANAGER.getMainFrame().work.addTab(screen);
-                    Manager.MANAGER.getMainFrame().work.setSelectedComponent(screen);
+                } catch (LoadLibraryException ex) {
+                    JOptionPane.showMessageDialog(Manager.MANAGER.getMainFrame(), ex.getMessage(), ex.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
+                    int simulator = JOptionPane.showConfirmDialog(Manager.MANAGER.getMainFrame(), "Do you want to use the simulator?", "Qustion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (simulator == JOptionPane.YES_OPTION) {
+                        analogWave.gen();
+                    } else {
+                        return;
+                    }
                 }
-            } catch (LoadLibraryException ex) {
-                JOptionPane.showMessageDialog(Manager.MANAGER.getMainFrame(), ex.getMessage(), ex.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
+                System.out.println(Arrays.toString(analogWave.getData()));
+                ScreenPanel screen = new ScreenPanel();
+                screen.setLocation(0, 0);
+                screen.setGrid(new SampleGrid());
+                screen.setWave(analogWave);
+                screen.setDropTarget(null);
+                screen.repaint();
+                Manager.MANAGER.getMainFrame().work.addTab(screen);
+                Manager.MANAGER.getMainFrame().work.setSelectedComponent(screen);
             }
         } else if (e.getSource().equals(openItem)) {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "open");

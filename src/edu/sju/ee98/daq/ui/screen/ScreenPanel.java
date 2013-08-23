@@ -9,6 +9,7 @@ import edu.sju.ee98.daq.ui.WorkPanel;
 import edu.sju.ee98.ni.daqmx.data.WaveData;
 import java.awt.Color;
 import java.awt.Graphics;
+import javax.swing.JPanel;
 
 /**
  *
@@ -27,6 +28,10 @@ public class ScreenPanel extends WorkPanel {
 
     public void setGrid(ScreenGrid grid) {
         this.grid = grid;
+        JPanel control = grid.getControl();
+        if (control != null) {
+            this.add(control);
+        }
     }
 
     public void setWave(WaveData wave) {

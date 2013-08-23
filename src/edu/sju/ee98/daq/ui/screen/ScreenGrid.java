@@ -5,6 +5,7 @@
 package edu.sju.ee98.daq.ui.screen;
 
 import java.awt.Graphics;
+import javax.swing.JPanel;
 
 /**
  *
@@ -12,6 +13,8 @@ import java.awt.Graphics;
  */
 public interface ScreenGrid {
 
+    public JPanel getControl();
+    
     public void paintGrid(Graphics g);
 
     public Integer[] transferData(double[] data);
