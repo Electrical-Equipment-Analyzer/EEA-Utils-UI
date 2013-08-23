@@ -45,6 +45,20 @@ public class MetricNumber extends Number {
         T, G, M, k, none, m, u, n, p
     }
 
+    public int getFirst() {
+        double value = this.value;
+        if (value > 1) {
+            while (value >= 10) {
+                value /= 10;
+            }
+        } else {
+            while (value < 1) {
+                value *= 10;
+            }
+        }
+        return (int) value;
+    }
+
     @Override
     public String toString() {
         int index = NONE;
@@ -55,7 +69,7 @@ public class MetricNumber extends Number {
                 index--;
             }
         } else {
-            while (value < (10.0 / RATE)) {
+            while (value < 1) {
                 value *= RATE;
                 index++;
             }

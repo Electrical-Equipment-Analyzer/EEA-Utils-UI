@@ -4,6 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.screen.grid;
 
+import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenGrid;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -46,7 +47,7 @@ public class SampleGrid implements ScreenGrid {
             @Override
             public void stateChanged(ChangeEvent e) {
                 vertical.setDiv(((SpinnerMetricModel) hd.getModel()).getDouble());
-                
+                Manager.MANAGER.getMainFrame().work.getSelectedComponent().repaint();
             }
         });
         this.control.add(hd);
@@ -60,27 +61,29 @@ public class SampleGrid implements ScreenGrid {
     @Override
     public void paintGrid(Graphics g) {
         g.setColor(Color.BLACK);
-        for (int h = 0; h < 9; h++) {
-            g.drawLine(0 + this.getX(), this.getHeight() / 8 * h + this.getY(),
-                    this.getWidth() + this.getX(), this.getHeight() / 8 * h + this.getY());
+        for (int h = 0; h <= getVertical() / getHard(); h++) {
+            int y = (this.getHeight() / (getVertical() / getHard()) * h) + this.getY();
+            g.drawLine(0 + this.getX(), y,
+                    this.getWidth() + this.getX(), y);
         }
-        for (int v = 0; v <= 10; v++) {
-            g.drawLine(this.getWidth() / 10 * v + this.getX(), 0 + this.getY(),
-                    this.getWidth() / 10 * v + this.getX(), this.getHeight() + this.getY());
+        for (int v = 0; v <= getHorizontal() / getHard(); v++) {
+            int x = this.getWidth() / (getHorizontal() / getHard()) * v + this.getX();
+            g.drawLine(x, 0 + this.getY(),
+                    x, this.getHeight() + this.getY());
         }
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < getVertical(); i++) {
             if (i % 5 == 0) {
                 continue;
             }
-            g.drawLine(this.getWidth() / 2 - 2 + this.getX(), this.getHeight() / 40 * i + this.getY(),
-                    this.getWidth() / 2 + 2 + this.getX(), this.getHeight() / 40 * i + this.getY());
+            g.drawLine(this.getWidth() / 2 - 2 + this.getX(), this.getHeight() / getVertical() * i + this.getY(),
+                    this.getWidth() / 2 + 2 + this.getX(), this.getHeight() / getVertical() * i + this.getY());
         }
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < getHorizontal(); i++) {
             if (i % 5 == 0) {
                 continue;
             }
-            g.drawLine(this.getWidth() / 50 * i + this.getX(), this.getHeight() / 2 - 2 + this.getY(),
-                    this.getWidth() / 50 * i + this.getX(), this.getHeight() / 2 + 2 + this.getY());
+            g.drawLine(this.getWidth() / getHorizontal() * i + this.getX(), this.getHeight() / 2 - 2 + this.getY(),
+                    this.getWidth() / getHorizontal() * i + this.getX(), this.getHeight() / 2 + 2 + this.getY());
         }
     }
 
@@ -93,11 +96,23 @@ public class SampleGrid implements ScreenGrid {
     }
 
     private int getHeight() {
-        return 500;
+        return 480;
     }
 
     private int getWidth() {
         return 600;
+    }
+
+    private int getVertical() {
+        return 40;
+    }
+
+    private int getHorizontal() {
+        return 50;
+    }
+
+    private int getHard() {
+        return 5;
     }
 
     @Override
@@ -105,7 +120,7 @@ public class SampleGrid implements ScreenGrid {
         Integer[] transfer = new Integer[this.getWidth()];
         for (int i = 0; i < transfer.length; i++) {
             try {
-                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / this.horizontal.getDiv()) / 2) * this.horizontal.getDiv()) + this.horizontal.getPostion()] * -10 / this.vertical.getDiv()) + (this.getHeight() / 2) - this.vertical.getPostion();
+                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / this.horizontal.getDiv()) / 2) * this.horizontal.getDiv()) + this.horizontal.getPostion()] * -1 * (getHeight() / getVertical()) / this.vertical.getDiv()) + this.getY() + (this.getHeight() / 2) - this.vertical.getPostion();
             } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
                 transfer[i] = null;
             }

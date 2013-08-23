@@ -47,7 +47,23 @@ public class SpinnerMetricModel extends AbstractSpinnerModel implements Serializ
     }
 
     private MetricNumber incrValue(boolean up) {
-        double v = (up ? value.doubleValue() * 10 : value.doubleValue() / 10);
+
+        int s = value.getFirst() % 10;
+        double v = 0;
+        switch (s) {
+            case 1:
+                v = (up ? value.doubleValue() * 2 : value.doubleValue() / 2);
+                break;
+            case 2:
+                v = (up ? value.doubleValue() / 2 * 5 : value.doubleValue() / 2);
+                break;
+            case 5:
+                v = (up ? value.doubleValue() * 2 : value.doubleValue() / 5 * 2);
+                break;
+            default:
+                System.out.println(s);
+        }
+
         if (v > maximum) {
             return null;
         }
