@@ -48,7 +48,7 @@ public class ScreenPanel extends WorkPanel {
             this.grid.paintGrid(g);
         }
         if (this.wave != null) {
-            paintData(g, this.grid.transferData(this.wave.getData()));
+            paintData(g, this.grid.transferData(this.wave.getDoubleArray()));
         }
     }
 

@@ -51,7 +51,7 @@ public class EditMenu extends JMenu implements ActionListener {
             if (selectedComponent instanceof ScreenPanel) {
                 ScreenPanel screen = (ScreenPanel) selectedComponent;
                 System.out.println(screen.getWave());
-                double[] transform = transform(screen.getWave().getData(), TransformType.FORWARD);
+                Complex[] transform = transform(screen.getWave().getData(), TransformType.FORWARD);
                 System.out.println(Arrays.toString(transform));
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
@@ -69,7 +69,7 @@ public class EditMenu extends JMenu implements ActionListener {
             if (selectedComponent instanceof ScreenPanel) {
                 ScreenPanel screen = (ScreenPanel) selectedComponent;
                 System.out.println(screen.getWave());
-                double[] transform = transform(screen.getWave().getData(), TransformType.INVERSE);
+                Complex[] transform = transform(screen.getWave().getData(), TransformType.INVERSE);
                 System.out.println(Arrays.toString(transform));
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
@@ -86,43 +86,71 @@ public class EditMenu extends JMenu implements ActionListener {
 
     public class FFTWave implements WaveData {
 
-        private double[] data;
+//        private double[] data;
+        private Complex[] data;
 
-        public FFTWave(double[] data) {
+        public FFTWave(Complex[] data) {
             this.data = data;
         }
 
         @Override
-        public double[] getData() {
+        public Complex[] getData() {
             return data;
         }
 
-        public void setData(double[] data) {
+        @Override
+        public double[] getDoubleArray() {
+
+            double[] tempConversion = new double[data.length];
+            for (int i = 0; i < data.length; i++) {
+                System.out.println(data[i]);
+                double rr = (data[i].getReal());
+                double ri = (data[i].getImaginary());
+
+//                tempConversion[i] = Math.sqrt((rr * rr) + (ri * ri));
+                tempConversion[i] = rr;
+            }
+            return tempConversion;
+        }
+
+        public void setData(Complex[] data) {
             this.data = data;
         }
     }
 
-    private static double[] transform(double[] input, TransformType type) {
+    private static Complex[] transform(Object input, TransformType type) {
 
-        double[] tempConversion = new double[input.length];
+//        double[] tempConversion = new double[input.length];
 
         FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
         try {
-            Complex[] complx = transformer.transform(input, type);
+            Complex[] complx = null;
+            if (input instanceof double[]) {
+                double[] data = (double[]) input;
+//                Double[] in = (Double[]) input;
+//                double[] data = new double[in.length];
+//                for (int i = 0; i < in.length; i++) {
+//                    data[i] = in[i];
+//                }
+                complx = transformer.transform(data, type);
+            } else if (input instanceof Complex[]) {
+                Complex[] data = (Complex[]) input;
+                complx = transformer.transform(data, type);
+            }
 //            Complex[] complx2 = transformer.transform(complx, TransformType.INVERSE);
 
-            for (int i = 0; i < complx.length; i++) {
-                System.out.println(complx[i]);
-                double rr = (complx[i].getReal());
-                double ri = (complx[i].getImaginary());
-
-                tempConversion[i] = Math.sqrt((rr * rr) + (ri * ri));
-            }
+//            for (int i = 0; i < complx.length; i++) {
+//                System.out.println(complx[i]);
+//                double rr = (complx[i].getReal());
+//                double ri = (complx[i].getImaginary());
+//
+//                tempConversion[i] = Math.sqrt((rr * rr) + (ri * ri));
+//            }
 //            System.out.println(Arrays.toString(complx2));
+            return complx;
         } catch (IllegalArgumentException e) {
             System.out.println(e);
         }
-
-        return tempConversion;
+        return null;
     }
 }
