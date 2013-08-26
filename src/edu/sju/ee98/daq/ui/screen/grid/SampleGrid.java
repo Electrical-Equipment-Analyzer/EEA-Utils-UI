@@ -21,41 +21,50 @@ import javax.swing.event.ChangeListener;
  */
 public class SampleGrid implements ScreenGrid {
 
-    private JPanel control;
+//    private JPanel control;
     private Axis horizontal;
     private Axis vertical;
 
     public SampleGrid() {
-        this(new Axis(0, 1), new Axis(0, 1));
+        this(new Axis(), new Axis());
+        this.horizontal.setLocation(0, 0);
+        this.vertical.setLocation(500, 0);
+//        this(new Axis(0, 1), new Axis(0, 1));
     }
 
     public SampleGrid(Axis horizontal, Axis vertical) {
         this.horizontal = horizontal;
         this.vertical = vertical;
-        initContorl();
+//        initContorl();
     }
-    private JSpinner hd;
+//    private JSpinner hd;
 
-    private void initContorl() {
-        this.control = new JPanel(null);
-        this.control.setBackground(Color.red);
-        this.control.setBounds(0, 0, 500, 30);
+//    private void initContorl() {
+//        this.control = new JPanel(null);
+//        this.control.setBackground(Color.red);
+//        this.control.setBounds(0, 0, 500, 30);
+//
+//        hd = new JSpinner(new SpinnerMetricModel(0.001, 0.000000000001, 1000000));
+//        hd.setBounds(50, 0, 100, 25);
+//        hd.addChangeListener(new ChangeListener() {
+//            @Override
+//            public void stateChanged(ChangeEvent e) {
+//                vertical.setDiv(((SpinnerMetricModel) hd.getModel()).getDouble());
+//                Manager.MANAGER.getMainFrame().work.getSelectedComponent().repaint();
+//            }
+//        });
+//        this.control.add(hd);
+//    }
+    @Override
+    public JPanel getControl() {
 
-        hd = new JSpinner(new SpinnerMetricModel(0.001, 0.000000000001, 1000000));
-        hd.setBounds(50, 0, 100, 25);
-        hd.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                vertical.setDiv(((SpinnerMetricModel) hd.getModel()).getDouble());
-                Manager.MANAGER.getMainFrame().work.getSelectedComponent().repaint();
-            }
-        });
-        this.control.add(hd);
+        return horizontal;
     }
 
     @Override
-    public JPanel getControl() {
-        return control;
+    public void addAxisControl(JPanel screen) {
+        screen.add(this.horizontal);
+        screen.add(this.vertical);
     }
 
     @Override

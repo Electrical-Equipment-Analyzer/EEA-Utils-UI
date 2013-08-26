@@ -28,10 +28,11 @@ public class ScreenPanel extends WorkPanel {
 
     public void setGrid(ScreenGrid grid) {
         this.grid = grid;
-        JPanel control = grid.getControl();
-        if (control != null) {
-            this.add(control);
-        }
+        this.grid.addAxisControl(this);
+//        JPanel control = grid.getControl();
+//        if (control != null) {
+//            this.add(control);
+//        }
     }
 
     public void setWave(WaveData wave) {

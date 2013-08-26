@@ -14,7 +14,9 @@ import javax.swing.JPanel;
 public interface ScreenGrid {
 
     public JPanel getControl();
-    
+
+    public void addAxisControl(JPanel screen);
+
     public void paintGrid(Graphics g);
 
     public Integer[] transferData(double[] data);
