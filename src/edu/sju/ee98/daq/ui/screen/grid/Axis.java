@@ -26,14 +26,17 @@ public class Axis extends JPanel implements ChangeListener {
         this.setBackground(Color.red);
         this.setSize(500, 25);
         this.postion = new JSpinner(new SpinnerNumberModel(0, -1000, 1000, 1));
+        this.postion.addChangeListener(this);
         this.postion.setBounds(50, 0, 100, 25);
         this.add(this.postion);
-        this.div = new JSpinner(new SpinnerMetricModel(0.001, 0.000000000001, 1000000));
+        this.div = new JSpinner(new SpinnerMetricModel(1, 0.000000000001, 1000000));
+        this.div.addChangeListener(this);
         this.div.setBounds(200, 0, 100, 25);
         this.add(this.div);
     }
 
     public Axis(int postion, double div) {
+//        this();
 //        this.postion = postion;
 //        this.div = div;
     }

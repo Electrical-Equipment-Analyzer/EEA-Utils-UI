@@ -8,6 +8,7 @@ import edu.sju.ee98.daq.oscilloscope.data.Channel;
 import edu.sju.ee98.daq.ui.WorkPanel;
 import edu.sju.ee98.ni.daqmx.data.WaveData;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
@@ -28,7 +29,9 @@ public class ScreenPanel extends WorkPanel {
 
     public void setGrid(ScreenGrid grid) {
         this.grid = grid;
-        this.grid.addAxisControl(this);
+        if (this.grid instanceof Component) {
+            this.add((Component) this.grid);
+        }
 //        JPanel control = grid.getControl();
 //        if (control != null) {
 //            this.add(control);

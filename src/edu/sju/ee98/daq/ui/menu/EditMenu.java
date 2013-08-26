@@ -55,7 +55,7 @@ public class EditMenu extends JMenu implements ActionListener {
                 System.out.println(Arrays.toString(transform));
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
-                fft.setGrid(new SampleGrid(new Axis(0, 2), new Axis(0, 1)));
+                fft.setGrid(new SampleGrid());
                 fft.setWave(new FFTWave(transform));
 
                 fft.setDropTarget(null);
@@ -73,7 +73,7 @@ public class EditMenu extends JMenu implements ActionListener {
                 System.out.println(Arrays.toString(transform));
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
-                fft.setGrid(new SampleGrid(new Axis(0, 2), new Axis(0, 1)));
+                fft.setGrid(new SampleGrid());
                 fft.setWave(new FFTWave(transform));
 
                 fft.setDropTarget(null);

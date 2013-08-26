@@ -19,24 +19,35 @@ import javax.swing.event.ChangeListener;
  *
  * @author Leo
  */
-public class SampleGrid implements ScreenGrid {
+public class SampleGrid extends JPanel implements ScreenGrid {
 
 //    private JPanel control;
-    private Axis horizontal;
     private Axis vertical;
+    private Axis horizontal;
 
     public SampleGrid() {
-        this(new Axis(), new Axis());
-        this.horizontal.setLocation(0, 0);
-        this.vertical.setLocation(500, 0);
+        super(null);
+        this.setLocation(0, 0);
+        this.setSize(1366, 50);
+        this.setBackground(Color.green);
+        this.horizontal = new Axis();
+        this.vertical = new Axis();
+        this.vertical.setLocation(10, 10);
+        this.horizontal.setLocation(510, 10);
+        this.add(this.vertical);
+        this.add(this.horizontal);
 //        this(new Axis(0, 1), new Axis(0, 1));
     }
 
-    public SampleGrid(Axis horizontal, Axis vertical) {
-        this.horizontal = horizontal;
-        this.vertical = vertical;
+//    public SampleGrid(Axis horizontal, Axis vertical) {
+//        super(null);
+//        this.setLocation(0, 0);
+//        this.setSize(1366, 50);
+//        this.setBackground(Color.green);
+//        this.horizontal = horizontal;
+//        this.vertical = vertical;
 //        initContorl();
-    }
+//    }
 //    private JSpinner hd;
 
 //    private void initContorl() {
@@ -63,73 +74,74 @@ public class SampleGrid implements ScreenGrid {
 
     @Override
     public void addAxisControl(JPanel screen) {
-        screen.add(this.horizontal);
-        screen.add(this.vertical);
+//        screen.add(this);
+//        screen.add(this.horizontal);
+//        screen.add(this.vertical);
     }
 
     @Override
     public void paintGrid(Graphics g) {
         g.setColor(Color.BLACK);
-        for (int h = 0; h <= getVertical() / getHard(); h++) {
-            int y = (this.getHeight() / (getVertical() / getHard()) * h) + this.getY();
-            g.drawLine(0 + this.getX(), y,
-                    this.getWidth() + this.getX(), y);
+        for (int h = 0; h <= getVerticalGraduation() / getHardGraduation(); h++) {
+            int y = (this.getGridHeight() / (getVerticalGraduation() / getHardGraduation()) * h) + this.getGridY();
+            g.drawLine(0 + this.getGridX(), y,
+                    this.getGridWidth() + this.getGridX(), y);
         }
-        for (int v = 0; v <= getHorizontal() / getHard(); v++) {
-            int x = this.getWidth() / (getHorizontal() / getHard()) * v + this.getX();
-            g.drawLine(x, 0 + this.getY(),
-                    x, this.getHeight() + this.getY());
+        for (int v = 0; v <= getHorizontalGraduation() / getHardGraduation(); v++) {
+            int x = this.getGridWidth() / (getHorizontalGraduation() / getHardGraduation()) * v + this.getGridX();
+            g.drawLine(x, 0 + this.getGridY(),
+                    x, this.getGridHeight() + this.getGridY());
         }
-        for (int i = 0; i < getVertical(); i++) {
+        for (int i = 0; i < getVerticalGraduation(); i++) {
             if (i % 5 == 0) {
                 continue;
             }
-            g.drawLine(this.getWidth() / 2 - 2 + this.getX(), this.getHeight() / getVertical() * i + this.getY(),
-                    this.getWidth() / 2 + 2 + this.getX(), this.getHeight() / getVertical() * i + this.getY());
+            g.drawLine(this.getGridWidth() / 2 - 2 + this.getGridX(), this.getGridHeight() / getVerticalGraduation() * i + this.getGridY(),
+                    this.getGridWidth() / 2 + 2 + this.getGridX(), this.getGridHeight() / getVerticalGraduation() * i + this.getGridY());
         }
-        for (int i = 0; i < getHorizontal(); i++) {
+        for (int i = 0; i < getHorizontalGraduation(); i++) {
             if (i % 5 == 0) {
                 continue;
             }
-            g.drawLine(this.getWidth() / getHorizontal() * i + this.getX(), this.getHeight() / 2 - 2 + this.getY(),
-                    this.getWidth() / getHorizontal() * i + this.getX(), this.getHeight() / 2 + 2 + this.getY());
+            g.drawLine(this.getGridWidth() / getHorizontalGraduation() * i + this.getGridX(), this.getGridHeight() / 2 - 2 + this.getGridY(),
+                    this.getGridWidth() / getHorizontalGraduation() * i + this.getGridX(), this.getGridHeight() / 2 + 2 + this.getGridY());
         }
     }
 
-    private int getX() {
+    private int getGridX() {
         return 0;
     }
 
-    private int getY() {
-        return 30;
-    }
-
-    private int getHeight() {
-        return 480;
-    }
-
-    private int getWidth() {
-        return 600;
-    }
-
-    private int getVertical() {
-        return 40;
-    }
-
-    private int getHorizontal() {
+    private int getGridY() {
         return 50;
     }
 
-    private int getHard() {
+    private int getGridHeight() {
+        return 480;
+    }
+
+    private int getGridWidth() {
+        return 600;
+    }
+
+    private int getVerticalGraduation() {
+        return 40;
+    }
+
+    private int getHorizontalGraduation() {
+        return 50;
+    }
+
+    private int getHardGraduation() {
         return 5;
     }
 
     @Override
     public Integer[] transferData(double[] data) {
-        Integer[] transfer = new Integer[this.getWidth()];
+        Integer[] transfer = new Integer[this.getGridWidth()];
         for (int i = 0; i < transfer.length; i++) {
             try {
-                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / this.horizontal.getDiv()) / 2) * this.horizontal.getDiv()) + this.horizontal.getPostion()] * -1 * (getHeight() / getVertical()) / this.vertical.getDiv()) + this.getY() + (this.getHeight() / 2) - this.vertical.getPostion();
+                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / this.horizontal.getDiv()) / 2) * this.horizontal.getDiv()) + this.horizontal.getPostion()] * -1 * (getGridHeight() / getVerticalGraduation()) / this.vertical.getDiv()) + this.getGridY() + (this.getGridHeight() / 2) - this.vertical.getPostion();
             } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
                 transfer[i] = null;
             }
