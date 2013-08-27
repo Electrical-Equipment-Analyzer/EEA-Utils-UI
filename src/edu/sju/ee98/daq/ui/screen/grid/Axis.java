@@ -6,6 +6,8 @@ package edu.sju.ee98.daq.ui.screen.grid;
 
 import edu.sju.ee98.daq.ui.Manager;
 import java.awt.Color;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -21,25 +23,31 @@ public class Axis extends JPanel implements ChangeListener {
     private JSpinner postion;
     private JSpinner div;
 
-    public Axis() {
+    public Axis(String title) {
         super(null);
-        this.setBackground(Color.red);
-        this.setSize(500, 25);
+        this.setBorder(BorderFactory.createTitledBorder(title));
+        this.setSize(400, 50);
+        JLabel labelPostion = new JLabel("postion".toUpperCase());
+        labelPostion.setBounds(20, 15, 60, 25);
+        this.add(labelPostion);
         this.postion = new JSpinner(new SpinnerNumberModel(0, -1000, 1000, 1));
         this.postion.addChangeListener(this);
-        this.postion.setBounds(50, 0, 100, 25);
+        this.postion.setBounds(100, 15, 80, 25);
         this.add(this.postion);
+        JLabel labelDiv = new JLabel("div".toUpperCase());
+        labelDiv.setBounds(220, 15, 60, 25);
+        this.add(labelDiv);
         this.div = new JSpinner(new SpinnerMetricModel(1, 0.000000000001, 1000000));
         this.div.addChangeListener(this);
-        this.div.setBounds(200, 0, 100, 25);
+        this.div.setBounds(300, 15, 80, 25);
         this.add(this.div);
     }
 
-    public Axis(int postion, double div) {
+//    public Axis(int postion, double div) {
 //        this();
 //        this.postion = postion;
 //        this.div = div;
-    }
+//    }
 //    public void setPostion(int postion) {
 //        this.postion = postion;
 //    }

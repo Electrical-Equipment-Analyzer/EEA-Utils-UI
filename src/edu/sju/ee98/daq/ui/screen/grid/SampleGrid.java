@@ -29,11 +29,11 @@ public class SampleGrid extends JPanel implements ScreenGrid {
         super(null);
         this.setLocation(0, 0);
         this.setSize(1366, 50);
-        this.setBackground(Color.green);
-        this.horizontal = new Axis();
-        this.vertical = new Axis();
-        this.vertical.setLocation(10, 10);
-        this.horizontal.setLocation(510, 10);
+//        this.setBackground(Color.lightGray);
+        this.horizontal = new Axis("horizontal".toUpperCase());
+        this.vertical = new Axis("vertical".toUpperCase());
+        this.vertical.setLocation(0, 0);
+        this.horizontal.setLocation(500, 0);
         this.add(this.vertical);
         this.add(this.horizontal);
 //        this(new Axis(0, 1), new Axis(0, 1));
@@ -113,7 +113,7 @@ public class SampleGrid extends JPanel implements ScreenGrid {
     }
 
     private int getGridY() {
-        return 50;
+        return 60;
     }
 
     private int getGridHeight() {
