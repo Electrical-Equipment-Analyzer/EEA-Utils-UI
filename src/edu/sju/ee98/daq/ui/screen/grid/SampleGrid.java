@@ -59,8 +59,20 @@ public class SampleGrid extends JPanel implements ScreenGrid {
         }
     }
 
+    @Override
+    public void paintData(Graphics g, Integer[] data) {
+        g.setColor(Color.RED);
+        for (int i = 1; i < data.length; i++) {
+            try {
+                int x = i + this.getGridX();
+                g.drawLine(x - 1, data[i - 1], x, data[i]);
+            } catch (java.lang.NullPointerException ex) {
+            }
+        }
+    }
+
     private int getGridX() {
-        return 0;
+        return 10;
     }
 
     private int getGridY() {
@@ -88,11 +100,12 @@ public class SampleGrid extends JPanel implements ScreenGrid {
     }
 
     @Override
-    public Integer[] transferData(double[] data) {
+    public Integer[] transferData(double rate, double[] data) {
         Integer[] transfer = new Integer[this.getGridWidth()];
         for (int i = 0; i < transfer.length; i++) {
             try {
-                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / this.horizontal.getDiv()) / 2) * this.horizontal.getDiv()) + this.horizontal.getPostion()] * -1 * (getGridHeight() / getVerticalGraduation()) / this.vertical.getDiv()) + this.getGridY() + (this.getGridHeight() / 2) - this.vertical.getPostion();
+                double t = rate / (this.getGridWidth() / this.getHorizontalGraduation() / this.horizontal.getDiv());
+                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / t) / 2) * t) + this.horizontal.getPostion()] * -1 * (getGridHeight() / getVerticalGraduation()) / this.vertical.getDiv()) + this.getGridY() + (this.getGridHeight() / 2) - this.vertical.getPostion();
             } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
                 transfer[i] = null;
             }

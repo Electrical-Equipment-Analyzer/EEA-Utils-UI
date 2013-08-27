@@ -46,17 +46,7 @@ public class ScreenPanel extends WorkPanel {
             this.grid.paintGrid(g);
         }
         if (this.wave != null) {
-            paintData(g, this.grid.transferData(this.wave.getDoubleArray()));
-        }
-    }
-
-    private void paintData(Graphics g, Integer[] data) {
-        g.setColor(Color.RED);
-        for (int i = 1; i < data.length; i++) {
-            try {
-                g.drawLine(i - 1, data[i - 1], i, data[i]);
-            } catch (java.lang.NullPointerException ex) {
-            }
+            this.grid.paintData(g, this.grid.transferData(this.wave.getRate(), this.wave.getDoubleArray()));
         }
     }
 }

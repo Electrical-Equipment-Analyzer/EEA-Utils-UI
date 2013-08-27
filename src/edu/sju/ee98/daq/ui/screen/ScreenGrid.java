@@ -14,5 +14,7 @@ public interface ScreenGrid {
 
     public void paintGrid(Graphics g);
 
-    public Integer[] transferData(double[] data);
+    public void paintData(Graphics g, Integer[] data);
+
+    public Integer[] transferData(double rate, double[] data);
 }

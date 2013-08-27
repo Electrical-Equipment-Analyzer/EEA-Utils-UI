@@ -116,6 +116,11 @@ public class EditMenu extends JMenu implements ActionListener {
         public void setData(Complex[] data) {
             this.data = data;
         }
+
+        @Override
+        public double getRate() {
+            return 1000;
+        }
     }
 
     private static Complex[] transform(Object input, TransformType type) {
