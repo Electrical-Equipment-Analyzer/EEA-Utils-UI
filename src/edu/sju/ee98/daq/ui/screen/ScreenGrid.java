@@ -5,17 +5,12 @@
 package edu.sju.ee98.daq.ui.screen;
 
 import java.awt.Graphics;
-import javax.swing.JPanel;
 
 /**
  *
  * @author Leo
  */
 public interface ScreenGrid {
-
-    public JPanel getControl();
-
-    public void addAxisControl(JPanel screen);
 
     public void paintGrid(Graphics g);
 

@@ -5,7 +5,6 @@
 package edu.sju.ee98.daq.ui.screen.grid;
 
 import edu.sju.ee98.daq.ui.Manager;
-import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,18 +41,6 @@ public class Axis extends JPanel implements ChangeListener {
         this.div.setBounds(300, 15, 80, 25);
         this.add(this.div);
     }
-
-//    public Axis(int postion, double div) {
-//        this();
-//        this.postion = postion;
-//        this.div = div;
-//    }
-//    public void setPostion(int postion) {
-//        this.postion = postion;
-//    }
-//    public void setDiv(double div) {
-//        this.div = div;
-//    }
 
     public int getPostion() {
         return (int) postion.getValue();

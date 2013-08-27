@@ -4,13 +4,11 @@
  */
 package edu.sju.ee98.daq.ui.screen;
 
-import edu.sju.ee98.daq.oscilloscope.data.Channel;
 import edu.sju.ee98.daq.ui.WorkPanel;
 import edu.sju.ee98.ni.daqmx.data.WaveData;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
-import javax.swing.JPanel;
 
 /**
  *
@@ -32,10 +30,6 @@ public class ScreenPanel extends WorkPanel {
         if (this.grid instanceof Component) {
             this.add((Component) this.grid);
         }
-//        JPanel control = grid.getControl();
-//        if (control != null) {
-//            this.add(control);
-//        }
     }
 
     public void setWave(WaveData wave) {
@@ -54,14 +48,6 @@ public class ScreenPanel extends WorkPanel {
         if (this.wave != null) {
             paintData(g, this.grid.transferData(this.wave.getDoubleArray()));
         }
-    }
-
-    private void paintChannel(Graphics g, Channel channel) {
-        if (channel == null) {
-            return;
-        }
-        g.setColor(channel.getColor());
-//        this.paintData(g, channel.getData());
     }
 
     private void paintData(Graphics g, Integer[] data) {
