@@ -104,8 +104,8 @@ public class SampleGrid extends JPanel implements ScreenGrid {
         Integer[] transfer = new Integer[this.getGridWidth()];
         for (int i = 0; i < transfer.length; i++) {
             try {
-                double t = rate / (this.getGridWidth() / this.getHorizontalGraduation() / this.horizontal.getDiv());
-                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / t) / 2) * t) + this.horizontal.getPostion()] * -1 * (getGridHeight() / getVerticalGraduation()) / this.vertical.getDiv()) + this.getGridY() + (this.getGridHeight() / 2) - this.vertical.getPostion();
+                double t = rate / (this.getGridWidth() / this.getHorizontalGraduation() * this.getHardGraduation() / this.horizontal.getDiv());
+                transfer[i] = (int) (data[(int) ((i - (transfer.length - data.length / t) / 2) * t) + this.horizontal.getPostion()] * -1 * (getGridHeight() / getVerticalGraduation() * getHardGraduation()) / this.vertical.getDiv()) + this.getGridY() + (this.getGridHeight() / 2) - this.vertical.getPostion();
             } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
                 transfer[i] = null;
             }
