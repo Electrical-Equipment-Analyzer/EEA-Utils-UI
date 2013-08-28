@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 public class AnalogConfigPane extends DialogPanel {
 
     private NIAnalogConfig config;
+    private JInput physicalChannel = new JInput("Physical Channel");
     private JInput minVoltage = new JInput("Min Voltage");
     private JInput maxVoltage = new JInput("Max Voltage");
     private JInput rate = new JInput("Rate");
@@ -31,6 +32,7 @@ public class AnalogConfigPane extends DialogPanel {
     }
 
     private void testValue() {
+        physicalChannel.setText("Dev1/ai0");
         minVoltage.setText("-20");
         maxVoltage.setText("20");
         rate.setText("10000");
@@ -39,13 +41,15 @@ public class AnalogConfigPane extends DialogPanel {
 
     private void initComponents() {
         testValue();
-        minVoltage.setLocation(50, 50);
+        physicalChannel.setLocation(50, 50);
+        this.add(physicalChannel);
+        minVoltage.setLocation(50, 100);
         this.add(minVoltage);
-        maxVoltage.setLocation(50, 100);
+        maxVoltage.setLocation(50, 150);
         this.add(maxVoltage);
-        rate.setLocation(50, 150);
+        rate.setLocation(50, 200);
         this.add(rate);
-        length.setLocation(50, 200);
+        length.setLocation(50, 250);
         this.add(length);
 
         JButton finishButton = new JButton("Finish");
@@ -55,6 +59,7 @@ public class AnalogConfigPane extends DialogPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     config = new NIAnalogConfig(
+                            physicalChannel.getText(),
                             Double.parseDouble(minVoltage.getText()), Double.parseDouble(maxVoltage.getText()),
                             Double.parseDouble(rate.getText()), Long.parseLong(length.getText()));
                 } catch (java.lang.NumberFormatException ex) {
