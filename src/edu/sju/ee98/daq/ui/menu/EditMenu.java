@@ -6,7 +6,6 @@ package edu.sju.ee98.daq.ui.menu;
 
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.screen.grid.Axis;
 import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
 import edu.sju.ee98.daq.ui.text.Format;
 import edu.sju.ee98.ni.daqmx.data.WaveData;
@@ -56,7 +55,7 @@ public class EditMenu extends JMenu implements ActionListener {
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
                 fft.setGrid(new SampleGrid());
-                fft.setWave(new FFTWave(transform));
+                fft.setWave(new FFTWave(screen.getWave().getRate(), transform));
 
                 fft.setDropTarget(null);
                 fft.repaint();
@@ -74,7 +73,7 @@ public class EditMenu extends JMenu implements ActionListener {
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
                 fft.setGrid(new SampleGrid());
-                fft.setWave(new FFTWave(transform));
+                fft.setWave(new FFTWave(screen.getWave().getRate(), transform));
 
                 fft.setDropTarget(null);
                 fft.repaint();
@@ -87,9 +86,11 @@ public class EditMenu extends JMenu implements ActionListener {
     public class FFTWave implements WaveData {
 
 //        private double[] data;
+        private double rate;
         private Complex[] data;
 
-        public FFTWave(Complex[] data) {
+        public FFTWave(double rate, Complex[] data) {
+            this.rate = rate;
             this.data = data;
         }
 
@@ -119,7 +120,7 @@ public class EditMenu extends JMenu implements ActionListener {
 
         @Override
         public double getRate() {
-            return 1000;
+            return this.rate;
         }
     }
 
