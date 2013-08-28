@@ -8,8 +8,11 @@ import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
 import edu.sju.ee98.daq.ui.text.Format;
+import edu.sju.ee98.ni.daqmx.data.Grid;
 import edu.sju.ee98.ni.daqmx.data.WaveData;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -99,19 +102,29 @@ public class EditMenu extends JMenu implements ActionListener {
             return data;
         }
 
-        @Override
-        public double[] getDoubleArray() {
-
-            double[] tempConversion = new double[data.length];
+//        @Override
+        private double[] getRealArray() {
+            double[] temp = new double[data.length];
             for (int i = 0; i < data.length; i++) {
-                System.out.println(data[i]);
-                double rr = (data[i].getReal());
-                double ri = (data[i].getImaginary());
-
-//                tempConversion[i] = Math.sqrt((rr * rr) + (ri * ri));
-                tempConversion[i] = rr;
+                temp[i] = data[i].getReal();
             }
-            return tempConversion;
+            return temp;
+        }
+
+        private double[] getImaginaryArray() {
+            double[] temp = new double[data.length];
+            for (int i = 0; i < data.length; i++) {
+                temp[i] = data[i].getImaginary();
+            }
+            return temp;
+        }
+
+        private double[] getAbsoluteArray() {
+            double[] temp = new double[data.length];
+            for (int i = 0; i < data.length; i++) {
+                temp[i] = data[i].abs();
+            }
+            return temp;
         }
 
         public void setData(Complex[] data) {
@@ -121,6 +134,16 @@ public class EditMenu extends JMenu implements ActionListener {
         @Override
         public double getRate() {
             return this.rate;
+        }
+
+        @Override
+        public void paintWave(Graphics g, Grid grid) {
+            g.setColor(Color.red);
+            grid.paintWave(g, rate, this.getAbsoluteArray());
+            g.setColor(Color.green);
+            grid.paintWave(g, rate, this.getRealArray());
+            g.setColor(Color.blue);
+            grid.paintWave(g, rate, this.getImaginaryArray());
         }
     }
 

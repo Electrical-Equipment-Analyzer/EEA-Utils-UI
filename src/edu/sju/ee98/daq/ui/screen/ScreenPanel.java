@@ -40,13 +40,16 @@ public class ScreenPanel extends WorkPanel {
         return wave;
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (this.grid != null) {
             this.grid.paintGrid(g);
         }
         if (this.wave != null) {
-            this.grid.paintData(g, this.grid.transferData(this.wave.getRate(), this.wave.getDoubleArray()));
+            g.setColor(Color.RED);
+            this.wave.paintWave(g, grid);
+//            this.grid.paintData(g, this.grid.transferData(this.wave.getRate(), this.wave.getDoubleArray()));
         }
     }
 }

@@ -4,17 +4,18 @@
  */
 package edu.sju.ee98.daq.ui.screen;
 
+import edu.sju.ee98.ni.daqmx.data.Grid;
 import java.awt.Graphics;
 
 /**
  *
  * @author Leo
  */
-public interface ScreenGrid {
+public interface ScreenGrid extends Grid {
 
     public void paintGrid(Graphics g);
 
-    public void paintData(Graphics g, Integer[] data);
+//    public void paintData(Graphics g, Integer[] data);
 
-    public Integer[] transferData(double rate, double[] data);
+//    public Integer[] transferData(double rate, double[] data);
 }

@@ -59,18 +59,6 @@ public class SampleGrid extends JPanel implements ScreenGrid {
         }
     }
 
-    @Override
-    public void paintData(Graphics g, Integer[] data) {
-        g.setColor(Color.RED);
-        for (int i = 1; i < data.length; i++) {
-            try {
-                int x = i + this.getGridX();
-                g.drawLine(x - 1, data[i - 1], x, data[i]);
-            } catch (java.lang.NullPointerException ex) {
-            }
-        }
-    }
-
     private int getGridX() {
         return 10;
     }
@@ -99,8 +87,19 @@ public class SampleGrid extends JPanel implements ScreenGrid {
         return 5;
     }
 
-    @Override
-    public Integer[] transferData(double rate, double[] data) {
+//    @Override
+    private void paintData(Graphics g, Integer[] data) {
+        for (int i = 1; i < data.length; i++) {
+            try {
+                int x = i + this.getGridX();
+                g.drawLine(x - 1, data[i - 1], x, data[i]);
+            } catch (java.lang.NullPointerException ex) {
+            }
+        }
+    }
+
+//    @Override
+    private Integer[] transferData(double rate, double[] data) {
         Integer[] transfer = new Integer[this.getGridWidth()];
         for (int i = 0; i < transfer.length; i++) {
             try {
@@ -111,5 +110,10 @@ public class SampleGrid extends JPanel implements ScreenGrid {
             }
         }
         return transfer;
+    }
+
+    @Override
+    public void paintWave(Graphics g, double rate, double[] data) {
+        this.paintData(g, this.transferData(rate, data));
     }
 }

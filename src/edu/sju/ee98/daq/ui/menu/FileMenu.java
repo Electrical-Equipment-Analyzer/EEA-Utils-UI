@@ -77,7 +77,7 @@ public class FileMenu extends JMenu implements ActionListener {
                         return;
                     }
                 }
-                System.out.println(Arrays.toString(analogWave.getDoubleArray()));
+//                System.out.println(Arrays.toString(analogWave.getDoubleArray()));
                 ScreenPanel screen = new ScreenPanel();
                 screen.setLocation(0, 0);
                 screen.setGrid(new SampleGrid());
