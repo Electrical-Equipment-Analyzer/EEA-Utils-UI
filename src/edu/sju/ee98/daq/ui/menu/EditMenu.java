@@ -4,18 +4,15 @@
  */
 package edu.sju.ee98.daq.ui.menu;
 
+import edu.sju.ee98.daq.math.ComplexWave;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
 import edu.sju.ee98.daq.ui.text.Format;
-import edu.sju.ee98.ni.daqmx.data.Grid;
 import edu.sju.ee98.ni.daqmx.data.WaveData;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,15 +48,12 @@ public class EditMenu extends JMenu implements ActionListener {
             Logger.getLogger(EditMenu.class.getName()).log(Level.FINER, fftForwardItem.getText());
             Component selectedComponent = Manager.MANAGER.getMainFrame().work.getSelectedComponent();
             if (selectedComponent instanceof ScreenPanel) {
-                ScreenPanel screen = (ScreenPanel) selectedComponent;
-                System.out.println(screen.getWave());
-                Complex[] transform = transform(screen.getWave().getData(), TransformType.FORWARD);
-                System.out.println(Arrays.toString(transform));
+                WaveData wave = ((ScreenPanel) selectedComponent).getWave();
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
                 fft.setGrid(new SampleGrid());
-                fft.setWave(new FFTWave(screen.getWave().getRate(), transform));
-
+                fft.setWave(new ComplexWave(wave.getRate(),
+                        transform(wave.getData(), TransformType.FORWARD)));
                 fft.setDropTarget(null);
                 fft.repaint();
                 Manager.MANAGER.getMainFrame().work.addTab(fft);
@@ -69,15 +63,13 @@ public class EditMenu extends JMenu implements ActionListener {
             Logger.getLogger(EditMenu.class.getName()).log(Level.FINER, fftInverseItem.getText());
             Component selectedComponent = Manager.MANAGER.getMainFrame().work.getSelectedComponent();
             if (selectedComponent instanceof ScreenPanel) {
-                ScreenPanel screen = (ScreenPanel) selectedComponent;
-                System.out.println(screen.getWave());
-                Complex[] transform = transform(screen.getWave().getData(), TransformType.INVERSE);
-                System.out.println(Arrays.toString(transform));
+                WaveData wave = ((ScreenPanel) selectedComponent).getWave();
+                System.out.println(wave);
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
                 fft.setGrid(new SampleGrid());
-                fft.setWave(new FFTWave(screen.getWave().getRate(), transform));
-
+                fft.setWave(new ComplexWave(wave.getRate(),
+                        transform(wave.getData(), TransformType.INVERSE)));
                 fft.setDropTarget(null);
                 fft.repaint();
                 Manager.MANAGER.getMainFrame().work.addTab(fft);
@@ -86,96 +78,15 @@ public class EditMenu extends JMenu implements ActionListener {
         }
     }
 
-    public class FFTWave implements WaveData {
-
-//        private double[] data;
-        private double rate;
-        private Complex[] data;
-
-        public FFTWave(double rate, Complex[] data) {
-            this.rate = rate;
-            this.data = data;
-        }
-
-        @Override
-        public Complex[] getData() {
-            return data;
-        }
-
-//        @Override
-        private double[] getRealArray() {
-            double[] temp = new double[data.length];
-            for (int i = 0; i < data.length; i++) {
-                temp[i] = data[i].getReal();
-            }
-            return temp;
-        }
-
-        private double[] getImaginaryArray() {
-            double[] temp = new double[data.length];
-            for (int i = 0; i < data.length; i++) {
-                temp[i] = data[i].getImaginary();
-            }
-            return temp;
-        }
-
-        private double[] getAbsoluteArray() {
-            double[] temp = new double[data.length];
-            for (int i = 0; i < data.length; i++) {
-                temp[i] = data[i].abs();
-            }
-            return temp;
-        }
-
-        public void setData(Complex[] data) {
-            this.data = data;
-        }
-
-        @Override
-        public double getRate() {
-            return this.rate;
-        }
-
-        @Override
-        public void paintWave(Graphics g, Grid grid) {
-            g.setColor(Color.red);
-            grid.paintWave(g, rate, this.getAbsoluteArray());
-            g.setColor(Color.green);
-            grid.paintWave(g, rate, this.getRealArray());
-            g.setColor(Color.blue);
-            grid.paintWave(g, rate, this.getImaginaryArray());
-        }
-    }
-
     private static Complex[] transform(Object input, TransformType type) {
-
-//        double[] tempConversion = new double[input.length];
-
         FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
         try {
             Complex[] complx = null;
             if (input instanceof double[]) {
-                double[] data = (double[]) input;
-//                Double[] in = (Double[]) input;
-//                double[] data = new double[in.length];
-//                for (int i = 0; i < in.length; i++) {
-//                    data[i] = in[i];
-//                }
-                complx = transformer.transform(data, type);
+                complx = transformer.transform((double[]) input, type);
             } else if (input instanceof Complex[]) {
-                Complex[] data = (Complex[]) input;
-                complx = transformer.transform(data, type);
+                complx = transformer.transform((Complex[]) input, type);
             }
-//            Complex[] complx2 = transformer.transform(complx, TransformType.INVERSE);
-
-//            for (int i = 0; i < complx.length; i++) {
-//                System.out.println(complx[i]);
-//                double rr = (complx[i].getReal());
-//                double ri = (complx[i].getImaginary());
-//
-//                tempConversion[i] = Math.sqrt((rr * rr) + (ri * ri));
-//            }
-//            System.out.println(Arrays.toString(complx2));
             return complx;
         } catch (IllegalArgumentException e) {
             System.out.println(e);
