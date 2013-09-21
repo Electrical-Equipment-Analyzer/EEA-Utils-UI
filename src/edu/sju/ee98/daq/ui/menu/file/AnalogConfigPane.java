@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sju.ee98.daq.ui.fft;
+package edu.sju.ee98.daq.ui.menu.file;
 
+import edu.sju.ee98.daq.ui.fft.DialogPanel;
 import edu.sju.ee98.ni.daqmx.NIAnalogConfig;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

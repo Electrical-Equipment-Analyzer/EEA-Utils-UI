@@ -4,6 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.fft;
 
+import edu.sju.ee98.daq.ui.menu.file.AnalogConfigPane;
 import edu.sju.ee98.ni.daqmx.NIAnalogConfig;
 import java.awt.Container;
 import javax.swing.JDialog;

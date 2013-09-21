@@ -53,6 +53,22 @@ public class ComplexWave implements WaveData {
         return temp;
     }
 
+    private double[] getArgumentArray() {
+        double[] temp = new double[data.length];
+        for (int i = 0; i < data.length; i++) {
+            temp[i] = data[i].getArgument();
+        }
+        return temp;
+    }
+
+    private double[] getZZArray() {
+        double[] temp = new double[data.length];
+        for (int i = 0; i < data.length; i++) {
+            temp[i] = Math.atan2(data[i].getImaginary(),data[i].getImaginary());
+        }
+        return temp;
+    }
+
     public void setData(Complex[] data) {
         this.data = data;
     }
@@ -67,8 +83,10 @@ public class ComplexWave implements WaveData {
         g.setColor(Color.red);
         grid.paintWave(g, rate, this.getAbsoluteArray());
         g.setColor(Color.green);
-        grid.paintWave(g, rate, this.getRealArray());
+        grid.paintWave(g, rate, this.getArgumentArray());
+//        grid.paintWave(g, rate, this.getRealArray());
         g.setColor(Color.blue);
-        grid.paintWave(g, rate, this.getImaginaryArray());
+        grid.paintWave(g, rate, this.getZZArray());
+//        grid.paintWave(g, rate, this.getImaginaryArray());
     }
 }
