@@ -8,9 +8,10 @@ import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.fft.DAQDialog;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
+import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
 import edu.sju.ee98.daq.ui.text.Format;
 import edu.sju.ee98.ni.daqmx.LoadLibraryException;
-import edu.sju.ee98.ni.daqmx.NIAnalogConfig;
+import edu.sju.ee98.ni.daqmx.config.NIAnalogConfig;
 import edu.sju.ee98.ni.daqmx.data.AnalogWave;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,7 +63,7 @@ public class FileMenu extends JMenu implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(newItem)) {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "new");
-            NIAnalogConfig config = DAQDialog.showAnalogConfigPane(Manager.MANAGER.getMainFrame());
+            NIAnalogConfig config = DAQOptionPane.showAnalogConfigPane(Manager.MANAGER.getMainFrame());
             System.out.println(config);
             AnalogWave analogWave = new AnalogWave(config);
             if (config != null) {

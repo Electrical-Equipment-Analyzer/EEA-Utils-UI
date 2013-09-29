@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sju.ee98.daq.ui.menu.file;
+package edu.sju.ee98.daq.ui.swing.pane;
 
+import edu.sju.ee98.daq.core.config.AnalogInputConfig;
 import edu.sju.ee98.daq.ui.fft.DialogPanel;
-import edu.sju.ee98.ni.daqmx.NIAnalogConfig;
+import edu.sju.ee98.ni.daqmx.config.NIAnalogConfig;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -17,7 +18,7 @@ import javax.swing.JTextField;
  *
  * @author Leo
  */
-public class AnalogConfigPane extends DialogPanel {
+public class FrequencyResponsePane extends DialogPanel {
 
     private NIAnalogConfig config;
     private JInput physicalChannel = new JInput("Physical Channel");
@@ -26,7 +27,7 @@ public class AnalogConfigPane extends DialogPanel {
     private JInput rate = new JInput("Rate");
     private JInput length = new JInput("Length");
 
-    public AnalogConfigPane() {
+    public FrequencyResponsePane() {
         super(null);
         this.setSize(300, 400);
         initComponents();
@@ -59,7 +60,7 @@ public class AnalogConfigPane extends DialogPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    config = new NIAnalogConfig(
+                    config = new AnalogInputConfig(
                             physicalChannel.getText(),
                             Double.parseDouble(minVoltage.getText()), Double.parseDouble(maxVoltage.getText()),
                             Double.parseDouble(rate.getText()), Long.parseLong(length.getText()));

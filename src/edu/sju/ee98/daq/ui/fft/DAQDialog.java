@@ -4,8 +4,8 @@
  */
 package edu.sju.ee98.daq.ui.fft;
 
-import edu.sju.ee98.daq.ui.menu.file.AnalogConfigPane;
-import edu.sju.ee98.ni.daqmx.NIAnalogConfig;
+import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
+import edu.sju.ee98.ni.daqmx.config.NIAnalogConfig;
 import java.awt.Container;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -40,7 +40,8 @@ public class DAQDialog extends JDialog {
 
     public static NIAnalogConfig showAnalogConfigPane(JFrame root) {
         AnalogConfigPane analogConfigPane = new AnalogConfigPane();
-        new DAQDialog(root, analogConfigPane);
-        return analogConfigPane.getConfig();
+//        new DAQDialog(root, analogConfigPane);
+//        return analogConfigPane.getConfig();
+        return null;
     }
 }

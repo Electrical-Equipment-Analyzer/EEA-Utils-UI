@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2013, St. John's University and/or its affiliates. All rights reserved.
+ * Department of Electrical Engineering.
  */
 package edu.sju.ee98.daq.ui.fft;
 
@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Leo
+ * @author 102m05008
  */
 public class DialogPanel extends JPanel {
 
