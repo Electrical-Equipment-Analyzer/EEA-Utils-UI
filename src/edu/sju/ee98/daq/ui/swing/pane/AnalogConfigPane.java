@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2013, St. John's University and/or its affiliates. All rights reserved.
+ * Department of Electrical Engineering.
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
@@ -14,9 +14,9 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Leo
+ * @author 102m05008
  */
-public class AnalogConfigPane extends DAQOptionPane {
+public class AnalogConfigPane extends DAQOptionPane implements ActionListener {
 
     private DAQLabelInput physicalChannel = new DAQLabelInput("Physical Channel");
     private DAQLabelInput minVoltage = new DAQLabelInput("Min Voltage");
@@ -52,43 +52,23 @@ public class AnalogConfigPane extends DAQOptionPane {
         length.setLocation(50, 250);
         this.add(length);
 
-
         finishButton = new JButton("Finish");
         finishButton.setBounds(100, 300, 100, 30);
-        finishButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    value = new AnalogInputConfig(
-                            physicalChannel.getText(),
-                            Double.parseDouble(minVoltage.getText()), Double.parseDouble(maxVoltage.getText()),
-                            Double.parseDouble(rate.getText()), Long.parseLong(length.getText()));
-                } catch (java.lang.NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(AnalogConfigPane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                getDialog().dispose();
-            }
-        });
+        finishButton.addActionListener(this);
         this.add(finishButton);
-
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(this.finishButton)) {
-            try {
-                value = new AnalogInputConfig(
-                        physicalChannel.getText(),
-                        Double.parseDouble(minVoltage.getText()), Double.parseDouble(maxVoltage.getText()),
-                        Double.parseDouble(rate.getText()), Long.parseLong(length.getText()));
-            } catch (java.lang.NumberFormatException ex) {
-                JOptionPane.showMessageDialog(AnalogConfigPane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+        try {
+            value = new AnalogInputConfig(
+                    physicalChannel.getText(),
+                    Double.parseDouble(minVoltage.getText()), Double.parseDouble(maxVoltage.getText()),
+                    Double.parseDouble(rate.getText()), Long.parseLong(length.getText()));
+        } catch (java.lang.NumberFormatException ex) {
+            JOptionPane.showMessageDialog(AnalogConfigPane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        getDialog().dispose();
     }
-//
-//    public NIAnalogConfig getConfig() {
-//        return config;
-//    }
 }
