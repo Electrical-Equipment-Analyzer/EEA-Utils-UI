@@ -1,22 +1,19 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2013, St. John's University and/or its affiliates. All rights reserved.
+ * Department of Electrical Engineering.
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
-import edu.sju.ee98.daq.core.config.AnalogInputConfig;
-import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 /**
  *
- * @author Leo
+ * @author 102m05008
  */
 public class NewFilePane extends DAQOptionPane implements ActionListener {
 
