@@ -5,6 +5,7 @@
 package edu.sju.ee98.daq.ui.swing;
 
 import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
+import edu.sju.ee98.daq.ui.swing.pane.NewFilePane;
 import edu.sju.ee98.ni.daqmx.config.NIAnalogConfig;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -41,6 +42,13 @@ public class DAQOptionPane extends JComponent {
         pane.dialog = pane.createDialog(parentComponent, "New Source");
         pane.dialog.show();
         return (NIAnalogConfig) pane.getValue();
+    }
+
+    public static String showNewFilePane(Component parentComponent) {
+        DAQOptionPane pane = new NewFilePane();
+        pane.dialog = pane.createDialog(parentComponent, "New File");
+        pane.dialog.show();
+        return (String) pane.getValue();
     }
 
     public Object getValue() {
