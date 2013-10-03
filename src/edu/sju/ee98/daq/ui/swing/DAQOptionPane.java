@@ -5,6 +5,7 @@
 package edu.sju.ee98.daq.ui.swing;
 
 import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
+import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponsePane;
 import edu.sju.ee98.daq.ui.swing.pane.NewFilePane;
 import edu.sju.ee98.ni.daqmx.config.NIAnalogConfig;
 import java.awt.BorderLayout;
@@ -39,9 +40,16 @@ public class DAQOptionPane extends JComponent {
 
     public static NIAnalogConfig showAnalogConfigDialog(Component parentComponent) {
         DAQOptionPane pane = new AnalogConfigPane();
-        pane.dialog = pane.createDialog(parentComponent, "New Source");
+        pane.dialog = pane.createDialog(parentComponent, AnalogConfigPane.NAME);
         pane.dialog.show();
         return (NIAnalogConfig) pane.getValue();
+    }
+
+    public static void showFrequencyResponseDialog(Component parentComponent) {
+        DAQOptionPane pane = new FrequencyResponsePane();
+        pane.dialog = pane.createDialog(parentComponent, FrequencyResponsePane.NAME);
+        pane.dialog.show();
+        return;
     }
 
     public Object getValue() {

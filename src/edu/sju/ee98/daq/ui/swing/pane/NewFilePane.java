@@ -18,7 +18,8 @@ import javax.swing.JLabel;
 public class NewFilePane extends DAQOptionPane implements ActionListener {
 
     private JLabel label = new JLabel("File Type");
-    private JComboBox file = new JComboBox(new String[]{"Analog Input", "Freauency Response"});
+    private JComboBox file = new JComboBox(
+            new String[]{AnalogConfigPane.NAME, FrequencyResponsePane.NAME});
     private JButton finishButton;
 
     public NewFilePane() {

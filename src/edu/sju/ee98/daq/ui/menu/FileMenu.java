@@ -7,6 +7,7 @@ package edu.sju.ee98.daq.ui.menu;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
 import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
+import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponsePane;
 import edu.sju.ee98.daq.ui.text.Format;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,8 +61,8 @@ public class FileMenu extends JMenu implements ActionListener {
             System.out.println(file);
             if (file.equals(AnalogConfigPane.NAME)) {
                 AnalogConfigPane.create();
-            } else if (file.equals("")) {
-                
+            } else if (file.equals(FrequencyResponsePane.NAME)) {
+                FrequencyResponsePane.create();
             }
         } else if (e.getSource().equals(openItem)) {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "open");

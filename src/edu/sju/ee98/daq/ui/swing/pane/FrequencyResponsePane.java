@@ -5,6 +5,7 @@
 package edu.sju.ee98.daq.ui.swing.pane;
 
 import edu.sju.ee98.daq.core.config.AnalogInputConfig;
+import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
 import java.awt.event.ActionEvent;
@@ -16,8 +17,9 @@ import javax.swing.JOptionPane;
  *
  * @author Leo
  */
-public class FrequencyResponsePane  extends DAQOptionPane {
+public class FrequencyResponsePane extends DAQOptionPane implements ActionListener {
 
+    public static final String NAME = "Frequency Response";
     private DAQLabelInput physicalChannel = new DAQLabelInput("Physical Channel");
     private DAQLabelInput minVoltage = new DAQLabelInput("Min Voltage");
     private DAQLabelInput maxVoltage = new DAQLabelInput("Max Voltage");
@@ -55,22 +57,28 @@ public class FrequencyResponsePane  extends DAQOptionPane {
 
         finishButton = new JButton("Finish");
         finishButton.setBounds(100, 300, 100, 30);
-        finishButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    value = new AnalogInputConfig(
-                            physicalChannel.getText(),
-                            Double.parseDouble(minVoltage.getText()), Double.parseDouble(maxVoltage.getText()),
-                            Double.parseDouble(rate.getText()), Long.parseLong(length.getText()));
-                } catch (java.lang.NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(FrequencyResponsePane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                getDialog().dispose();
-            }
-        });
+        finishButton.addActionListener(this);
         this.add(finishButton);
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        try {
+            value = new AnalogInputConfig(
+                    physicalChannel.getText(),
+                    Double.parseDouble(minVoltage.getText()), Double.parseDouble(maxVoltage.getText()),
+                    Double.parseDouble(rate.getText()), Long.parseLong(length.getText()));
+        } catch (java.lang.NumberFormatException ex) {
+            JOptionPane.showMessageDialog(FrequencyResponsePane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        getDialog().dispose();
+    }
+
+    public static void create() {
+        DAQOptionPane.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
+//        System.out.println(config);
+//        AnalogWave analogWave = new AnalogWave(config);
     }
 }
