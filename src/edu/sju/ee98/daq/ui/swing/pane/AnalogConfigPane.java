@@ -80,7 +80,7 @@ public class AnalogConfigPane extends DAQOptionPane implements ActionListener {
     }
 
     public static void create() {
-        NIAnalogConfig config = DAQOptionPane.showAnalogConfigPane(Manager.MANAGER.getMainFrame());
+        NIAnalogConfig config = DAQOptionPane.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
         AnalogWave analogWave = new AnalogWave(config);
         if (config != null) {

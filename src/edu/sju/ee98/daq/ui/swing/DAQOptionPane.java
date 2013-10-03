@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2013, St. John's University and/or its affiliates. All rights reserved.
+ * Department of Electrical Engineering.
  */
 package edu.sju.ee98.daq.ui.swing;
 
@@ -13,19 +13,12 @@ import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
-import static javax.swing.JOptionPane.UNINITIALIZED_VALUE;
-import static javax.swing.JOptionPane.getRootFrame;
 
 /**
  *
- * @author Leo
+ * @author 102m05008
  */
 public class DAQOptionPane extends JComponent {
 
@@ -33,22 +26,22 @@ public class DAQOptionPane extends JComponent {
     private JDialog dialog;
 
     public static void main(String[] args) {
-        DAQOptionPane.showAnalogConfigPane(null);
+        DAQOptionPane.showAnalogConfigDialog(null);
         System.exit(0);
     }
 
-    public static NIAnalogConfig showAnalogConfigPane(Component parentComponent) {
-        DAQOptionPane pane = new AnalogConfigPane();
-        pane.dialog = pane.createDialog(parentComponent, "New Source");
-        pane.dialog.show();
-        return (NIAnalogConfig) pane.getValue();
-    }
-
-    public static String showNewFilePane(Component parentComponent) {
+    public static String showNewFileDialog(Component parentComponent) {
         DAQOptionPane pane = new NewFilePane();
         pane.dialog = pane.createDialog(parentComponent, "New File");
         pane.dialog.show();
         return (String) pane.getValue();
+    }
+
+    public static NIAnalogConfig showAnalogConfigDialog(Component parentComponent) {
+        DAQOptionPane pane = new AnalogConfigPane();
+        pane.dialog = pane.createDialog(parentComponent, "New Source");
+        pane.dialog.show();
+        return (NIAnalogConfig) pane.getValue();
     }
 
     public Object getValue() {
@@ -71,7 +64,6 @@ public class DAQOptionPane extends JComponent {
     private void initDialog(final JDialog dialog, Component parentComponent) {
 //        dialog.setComponentOrientation(this.getComponentOrientation());
         Container contentPane = dialog.getContentPane();
-//
         contentPane.setLayout(new BorderLayout());
         contentPane.add(this, BorderLayout.CENTER);
         dialog.setResizable(false);
@@ -85,38 +77,9 @@ public class DAQOptionPane extends JComponent {
 //        }
         dialog.setSize(this.getSize());
         dialog.setLocationRelativeTo(parentComponent);
-
     }
 
     protected JDialog getDialog() {
         return dialog;
-    }
-
-    public static Object showAnalogConfigDialog(Component parentComponent,
-            Object message, String title, int messageType, Icon icon,
-            Object[] selectionValues, Object initialSelectionValue)
-            throws HeadlessException {
-        JOptionPane pane = new JOptionPane(message, messageType,
-                OK_CANCEL_OPTION, icon,
-                null, null);
-
-        pane.setWantsInput(true);
-        pane.setSelectionValues(selectionValues);
-        pane.setInitialSelectionValue(initialSelectionValue);
-        pane.setComponentOrientation(((parentComponent == null)
-                ? getRootFrame() : parentComponent).getComponentOrientation());
-
-        JDialog dialog = pane.createDialog(parentComponent, title);
-
-        pane.selectInitialValue();
-        dialog.show();
-        dialog.dispose();
-
-        Object value = pane.getInputValue();
-
-        if (value == UNINITIALIZED_VALUE) {
-            return null;
-        }
-        return value;
     }
 }
