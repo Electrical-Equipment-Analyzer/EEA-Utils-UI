@@ -20,11 +20,12 @@ import javax.swing.JOptionPane;
 public class FrequencyResponsePane extends DAQOptionPane implements ActionListener {
 
     public static final String NAME = "Frequency Response";
-    private DAQLabelInput physicalChannel = new DAQLabelInput("Physical Channel");
-    private DAQLabelInput minVoltage = new DAQLabelInput("Min Voltage");
-    private DAQLabelInput maxVoltage = new DAQLabelInput("Max Voltage");
-    private DAQLabelInput rate = new DAQLabelInput("Rate");
-    private DAQLabelInput length = new DAQLabelInput("Length");
+    private DAQLabelInput outputChannel = new DAQLabelInput("Output Channel");
+    private DAQLabelInput inputChannel = new DAQLabelInput("Input Channel");
+    private DAQLabelInput minFrequency = new DAQLabelInput("Min Frequency");
+    private DAQLabelInput maxFrequrncy = new DAQLabelInput("Max Frequency");
+    private DAQLabelInput voltage = new DAQLabelInput("Voltage");
+    private DAQLabelInput log = new DAQLabelInput("Log");//see jqplot
     private JButton finishButton;
 
     public FrequencyResponsePane() {
@@ -33,42 +34,42 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
     }
 
     private void testValue() {
-        physicalChannel.setText("Dev1/ai0");
-        minVoltage.setText("-20");
-        maxVoltage.setText("20");
-        rate.setText("10000");
-        length.setText("1024");
+        outputChannel.setText("Dev1/ao0");
+        inputChannel.setText("Dev1/ai0");
+        minFrequency.setText("1");
+        maxFrequrncy.setText("1000");
+        voltage.setText("2");
+        log.setText("1024");
     }
 
     private void initComponents() {
         testValue();
-        physicalChannel.setLocation(50, 50);
-//        physicalChannel.setSize(500, 30);
-        this.add(physicalChannel);
-        minVoltage.setLocation(50, 100);
-        this.add(minVoltage);
-        maxVoltage.setLocation(50, 150);
-        this.add(maxVoltage);
-        rate.setLocation(50, 200);
-        this.add(rate);
-        length.setLocation(50, 250);
-        this.add(length);
-
+        outputChannel.setLocation(50, 50);
+        this.add(outputChannel);
+        inputChannel.setLocation(50, 100);
+        this.add(inputChannel);
+        minFrequency.setLocation(50, 150);
+        this.add(minFrequency);
+        maxFrequrncy.setLocation(50, 200);
+        this.add(maxFrequrncy);
+        voltage.setLocation(50, 250);
+        this.add(voltage);
+        log.setLocation(50, 300);
+        this.add(log);
 
         finishButton = new JButton("Finish");
-        finishButton.setBounds(100, 300, 100, 30);
+        finishButton.setBounds(450, 350, 100, 30);
         finishButton.addActionListener(this);
         this.add(finishButton);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
             value = new AnalogInputConfig(
-                    physicalChannel.getText(),
-                    Double.parseDouble(minVoltage.getText()), Double.parseDouble(maxVoltage.getText()),
-                    Double.parseDouble(rate.getText()), Long.parseLong(length.getText()));
+                    inputChannel.getText(),
+                    Double.parseDouble(minFrequency.getText()), Double.parseDouble(maxFrequrncy.getText()),
+                    Double.parseDouble(voltage.getText()), Long.parseLong(log.getText()));
         } catch (java.lang.NumberFormatException ex) {
             JOptionPane.showMessageDialog(FrequencyResponsePane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;

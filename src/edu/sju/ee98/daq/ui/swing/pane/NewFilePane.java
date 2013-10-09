@@ -41,7 +41,7 @@ public class NewFilePane extends DAQOptionPane implements ActionListener {
         this.add(this.file);
 
         finishButton = new JButton("Next");
-        finishButton.setBounds(350, 350, 100, 30);
+        finishButton.setBounds(450, 350, 100, 30);
         finishButton.addActionListener(this);
         this.add(finishButton);
     }
