@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sju.ee98.daq.ui.screen.grid;
+package edu.sju.ee98.daq.math;
 
 import java.text.DecimalFormat;
 

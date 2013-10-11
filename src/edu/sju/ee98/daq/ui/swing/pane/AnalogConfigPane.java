@@ -7,12 +7,13 @@ package edu.sju.ee98.daq.ui.swing.pane;
 import edu.sju.ee98.daq.core.config.AnalogInputConfig;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
+import edu.sju.ee98.daq.ui.screen.SampleGrid;
 import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
+import edu.sju.ee98.daq.ui.wave.SAnalogWave;
 import edu.sju.ee98.ni.daqmx.LoadLibraryException;
 import edu.sju.ee98.ni.daqmx.config.NIAnalogConfig;
-import edu.sju.ee98.ni.daqmx.data.AnalogWave;
+import edu.sju.ee98.ni.daqmx.data.NIAnalogWave;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -82,7 +83,7 @@ public class AnalogConfigPane extends DAQOptionPane implements ActionListener {
     public static void create() {
         NIAnalogConfig config = DAQOptionPane.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
-        AnalogWave analogWave = new AnalogWave(config);
+        SAnalogWave analogWave = new SAnalogWave(config);
         if (config != null) {
             try {
                 analogWave.read();

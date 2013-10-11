@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sju.ee98.daq.ui.screen.grid;
+package edu.sju.ee98.daq.swing;
 
+import edu.sju.ee98.daq.math.MetricNumber;
 import java.io.Serializable;
 import javax.swing.AbstractSpinnerModel;
 

@@ -5,7 +5,7 @@
 package edu.sju.ee98.daq.ui;
 
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
+import edu.sju.ee98.daq.ui.screen.SampleGrid;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTabbedPane;

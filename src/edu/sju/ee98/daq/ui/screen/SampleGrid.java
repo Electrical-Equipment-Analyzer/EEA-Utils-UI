@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sju.ee98.daq.ui.screen.grid;
+package edu.sju.ee98.daq.ui.screen;
 
-import edu.sju.ee98.daq.ui.screen.ScreenGrid;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;

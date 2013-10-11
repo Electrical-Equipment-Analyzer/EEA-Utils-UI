@@ -4,12 +4,12 @@
  */
 package edu.sju.ee98.daq.ui.menu;
 
-import edu.sju.ee98.daq.math.ComplexWave;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.screen.grid.SampleGrid;
+import edu.sju.ee98.daq.ui.screen.SampleGrid;
 import edu.sju.ee98.daq.ui.text.Format;
-import edu.sju.ee98.ni.daqmx.data.WaveData;
+import edu.sju.ee98.daq.ui.wave.SComplexWave;
+import edu.sju.ee98.ni.daqmx.data.NIWaveData;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,11 +48,11 @@ public class EditMenu extends JMenu implements ActionListener {
             Logger.getLogger(EditMenu.class.getName()).log(Level.FINER, fftForwardItem.getText());
             Component selectedComponent = Manager.MANAGER.getMainFrame().work.getSelectedComponent();
             if (selectedComponent instanceof ScreenPanel) {
-                WaveData wave = ((ScreenPanel) selectedComponent).getWave();
+                NIWaveData wave = ((ScreenPanel) selectedComponent).getWave();
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
                 fft.setGrid(new SampleGrid());
-                fft.setWave(new ComplexWave(wave.getRate(),
+                fft.setWave(new SComplexWave(wave.getRate(),
                         transform(wave.getData(), TransformType.FORWARD)));
                 fft.setDropTarget(null);
                 fft.repaint();
@@ -63,12 +63,12 @@ public class EditMenu extends JMenu implements ActionListener {
             Logger.getLogger(EditMenu.class.getName()).log(Level.FINER, fftInverseItem.getText());
             Component selectedComponent = Manager.MANAGER.getMainFrame().work.getSelectedComponent();
             if (selectedComponent instanceof ScreenPanel) {
-                WaveData wave = ((ScreenPanel) selectedComponent).getWave();
+                NIWaveData wave = ((ScreenPanel) selectedComponent).getWave();
                 System.out.println(wave);
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
                 fft.setGrid(new SampleGrid());
-                fft.setWave(new ComplexWave(wave.getRate(),
+                fft.setWave(new SComplexWave(wave.getRate(),
                         transform(wave.getData(), TransformType.INVERSE)));
                 fft.setDropTarget(null);
                 fft.repaint();

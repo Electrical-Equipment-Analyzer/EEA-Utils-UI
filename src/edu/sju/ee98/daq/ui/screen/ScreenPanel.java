@@ -5,7 +5,6 @@
 package edu.sju.ee98.daq.ui.screen;
 
 import edu.sju.ee98.daq.ui.WorkPanel;
-import edu.sju.ee98.ni.daqmx.data.WaveData;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -17,7 +16,7 @@ import java.awt.Graphics;
 public class ScreenPanel extends WorkPanel {
 
     private ScreenGrid grid;
-    private WaveData wave;
+    private ScreenWave wave;
 
     public ScreenPanel() {
         this.setSize(1366, 300);
@@ -32,11 +31,11 @@ public class ScreenPanel extends WorkPanel {
         }
     }
 
-    public void setWave(WaveData wave) {
+    public void setWave(ScreenWave wave) {
         this.wave = wave;
     }
 
-    public WaveData getWave() {
+    public ScreenWave getWave() {
         return wave;
     }
 
@@ -47,7 +46,7 @@ public class ScreenPanel extends WorkPanel {
             this.grid.paintGrid(g);
         }
         if (this.wave != null) {
-            g.setColor(Color.RED);
+//            g.setColor(Color.RED);
             this.wave.paintWave(g, grid);
 //            this.grid.paintData(g, this.grid.transferData(this.wave.getRate(), this.wave.getDoubleArray()));
         }
