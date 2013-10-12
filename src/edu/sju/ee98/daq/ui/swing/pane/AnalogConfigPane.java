@@ -13,7 +13,7 @@ import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
 import edu.sju.ee98.daq.ui.wave.SAnalogWave;
 import edu.sju.ee98.ni.daqmx.LoadLibraryException;
 import edu.sju.ee98.ni.daqmx.config.NIAnalogConfig;
-import edu.sju.ee98.ni.daqmx.data.NIAnalogWave;
+import edu.sju.ee98.ni.daqmx.wave.NIAnalogWave;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -81,9 +81,9 @@ public class AnalogConfigPane extends DAQOptionPane implements ActionListener {
     }
 
     public static void create() {
-        NIAnalogConfig config = DAQOptionPane.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
+        AnalogInputConfig config = DAQOptionPane.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
-        SAnalogWave analogWave = new SAnalogWave(config);
+        SAnalogWave analogWave = new SAnalogWave(config, config);
         if (config != null) {
             try {
                 analogWave.read();
@@ -91,7 +91,7 @@ public class AnalogConfigPane extends DAQOptionPane implements ActionListener {
                 JOptionPane.showMessageDialog(Manager.MANAGER.getMainFrame(), ex.getMessage(), ex.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
                 int simulator = JOptionPane.showConfirmDialog(Manager.MANAGER.getMainFrame(), "Do you want to use the simulator?", "Qustion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (simulator == JOptionPane.YES_OPTION) {
-                    analogWave.gen();
+//                    analogWave.gen();
                 } else {
                     return;
                 }
