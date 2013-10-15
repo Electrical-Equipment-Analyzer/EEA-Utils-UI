@@ -8,7 +8,6 @@ import edu.sju.ee98.daq.core.config.AnalogInputConfig;
 import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
 import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponsePane;
 import edu.sju.ee98.daq.ui.swing.pane.NewFilePane;
-import edu.sju.ee98.ni.daqmx.config.NIAnalogConfig;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
