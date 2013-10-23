@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
-import edu.sju.ee98.daq.core.config.AnalogInputConfig;
+import edu.sju.ee98.daq.core.config.AnalogConfig;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.screen.SampleGrid;
@@ -69,7 +69,7 @@ public class AnalogConfigPane extends DAQOptionPane implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            value = new AnalogInputConfig(
+            value = new AnalogConfig(
                     physicalChannel.getText(),
                     Double.parseDouble(minVoltage.getText()), Double.parseDouble(maxVoltage.getText()),
                     Double.parseDouble(rate.getText()), Long.parseLong(length.getText()));
@@ -81,7 +81,7 @@ public class AnalogConfigPane extends DAQOptionPane implements ActionListener {
     }
 
     public static void create() {
-        AnalogInputConfig config = DAQOptionPane.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
+        AnalogConfig config = DAQOptionPane.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
         if (config != null) {
             ScreenWave wave = null;

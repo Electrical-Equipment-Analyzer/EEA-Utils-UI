@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
-import edu.sju.ee98.daq.core.config.AnalogInputConfig;
+import edu.sju.ee98.daq.core.config.AnalogConfig;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
@@ -66,7 +66,7 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            value = new AnalogInputConfig(
+            value = new AnalogConfig(
                     inputChannel.getText(),
                     Double.parseDouble(minFrequency.getText()), Double.parseDouble(maxFrequrncy.getText()),
                     Double.parseDouble(voltage.getText()), Long.parseLong(log.getText()));
