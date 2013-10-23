@@ -4,14 +4,19 @@
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
-import edu.sju.ee98.daq.core.config.AnalogConfig;
+import edu.sju.ee98.daq.core.config.FrequencyResponseConfig;
 import edu.sju.ee98.daq.ui.Manager;
+import edu.sju.ee98.daq.ui.screen.SampleGrid;
+import edu.sju.ee98.daq.ui.screen.ScreenPanel;
+import edu.sju.ee98.daq.ui.screen.ScreenWave;
 import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
+import edu.sju.ee98.daq.ui.wave.SComplexWave;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import org.apache.commons.math3.complex.Complex;
 
 /**
  *
@@ -66,10 +71,10 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            value = new AnalogConfig(
-                    inputChannel.getText(),
+            value = new FrequencyResponseConfig(
+                    inputChannel.getText(), outputChannel.getText(), Double.parseDouble(voltage.getText()),
                     Double.parseDouble(minFrequency.getText()), Double.parseDouble(maxFrequrncy.getText()),
-                    Double.parseDouble(voltage.getText()), Long.parseLong(log.getText()));
+                    Integer.parseInt(log.getText()));
         } catch (java.lang.NumberFormatException ex) {
             JOptionPane.showMessageDialog(FrequencyResponsePane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -77,9 +82,28 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
         getDialog().dispose();
     }
 
+    private static Complex[] process(FrequencyResponseConfig config) {
+        Complex[] data = new Complex[config.getLength()];
+        for (int i = 0; i < config.getLength(); i++) {
+            data[i] = new Complex(i, -i);
+        }
+        return data;
+    }
+
     public static void create() {
-        DAQOptionPane.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
-//        System.out.println(config);
-//        AnalogWave analogWave = new AnalogWave(config);
+        FrequencyResponseConfig config = DAQOptionPane.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
+        System.out.println(config);
+        if (config != null) {
+            ScreenWave wave = null;
+            wave = new SComplexWave(1000,process(config));
+            ScreenPanel screen = new ScreenPanel();
+            screen.setLocation(0, 0);
+            screen.setGrid(new SampleGrid());
+            screen.setWave(wave);
+            screen.setDropTarget(null);
+            screen.repaint();
+            Manager.MANAGER.getMainFrame().work.addTab(screen);
+            Manager.MANAGER.getMainFrame().work.setSelectedComponent(screen);
+        }
     }
 }
