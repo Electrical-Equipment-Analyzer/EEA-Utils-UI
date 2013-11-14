@@ -4,6 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
+import edu.sju.ee98.daq.core.config.AnalogConfig;
 import edu.sju.ee98.daq.core.config.FrequencyResponseConfig;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.SampleGrid;
@@ -12,8 +13,14 @@ import edu.sju.ee98.daq.ui.screen.ScreenWave;
 import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
 import edu.sju.ee98.daq.ui.wave.SComplexWave;
+import edu.sju.ee98.ni.daqmx.LoadLibraryException;
+import edu.sju.ee98.ni.daqmx.analog.AcqIntClk;
+import edu.sju.ee98.ni.daqmx.analog.ContGenIntClk;
+import edu.sju.ee98.ni.daqmx.analog.AnalogGenerator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import org.apache.commons.math3.complex.Complex;
@@ -84,8 +91,21 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
 
     private static Complex[] process(FrequencyResponseConfig config) {
         Complex[] data = new Complex[config.getLength()];
+        ContGenIntClk out;
+        AcqIntClk in;
         for (int i = 0; i < config.getLength(); i++) {
-            data[i] = new Complex(i, -i);
+            try {
+                out = config.createOutput();
+                in = config.createInput();
+                out.start();
+                in.read();
+                out.stop();
+                Complex mainOut = out.getMainFrequency(config.getFrequency().getFrequency());
+                Complex mainIn = in.getMainFrequency(config.getFrequency().getFrequency());
+                data[i] = mainOut.divide(mainIn);
+            } catch (LoadLibraryException ex) {
+                Logger.getLogger(FrequencyResponsePane.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return data;
     }

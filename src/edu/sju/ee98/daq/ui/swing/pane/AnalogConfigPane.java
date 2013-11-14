@@ -14,7 +14,7 @@ import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
 import edu.sju.ee98.daq.ui.wave.SAnalogWave;
 import edu.sju.ee98.ni.daqmx.LoadLibraryException;
 import edu.sju.ee98.ni.daqmx.analog.AcqIntClk;
-import edu.sju.ee98.ni.daqmx.generator.AnalogGenerator;
+import edu.sju.ee98.ni.daqmx.analog.AnalogGenerator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
