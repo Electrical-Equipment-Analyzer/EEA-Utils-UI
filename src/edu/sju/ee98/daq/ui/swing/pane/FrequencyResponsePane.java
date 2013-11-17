@@ -95,9 +95,24 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
         AcqIntClk in;
         for (int i = 0; i < config.getLength(); i++) {
             try {
+
+//                double frequency = 1000;
+//                double rate = frequency * 1000.0;
+//                int length = (int) (rate * 1.024);
+//                AnalogConfig ac = new AnalogConfig("Dev1/ao0", -10.0, 10.0, rate, length);
+//                AnalogGenerator ag = new AnalogGenerator(rate, length, 2, frequency, 0);
+//                out = new ContGenIntClk(ac, ac, ag.getData());
                 out = config.createOutput();
+                out.write();
                 in = config.createInput();
+                System.out.println(i);
+                System.out.println(out);
                 out.start();
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FrequencyResponsePane.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 in.read();
                 out.stop();
                 Complex mainOut = out.getMainFrequency(config.getFrequency().getFrequency());
@@ -115,7 +130,7 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
         System.out.println(config);
         if (config != null) {
             ScreenWave wave = null;
-            wave = new SComplexWave(1000,process(config));
+            wave = new SComplexWave(1000, process(config));
             ScreenPanel screen = new ScreenPanel();
             screen.setLocation(0, 0);
             screen.setGrid(new SampleGrid());
