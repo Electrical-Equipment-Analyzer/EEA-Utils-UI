@@ -25,7 +25,8 @@ public class MainFrame extends JFrame {
 //        this.managet = manager;
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setSize(1366, 768);
 //        this.setResizable(false);
         this.setLayout(null);
 

@@ -37,7 +37,7 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
     private DAQLabelInput minFrequency = new DAQLabelInput("Min Frequency");
     private DAQLabelInput maxFrequrncy = new DAQLabelInput("Max Frequency");
     private DAQLabelInput voltage = new DAQLabelInput("Voltage");
-    private DAQLabelInput log = new DAQLabelInput("Log");//see jqplot
+    private DAQLabelInput length = new DAQLabelInput("Length");
     private JButton finishButton;
 
     public FrequencyResponsePane() {
@@ -48,10 +48,10 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
     private void testValue() {
         outputChannel.setText("Dev1/ao0");
         inputChannel.setText("Dev1/ai0");
-        minFrequency.setText("1");
-        maxFrequrncy.setText("1000");
+        minFrequency.setText("40");
+        maxFrequrncy.setText("4000");
         voltage.setText("2");
-        log.setText("1024");
+        length.setText("100");
     }
 
     private void initComponents() {
@@ -66,8 +66,8 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
         this.add(maxFrequrncy);
         voltage.setLocation(50, 250);
         this.add(voltage);
-        log.setLocation(50, 300);
-        this.add(log);
+        length.setLocation(50, 300);
+        this.add(length);
 
         finishButton = new JButton("Finish");
         finishButton.setBounds(450, 350, 100, 30);
@@ -81,7 +81,7 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
             value = new FrequencyResponseConfig(
                     inputChannel.getText(), outputChannel.getText(), Double.parseDouble(voltage.getText()),
                     Double.parseDouble(minFrequency.getText()), Double.parseDouble(maxFrequrncy.getText()),
-                    Integer.parseInt(log.getText()));
+                    Integer.parseInt(length.getText()));
         } catch (java.lang.NumberFormatException ex) {
             JOptionPane.showMessageDialog(FrequencyResponsePane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -93,31 +93,24 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
         Complex[] data = new Complex[config.getLength()];
         ContGenIntClk out;
         AcqIntClk in;
-        for (int i = 0; i < config.getLength(); i++) {
+        for (int i = 0; i < data.length; i++) {
+            double frequency = config.getFrequency(i);
             try {
-
-//                double frequency = 1000;
-//                double rate = frequency * 1000.0;
-//                int length = (int) (rate * 1.024);
-//                AnalogConfig ac = new AnalogConfig("Dev1/ao0", -10.0, 10.0, rate, length);
-//                AnalogGenerator ag = new AnalogGenerator(rate, length, 2, frequency, 0);
-//                out = new ContGenIntClk(ac, ac, ag.getData());
-                out = config.createOutput();
+                out = config.createOutput(frequency);
+                in = config.createInput(frequency);
                 out.write();
-                in = config.createInput();
-                System.out.println(i);
-                System.out.println(out);
                 out.start();
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FrequencyResponsePane.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                try {
+//                    Thread.sleep(2);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(FrequencyResponsePane.class.getName()).log(Level.SEVERE, null, ex);
+//                }
                 in.read();
                 out.stop();
-                Complex mainOut = out.getMainFrequency(config.getFrequency().getFrequency());
-                Complex mainIn = in.getMainFrequency(config.getFrequency().getFrequency());
-                data[i] = mainOut.divide(mainIn);
+                Complex mainOut = out.getMainFrequency(frequency);
+                Complex mainIn = in.getMainFrequency(frequency);
+                data[i] = mainIn.divide(mainOut);
+//                data[i] = new Complex(mainIn.abs() / mainOut.abs());
             } catch (LoadLibraryException ex) {
                 Logger.getLogger(FrequencyResponsePane.class.getName()).log(Level.SEVERE, null, ex);
             }
