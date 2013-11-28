@@ -12,7 +12,7 @@ import edu.sju.ee98.daq.ui.screen.ScreenWave;
 import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
 import edu.sju.ee98.daq.ui.wave.SAnalogWave;
-import edu.sju.ee98.ni.daqmx.LoadLibraryException;
+import edu.sju.ee.jni.LoadLibraryException;
 import edu.sju.ee98.ni.daqmx.analog.AcqIntClk;
 import edu.sju.ee98.ni.daqmx.analog.AnalogGenerator;
 import java.awt.event.ActionEvent;

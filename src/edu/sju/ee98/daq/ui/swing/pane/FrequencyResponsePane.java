@@ -13,7 +13,7 @@ import edu.sju.ee98.daq.ui.screen.ScreenWave;
 import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
 import edu.sju.ee98.daq.ui.wave.SComplexWave;
-import edu.sju.ee98.ni.daqmx.LoadLibraryException;
+import edu.sju.ee.jni.LoadLibraryException;
 import edu.sju.ee98.ni.daqmx.analog.AcqIntClk;
 import edu.sju.ee98.ni.daqmx.analog.ContGenIntClk;
 import edu.sju.ee98.ni.daqmx.analog.AnalogGenerator;
@@ -32,8 +32,8 @@ import org.apache.commons.math3.complex.Complex;
 public class FrequencyResponsePane extends DAQOptionPane implements ActionListener {
 
     public static final String NAME = "Frequency Response";
-    private DAQLabelInput outputChannel = new DAQLabelInput("Output Channel");
-    private DAQLabelInput inputChannel = new DAQLabelInput("Input Channel");
+    private DAQLabelInput generateChannel = new DAQLabelInput("Generate Channel");
+    private DAQLabelInput responseChannel = new DAQLabelInput("Response Channel");
     private DAQLabelInput minFrequency = new DAQLabelInput("Min Frequency");
     private DAQLabelInput maxFrequrncy = new DAQLabelInput("Max Frequency");
     private DAQLabelInput voltage = new DAQLabelInput("Voltage");
@@ -46,8 +46,8 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
     }
 
     private void testValue() {
-        outputChannel.setText("Dev1/ao0");
-        inputChannel.setText("Dev1/ai0");
+        generateChannel.setText("Dev1/ao0");
+        responseChannel.setText("Dev1/ai0:1");
         minFrequency.setText("40");
         maxFrequrncy.setText("4000");
         voltage.setText("2");
@@ -56,10 +56,10 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
 
     private void initComponents() {
         testValue();
-        outputChannel.setLocation(50, 50);
-        this.add(outputChannel);
-        inputChannel.setLocation(50, 100);
-        this.add(inputChannel);
+        generateChannel.setLocation(50, 50);
+        this.add(generateChannel);
+        responseChannel.setLocation(50, 100);
+        this.add(responseChannel);
         minFrequency.setLocation(50, 150);
         this.add(minFrequency);
         maxFrequrncy.setLocation(50, 200);
@@ -79,7 +79,7 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
     public void actionPerformed(ActionEvent e) {
         try {
             value = new FrequencyResponseConfig(
-                    inputChannel.getText(), outputChannel.getText(), Double.parseDouble(voltage.getText()),
+                    generateChannel.getText(), responseChannel.getText(), Double.parseDouble(voltage.getText()),
                     Double.parseDouble(minFrequency.getText()), Double.parseDouble(maxFrequrncy.getText()),
                     Integer.parseInt(length.getText()));
         } catch (java.lang.NumberFormatException ex) {
@@ -92,28 +92,32 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
     private static Complex[] process(FrequencyResponseConfig config) {
         Complex[] data = new Complex[config.getLength()];
         ContGenIntClk out;
-        AcqIntClk in;
+        FrequencyResponseConfig.FrequencyResponse createResponse;
+//        AcqIntClk in;
         for (int i = 0; i < data.length; i++) {
             double frequency = config.getFrequency(i);
+//            try {
+            out = config.createOutput(frequency);
+//                in = config.createInput(frequency);
+            out.write();
+            out.start();
             try {
-                out = config.createOutput(frequency);
-                in = config.createInput(frequency);
-                out.write();
-                out.start();
-//                try {
-//                    Thread.sleep(2);
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(FrequencyResponsePane.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-                in.read();
-                out.stop();
-                Complex mainOut = out.getMainFrequency(frequency);
-                Complex mainIn = in.getMainFrequency(frequency);
-                data[i] = mainIn.divide(mainOut);
-//                data[i] = new Complex(mainIn.abs() / mainOut.abs());
-            } catch (LoadLibraryException ex) {
+                createResponse = config.createResponse(frequency);
+                Complex H = createResponse.H();
+                data[i] = H;
+            } catch (Exception ex) {
+                data[i] = Complex.ZERO;
                 Logger.getLogger(FrequencyResponsePane.class.getName()).log(Level.SEVERE, null, ex);
             }
+//                in.read();
+            out.stop();
+//                Complex mainOut = out.getMainFrequency(frequency);
+//                Complex mainIn = in.getMainFrequency(frequency);
+//                data[i] = mainIn.divide(mainOut);
+//                data[i] = new Complex(mainIn.abs() / mainOut.abs());
+//            } catch (LoadLibraryException ex) {
+//                Logger.getLogger(FrequencyResponsePane.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
         return data;
     }
