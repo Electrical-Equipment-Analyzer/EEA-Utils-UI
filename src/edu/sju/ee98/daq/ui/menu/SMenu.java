@@ -10,9 +10,9 @@ import javax.swing.JMenu;
  *
  * @author Leo
  */
-public class DMenu extends JMenu {
+public class SMenu extends JMenu {
 
-    public DMenu(String text, char mnemonic) {
+    public SMenu(String text, char mnemonic) {
         super(text);
         this.setMnemonic(mnemonic);
     }

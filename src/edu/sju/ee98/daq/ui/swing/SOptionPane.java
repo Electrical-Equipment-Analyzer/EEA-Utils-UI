@@ -22,32 +22,27 @@ import javax.swing.JDialog;
  *
  * @author 102m05008
  */
-public class DAQOptionPane extends JComponent {
+public class SOptionPane extends JComponent {
 
     protected Object value;
     private JDialog dialog;
 
-    public static void main(String[] args) {
-        DAQOptionPane.showAnalogConfigDialog(null);
-        System.exit(0);
-    }
-
     public static String showNewFileDialog(Component parentComponent) {
-        DAQOptionPane pane = new NewFilePane();
+        SOptionPane pane = new NewFilePane();
         pane.dialog = pane.createDialog(parentComponent, "New File");
         pane.dialog.show();
         return (String) pane.getValue();
     }
 
     public static AnalogVoltage showAnalogConfigDialog(Component parentComponent) {
-        DAQOptionPane pane = new AnalogConfigPane();
+        SOptionPane pane = new AnalogConfigPane();
         pane.dialog = pane.createDialog(parentComponent, AnalogConfigPane.NAME);
         pane.dialog.show();
         return (AnalogVoltage) pane.getValue();
     }
 
     public static FrequencyResponse showFrequencyResponseDialog(Component parentComponent) {
-        DAQOptionPane pane = new FrequencyResponsePane();
+        SOptionPane pane = new FrequencyResponsePane();
         pane.dialog = pane.createDialog(parentComponent, FrequencyResponsePane.NAME);
         pane.dialog.show();
         return (FrequencyResponse) pane.getValue();

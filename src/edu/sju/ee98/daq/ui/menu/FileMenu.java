@@ -5,7 +5,7 @@
 package edu.sju.ee98.daq.ui.menu;
 
 import edu.sju.ee98.daq.ui.Manager;
-import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
+import edu.sju.ee98.daq.ui.swing.SOptionPane;
 import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
 import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponsePane;
 import edu.sju.ee98.daq.ui.text.Format;
@@ -35,12 +35,12 @@ public class FileMenu extends JMenu implements ActionListener {
         this.setText(Format.text(resource.getString(LABEL)));
         this.setMnemonic(Format.mnemonic(resource.getString(LABEL)));
 
-        this.newItem = new DMenuItem(resource.getString(LABEL + ".new"), this);
-        this.openItem = new DMenuItem(resource.getString(LABEL + ".open"), this);
-        this.saveItem = new DMenuItem(resource.getString(LABEL + ".save"), this);
-        this.saveasItem = new DMenuItem(resource.getString(LABEL + ".saveas"), this);
-        this.closeItem = new DMenuItem(resource.getString(LABEL + ".close"), this);
-        this.exitItem = new DMenuItem(resource.getString(LABEL + ".exit"), this);
+        this.newItem = new SMenuItem(resource.getString(LABEL + ".new"), this);
+        this.openItem = new SMenuItem(resource.getString(LABEL + ".open"), this);
+        this.saveItem = new SMenuItem(resource.getString(LABEL + ".save"), this);
+        this.saveasItem = new SMenuItem(resource.getString(LABEL + ".saveas"), this);
+        this.closeItem = new SMenuItem(resource.getString(LABEL + ".close"), this);
+        this.exitItem = new SMenuItem(resource.getString(LABEL + ".exit"), this);
 
         this.add(newItem);
         this.add(openItem);
@@ -57,7 +57,7 @@ public class FileMenu extends JMenu implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(newItem)) {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "new");
-            String file = DAQOptionPane.showNewFileDialog(Manager.MANAGER.getMainFrame());
+            String file = SOptionPane.showNewFileDialog(Manager.MANAGER.getMainFrame());
             System.out.println(file);
             if (file.equals(AnalogConfigPane.NAME)) {
                 AnalogConfigPane.create();

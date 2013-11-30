@@ -4,31 +4,36 @@
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
+import edu.sju.ee.daq.core.math.ComplexArray;
+import edu.sju.ee.daq.core.math.MathArray;
 import edu.sju.ee98.daq.core.data.Wave;
 import edu.sju.ee98.daq.core.function.FrequencyResponse;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.SamplePainter;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
-import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
+import edu.sju.ee98.daq.ui.swing.SLabelInput;
+import edu.sju.ee98.daq.ui.swing.SOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import org.apache.commons.math3.complex.Complex;
+import org.apache.commons.math3.util.MathArrays;
 
 /**
  *
  * @author Leo
  */
-public class FrequencyResponsePane extends DAQOptionPane implements ActionListener {
+public class FrequencyResponsePane extends SOptionPane implements ActionListener {
 
     public static final String NAME = "Frequency Response";
-    private DAQLabelInput generateChannel = new DAQLabelInput("Generate Channel");
-    private DAQLabelInput responseChannel = new DAQLabelInput("Response Channel");
-    private DAQLabelInput minFrequency = new DAQLabelInput("Min Frequency");
-    private DAQLabelInput maxFrequrncy = new DAQLabelInput("Max Frequency");
-    private DAQLabelInput voltage = new DAQLabelInput("Voltage");
-    private DAQLabelInput length = new DAQLabelInput("Length");
+    private SLabelInput generateChannel = new SLabelInput("Generate Channel");
+    private SLabelInput responseChannel = new SLabelInput("Response Channel");
+    private SLabelInput minFrequency = new SLabelInput("Min Frequency");
+    private SLabelInput maxFrequrncy = new SLabelInput("Max Frequency");
+    private SLabelInput voltage = new SLabelInput("Voltage");
+    private SLabelInput length = new SLabelInput("Length");
     private JButton finishButton;
 
     public FrequencyResponsePane() {
@@ -81,19 +86,18 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
     }
 
     public static void create() {
-        FrequencyResponse config = DAQOptionPane.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
+        FrequencyResponse config = SOptionPane.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
         if (config != null) {
-//            ScreenWave wave = null;
-//            wave = new SComplexWave(100, config.process());
+            Complex[] process = config.process();
             ScreenPanel screen = new ScreenPanel();
             screen.setLocation(0, 0);
-            screen.setGrid(new SamplePainter(new Wave(100, config.process())));
-//            screen.setWave(wave);
+            screen.setGrid(new SamplePainter(new Wave(100, process)));
             screen.setDropTarget(null);
             screen.repaint();
             Manager.MANAGER.getMainFrame().work.addTab(screen);
             Manager.MANAGER.getMainFrame().work.setSelectedComponent(screen);
+            
         }
     }
 }

@@ -12,13 +12,13 @@ import javax.swing.JMenuBar;
  *
  * @author Leo
  */
-public class DAQMenuBar extends JMenuBar {
+public class SMenuBar extends JMenuBar {
 
     private static final ResourceBundle resource = ResourceBundle.getBundle("edu.sju.ee98.daq.ui.text.menu");
     public final FileMenu fileMenu;
     public final EditMenu editMenu;
 
-    public DAQMenuBar() {
+    public SMenuBar() {
         fileMenu = new FileMenu(resource);
         this.add(fileMenu);
         editMenu = new EditMenu(resource);
@@ -38,7 +38,7 @@ public class DAQMenuBar extends JMenuBar {
     private void menuHelp() {
         JMenu menu = new JMenu("Help");
         menu.setMnemonic('H');
-        menu.add(new DMenuItem("About", 'A'));
+        menu.add(new SMenuItem("About", 'A'));
         this.add(menu);
     }
 }

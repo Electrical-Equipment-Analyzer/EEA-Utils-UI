@@ -12,9 +12,9 @@ import javax.swing.JMenuItem;
  *
  * @author Leo
  */
-class DMenuItem extends JMenuItem {
+class SMenuItem extends JMenuItem {
 
-    public DMenuItem(String format, ActionListener l) {
+    public SMenuItem(String format, ActionListener l) {
         super(Format.text(format));
         this.setMnemonic(Format.mnemonic(format));
         this.addActionListener(l);
@@ -38,7 +38,7 @@ class DMenuItem extends JMenuItem {
 //        this(text, mnemonic, Manager.MANAGER.EVENT_POOL.get(l));
 //    }
 
-    public DMenuItem(String text, char mnemonic) {
+    public SMenuItem(String text, char mnemonic) {
         super(text);
         this.setMnemonic(mnemonic);
     }

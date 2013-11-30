@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.ui;
 
-import edu.sju.ee98.daq.ui.menu.DAQMenuBar;
+import edu.sju.ee98.daq.ui.menu.SMenuBar;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -17,7 +17,7 @@ public class MainFrame extends JFrame {
     
 //     JFrame THIS = new MainFrame();
 //    private Manager managet;
-    public final DAQMenuBar menuBar;
+    public final SMenuBar menuBar;
     public final MainPanel work;
 
     public MainFrame(Manager manager) throws HeadlessException {
@@ -31,7 +31,7 @@ public class MainFrame extends JFrame {
         this.setLayout(null);
 
         
-        menuBar = new DAQMenuBar();
+        menuBar = new SMenuBar();
         //MenuBar============
         this.setJMenuBar(menuBar);
         

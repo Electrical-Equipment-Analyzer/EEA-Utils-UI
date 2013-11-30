@@ -8,8 +8,8 @@ import edu.sju.ee98.daq.core.function.AnalogVoltage;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.screen.SamplePainter;
-import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
-import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
+import edu.sju.ee98.daq.ui.swing.SLabelInput;
+import edu.sju.ee98.daq.ui.swing.SOptionPane;
 import edu.sju.ee98.daq.core.data.Wave;
 import edu.sju.ee.ni.math.WaveGenerator;
 import java.awt.event.ActionEvent;
@@ -21,14 +21,14 @@ import javax.swing.JOptionPane;
  *
  * @author 102m05008
  */
-public class AnalogConfigPane extends DAQOptionPane implements ActionListener {
+public class AnalogConfigPane extends SOptionPane implements ActionListener {
 
     public static final String NAME = "Analog Input";
-    private DAQLabelInput physicalChannel = new DAQLabelInput("Physical Channel");
-    private DAQLabelInput minVoltage = new DAQLabelInput("Min Voltage");
-    private DAQLabelInput maxVoltage = new DAQLabelInput("Max Voltage");
-    private DAQLabelInput rate = new DAQLabelInput("Rate");
-    private DAQLabelInput length = new DAQLabelInput("Length");
+    private SLabelInput physicalChannel = new SLabelInput("Physical Channel");
+    private SLabelInput minVoltage = new SLabelInput("Min Voltage");
+    private SLabelInput maxVoltage = new SLabelInput("Max Voltage");
+    private SLabelInput rate = new SLabelInput("Rate");
+    private SLabelInput length = new SLabelInput("Length");
     private JButton finishButton;
 
     public AnalogConfigPane() {
@@ -78,7 +78,7 @@ public class AnalogConfigPane extends DAQOptionPane implements ActionListener {
     }
 
     public static void create() {
-        AnalogVoltage config = DAQOptionPane.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
+        AnalogVoltage config = SOptionPane.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
         if (config != null) {
             Wave wave = null;

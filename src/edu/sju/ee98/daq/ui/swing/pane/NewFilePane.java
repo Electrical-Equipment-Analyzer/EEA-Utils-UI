@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
-import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
+import edu.sju.ee98.daq.ui.swing.SOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -15,7 +15,7 @@ import javax.swing.JLabel;
  *
  * @author 102m05008
  */
-public class NewFilePane extends DAQOptionPane implements ActionListener {
+public class NewFilePane extends SOptionPane implements ActionListener {
 
     private JLabel label = new JLabel("File Type");
     private JComboBox file = new JComboBox(

@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.swing;
 
-import edu.sju.ee98.daq.math.MetricNumber;
+import edu.sju.ee.daq.core.math.MetricNumber;
 import java.io.Serializable;
 import javax.swing.AbstractSpinnerModel;
 

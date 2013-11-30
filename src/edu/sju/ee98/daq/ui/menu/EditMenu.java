@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.menu;
 
-import edu.sju.ee.daq.core.math.ComplexArrays;
+import edu.sju.ee.daq.core.math.ComplexArray;
 import edu.sju.ee98.daq.core.data.Wave;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
@@ -38,9 +38,9 @@ public class EditMenu extends JMenu implements ActionListener {
     public EditMenu(ResourceBundle resource) {
         this.setText(Format.text(resource.getString(LABEL)));
         this.setMnemonic(Format.mnemonic(resource.getString(LABEL)));
-        this.fftForwardItem = new DMenuItem(resource.getString(LABEL + ".fftf"), this);
-        this.fftInverseItem = new DMenuItem(resource.getString(LABEL + ".ffti"), this);
-        this.complexAbsolute = new DMenuItem(resource.getString(LABEL + ".complex.absolute"), this);
+        this.fftForwardItem = new SMenuItem(resource.getString(LABEL + ".fftf"), this);
+        this.fftInverseItem = new SMenuItem(resource.getString(LABEL + ".ffti"), this);
+        this.complexAbsolute = new SMenuItem(resource.getString(LABEL + ".complex.absolute"), this);
 
         this.add(fftForwardItem);
         this.add(fftInverseItem);
