@@ -4,6 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.wave;
 
+import edu.sju.ee.daq.core.math.ComplexArrays;
 import edu.sju.ee98.daq.core.data.ComplexWave;
 import edu.sju.ee98.daq.ui.screen.ScreenGrid;
 import edu.sju.ee98.daq.ui.screen.ScreenWave;
@@ -24,13 +25,13 @@ public class SComplexWave extends ComplexWave implements ScreenWave {
     @Override
     public void paintWave(Graphics g, ScreenGrid grid) {
         g.setColor(Color.red);
-        grid.paintWave(g, this.getRate(), this.getAbsoluteArray());
+        grid.paintWave(g, this.getRate(), ComplexArrays.getAbsolute(this.getData()));
         g.setColor(Color.green);
-        grid.paintWave(g, this.getRate(), this.getArgumentArray());
-        
+        grid.paintWave(g, this.getRate(), ComplexArrays.getArgument(this.getData()));
+
         g.setColor(Color.black);
-        grid.paintWave(g, this.getRate(), this.getRealArray());
+        grid.paintWave(g, this.getRate(), ComplexArrays.getReal(this.getData()));
         g.setColor(Color.blue);
-        grid.paintWave(g, this.getRate(), this.getImaginaryArray());
+        grid.paintWave(g, this.getRate(), ComplexArrays.getImaginary(this.getData()));
     }
 }
