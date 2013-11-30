@@ -4,14 +4,13 @@
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
+import edu.sju.ee98.daq.core.data.Wave;
 import edu.sju.ee98.daq.core.function.FrequencyResponse;
 import edu.sju.ee98.daq.ui.Manager;
-import edu.sju.ee98.daq.ui.screen.SampleGrid;
+import edu.sju.ee98.daq.ui.screen.SamplePainter;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.screen.ScreenWave;
 import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
-import edu.sju.ee98.daq.ui.wave.SComplexWave;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -85,12 +84,12 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
         FrequencyResponse config = DAQOptionPane.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
         if (config != null) {
-            ScreenWave wave = null;
-            wave = new SComplexWave(100, config.process());
+//            ScreenWave wave = null;
+//            wave = new SComplexWave(100, config.process());
             ScreenPanel screen = new ScreenPanel();
             screen.setLocation(0, 0);
-            screen.setGrid(new SampleGrid());
-            screen.setWave(wave);
+            screen.setGrid(new SamplePainter(new Wave(100, config.process())));
+//            screen.setWave(wave);
             screen.setDropTarget(null);
             screen.repaint();
             Manager.MANAGER.getMainFrame().work.addTab(screen);

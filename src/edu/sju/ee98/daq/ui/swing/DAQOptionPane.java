@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.swing;
 
-import edu.sju.ee98.daq.core.config.AnalogConfig;
+import edu.sju.ee98.daq.core.function.AnalogVoltage;
 import edu.sju.ee98.daq.core.function.FrequencyResponse;
 import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
 import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponsePane;
@@ -39,11 +39,11 @@ public class DAQOptionPane extends JComponent {
         return (String) pane.getValue();
     }
 
-    public static AnalogConfig showAnalogConfigDialog(Component parentComponent) {
+    public static AnalogVoltage showAnalogConfigDialog(Component parentComponent) {
         DAQOptionPane pane = new AnalogConfigPane();
         pane.dialog = pane.createDialog(parentComponent, AnalogConfigPane.NAME);
         pane.dialog.show();
-        return (AnalogConfig) pane.getValue();
+        return (AnalogVoltage) pane.getValue();
     }
 
     public static FrequencyResponse showFrequencyResponseDialog(Component parentComponent) {

@@ -15,8 +15,8 @@ import java.awt.Graphics;
  */
 public class ScreenPanel extends WorkPanel {
 
-    private ScreenGrid grid;
-    private ScreenWave wave;
+    private ScreenPainter grid;
+//    private ScreenWave wave;
 
     public ScreenPanel() {
         this.setSize(1366, 300);
@@ -24,31 +24,36 @@ public class ScreenPanel extends WorkPanel {
         this.setLayout(null);
     }
 
-    public void setGrid(ScreenGrid grid) {
+    public void setGrid(ScreenPainter grid) {
         this.grid = grid;
         if (this.grid instanceof Component) {
             this.add((Component) this.grid);
         }
     }
 
-    public void setWave(ScreenWave wave) {
-        this.wave = wave;
+    public ScreenPainter getGrid() {
+        return grid;
     }
 
-    public ScreenWave getWave() {
-        return wave;
-    }
+//    public void setWave(ScreenWave wave) {
+//        this.wave = wave;
+//    }
+//
+//    public ScreenWave getWave() {
+//        return wave;
+//    }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (this.grid != null) {
             this.grid.paintGrid(g);
+            this.grid.paintWave(g);
         }
-        if (this.wave != null) {
+//        if (this.wave != null) {
 //            g.setColor(Color.RED);
-            this.wave.paintWave(g, grid);
+//            this.wave.paintWave(g, grid);
 //            this.grid.paintData(g, this.grid.transferData(this.wave.getRate(), this.wave.getDoubleArray()));
-        }
+//        }
     }
 }

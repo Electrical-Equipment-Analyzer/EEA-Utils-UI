@@ -4,6 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.screen;
 
+import edu.sju.ee98.daq.core.data.Wave;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
@@ -12,12 +13,14 @@ import javax.swing.JPanel;
  *
  * @author Leo
  */
-public class SampleGrid extends JPanel implements ScreenGrid {
-
+public class SamplePainter extends JPanel implements ScreenPainter {
+    
     private Axis vertical;
     private Axis horizontal;
-
-    public SampleGrid() {
+    
+    private Wave wave;
+    
+    public SamplePainter(Wave wave) {
         super(null);
         this.setLocation(0, 0);
         this.setSize(1366, 50);
@@ -27,8 +30,9 @@ public class SampleGrid extends JPanel implements ScreenGrid {
         this.horizontal.setLocation(500, 0);
         this.add(this.vertical);
         this.add(this.horizontal);
+        this.wave = wave;
     }
-
+    
     @Override
     public void paintGrid(Graphics g) {
         g.setColor(Color.BLACK);
@@ -57,31 +61,31 @@ public class SampleGrid extends JPanel implements ScreenGrid {
                     this.getGridWidth() / getHorizontalGraduation() * i + this.getGridX(), this.getGridHeight() / 2 + 2 + this.getGridY());
         }
     }
-
+    
     private int getGridX() {
         return 10;
     }
-
+    
     private int getGridY() {
         return 60;
     }
-
+    
     private int getGridHeight() {
         return 480;
     }
-
+    
     private int getGridWidth() {
         return 600;
     }
-
+    
     private int getVerticalGraduation() {
         return 40;
     }
-
+    
     private int getHorizontalGraduation() {
         return 50;
     }
-
+    
     private int getHardGraduation() {
         return 5;
     }
@@ -110,9 +114,27 @@ public class SampleGrid extends JPanel implements ScreenGrid {
         }
         return transfer;
     }
-
+    
     @Override
-    public void paintWave(Graphics g, double rate, double[] data) {
-        this.paintData(g, this.transferData(rate, data));
+    public void paintWave(Graphics g) {
+        if (this.wave == null) {
+            return;
+        }
+        g.setColor(Color.black);
+        this.paintData(g, this.transferData(wave.getRate(), wave.getReal()));
+        try {
+            g.setColor(Color.blue);
+            this.paintData(g, this.transferData(wave.getRate(), wave.getImaginary()));
+            g.setColor(Color.red);
+            this.paintData(g, this.transferData(wave.getRate(), wave.getAbsolute()));
+            g.setColor(Color.green);
+            this.paintData(g, this.transferData(wave.getRate(), wave.getArgument()));
+        } catch (NullPointerException ex) {
+            
+        }
+    }
+    
+    public Object getData() {
+        return this.wave;
     }
 }

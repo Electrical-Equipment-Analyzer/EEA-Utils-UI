@@ -4,17 +4,14 @@
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
-import edu.sju.ee98.daq.core.config.AnalogConfig;
+import edu.sju.ee98.daq.core.function.AnalogVoltage;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.screen.SampleGrid;
-import edu.sju.ee98.daq.ui.screen.ScreenWave;
+import edu.sju.ee98.daq.ui.screen.SamplePainter;
 import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
-import edu.sju.ee98.daq.ui.wave.SAnalogWave;
-import edu.sju.ee.jni.LoadLibraryException;
-import edu.sju.ee98.ni.daqmx.analog.AcqIntClk;
-import edu.sju.ee98.ni.daqmx.analog.AnalogGenerator;
+import edu.sju.ee98.daq.core.data.Wave;
+import edu.sju.ee.ni.math.WaveGenerator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -69,10 +66,10 @@ public class AnalogConfigPane extends DAQOptionPane implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            value = new AnalogConfig(
+            value = new AnalogVoltage(
                     physicalChannel.getText(),
                     Double.parseDouble(minVoltage.getText()), Double.parseDouble(maxVoltage.getText()),
-                    Double.parseDouble(rate.getText()), Long.parseLong(length.getText()));
+                    Double.parseDouble(rate.getText()), Integer.parseInt(length.getText()));
         } catch (java.lang.NumberFormatException ex) {
             JOptionPane.showMessageDialog(AnalogConfigPane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -81,27 +78,26 @@ public class AnalogConfigPane extends DAQOptionPane implements ActionListener {
     }
 
     public static void create() {
-        AnalogConfig config = DAQOptionPane.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
+        AnalogVoltage config = DAQOptionPane.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
         if (config != null) {
-            ScreenWave wave = null;
+            Wave wave = null;
             try {
-                AcqIntClk analog = new AcqIntClk(config, config);
-                analog.read();
-                wave = new SAnalogWave(analog);
-            } catch (LoadLibraryException ex) {
+                wave = config.process();
+            } catch (Exception ex) {
                 JOptionPane.showMessageDialog(Manager.MANAGER.getMainFrame(), ex.getMessage(), ex.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
                 int simulator = JOptionPane.showConfirmDialog(Manager.MANAGER.getMainFrame(), "Do you want to use the simulator?", "Qustion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (simulator == JOptionPane.YES_OPTION) {
-                    wave = new SAnalogWave(new AnalogGenerator(1024, 1024, 1, 100));
+                    WaveGenerator analogGenerator = new WaveGenerator(1024, 1024, 1, 100);
+                    wave = new Wave(analogGenerator.getRate(), analogGenerator.getData());
                 } else {
                     return;
                 }
             }
             ScreenPanel screen = new ScreenPanel();
             screen.setLocation(0, 0);
-            screen.setGrid(new SampleGrid());
-            screen.setWave(wave);
+            screen.setGrid(new SamplePainter(wave));
+//            screen.setWave(wave);
             screen.setDropTarget(null);
             screen.repaint();
             Manager.MANAGER.getMainFrame().work.addTab(screen);

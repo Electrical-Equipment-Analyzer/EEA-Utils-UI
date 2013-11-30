@@ -5,12 +5,11 @@
 package edu.sju.ee98.daq.ui.menu;
 
 import edu.sju.ee.daq.core.math.ComplexArrays;
+import edu.sju.ee98.daq.core.data.Wave;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.screen.SampleGrid;
+import edu.sju.ee98.daq.ui.screen.SamplePainter;
 import edu.sju.ee98.daq.ui.text.Format;
-import edu.sju.ee98.daq.ui.wave.SComplexWave;
-import edu.sju.ee98.ni.daqmx.data.NIWaveData;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,12 +54,13 @@ public class EditMenu extends JMenu implements ActionListener {
             Logger.getLogger(EditMenu.class.getName()).log(Level.FINER, fftForwardItem.getText());
             Component selectedComponent = Manager.MANAGER.getMainFrame().work.getSelectedComponent();
             if (selectedComponent instanceof ScreenPanel) {
-                NIWaveData wave = ((ScreenPanel) selectedComponent).getWave();
+                Wave wave = (Wave) ((ScreenPanel) selectedComponent).getGrid().getData();
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
-                fft.setGrid(new SampleGrid());
-                fft.setWave(new SComplexWave(wave.getRate(),
-                        transform(wave.getData(), TransformType.FORWARD)));
+                fft.setGrid(new SamplePainter(new Wave(wave.getRate(),
+                        transform(wave.getComplex(), TransformType.FORWARD))));
+//                fft.setWave(new Wave(wave.getRate(),
+//                        transform(wave.getData(), TransformType.FORWARD)));
                 fft.setDropTarget(null);
                 fft.repaint();
                 Manager.MANAGER.getMainFrame().work.addTab(fft);
@@ -70,13 +70,14 @@ public class EditMenu extends JMenu implements ActionListener {
             Logger.getLogger(EditMenu.class.getName()).log(Level.FINER, fftInverseItem.getText());
             Component selectedComponent = Manager.MANAGER.getMainFrame().work.getSelectedComponent();
             if (selectedComponent instanceof ScreenPanel) {
-                NIWaveData wave = ((ScreenPanel) selectedComponent).getWave();
+                Wave wave = (Wave) ((ScreenPanel) selectedComponent).getGrid().getData();
                 System.out.println(wave);
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
-                fft.setGrid(new SampleGrid());
-                fft.setWave(new SComplexWave(wave.getRate(),
-                        transform(wave.getData(), TransformType.INVERSE)));
+                fft.setGrid(new SamplePainter(new Wave(wave.getRate(),
+                        transform(wave.getComplex(), TransformType.INVERSE))));
+//                fft.setWave(new SComplexWave(wave.getRate(),
+//                        transform(wave.getData(), TransformType.INVERSE)));
                 fft.setDropTarget(null);
                 fft.repaint();
                 Manager.MANAGER.getMainFrame().work.addTab(fft);
@@ -84,20 +85,20 @@ public class EditMenu extends JMenu implements ActionListener {
             }
         } else if (e.getSource().equals(complexAbsolute)) {
             Logger.getLogger(EditMenu.class.getName()).log(Level.FINER, complexAbsolute.getText());
-            Component selectedComponent = Manager.MANAGER.getMainFrame().work.getSelectedComponent();
-            if (selectedComponent instanceof ScreenPanel) {
-                NIWaveData wave = ((ScreenPanel) selectedComponent).getWave();
-                System.out.println(wave);
-                ScreenPanel complex = new ScreenPanel();
-                complex.setLocation(0, 0);
-                complex.setGrid(new SampleGrid());
-                complex.setWave(new SComplexWave(wave.getRate(),
-                        ComplexUtils.convertToComplex(ComplexArrays.getAbsolute((Complex[]) wave.getData()))));
-                complex.setDropTarget(null);
-                complex.repaint();
-                Manager.MANAGER.getMainFrame().work.addTab(complex);
-                Manager.MANAGER.getMainFrame().work.setSelectedComponent(complex);
-            }
+//            Component selectedComponent = Manager.MANAGER.getMainFrame().work.getSelectedComponent();
+//            if (selectedComponent instanceof ScreenPanel) {
+//                NIWaveData wave = ((ScreenPanel) selectedComponent).getWave();
+//                System.out.println(wave);
+//                ScreenPanel complex = new ScreenPanel();
+//                complex.setLocation(0, 0);
+//                complex.setGrid(new SampleGrid());
+//                complex.setWave(new SComplexWave(wave.getRate(),
+//                        ComplexUtils.convertToComplex(ComplexArrays.getAbsolute((Complex[]) wave.getData()))));
+//                complex.setDropTarget(null);
+//                complex.repaint();
+//                Manager.MANAGER.getMainFrame().work.addTab(complex);
+//                Manager.MANAGER.getMainFrame().work.setSelectedComponent(complex);
+//            }
         }
     }
 
