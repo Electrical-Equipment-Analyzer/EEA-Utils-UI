@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
-import edu.sju.ee98.daq.core.config.FrequencyResponseConfig;
+import edu.sju.ee98.daq.core.function.FrequencyResponse;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.SampleGrid;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
@@ -70,7 +70,7 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            value = new FrequencyResponseConfig(
+            value = new FrequencyResponse(
                     generateChannel.getText(), responseChannel.getText(), Double.parseDouble(voltage.getText()),
                     Double.parseDouble(minFrequency.getText()), Double.parseDouble(maxFrequrncy.getText()),
                     Integer.parseInt(length.getText()));
@@ -82,7 +82,7 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
     }
 
     public static void create() {
-        FrequencyResponseConfig config = DAQOptionPane.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
+        FrequencyResponse config = DAQOptionPane.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
         if (config != null) {
             ScreenWave wave = null;
