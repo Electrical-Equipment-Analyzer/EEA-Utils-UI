@@ -4,7 +4,6 @@
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
-import edu.sju.ee98.daq.core.config.AnalogConfig;
 import edu.sju.ee98.daq.core.config.FrequencyResponseConfig;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.SampleGrid;
@@ -13,17 +12,10 @@ import edu.sju.ee98.daq.ui.screen.ScreenWave;
 import edu.sju.ee98.daq.ui.swing.DAQLabelInput;
 import edu.sju.ee98.daq.ui.swing.DAQOptionPane;
 import edu.sju.ee98.daq.ui.wave.SComplexWave;
-import edu.sju.ee.jni.LoadLibraryException;
-import edu.sju.ee98.ni.daqmx.analog.AcqIntClk;
-import edu.sju.ee98.ni.daqmx.analog.ContGenIntClk;
-import edu.sju.ee98.ni.daqmx.analog.AnalogGenerator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import org.apache.commons.math3.complex.Complex;
 
 /**
  *
@@ -89,45 +81,12 @@ public class FrequencyResponsePane extends DAQOptionPane implements ActionListen
         getDialog().dispose();
     }
 
-    private static Complex[] process(FrequencyResponseConfig config) {
-        Complex[] data = new Complex[config.getLength()];
-        ContGenIntClk out;
-        FrequencyResponseConfig.FrequencyResponse createResponse;
-//        AcqIntClk in;
-        for (int i = 0; i < data.length; i++) {
-            double frequency = config.getFrequency(i);
-//            try {
-            out = config.createOutput(frequency);
-//                in = config.createInput(frequency);
-            out.write();
-            out.start();
-            try {
-                createResponse = config.createResponse(frequency);
-                Complex H = createResponse.H();
-                data[i] = H;
-            } catch (Exception ex) {
-                data[i] = Complex.ZERO;
-                Logger.getLogger(FrequencyResponsePane.class.getName()).log(Level.SEVERE, null, ex);
-            }
-//                in.read();
-            out.stop();
-//                Complex mainOut = out.getMainFrequency(frequency);
-//                Complex mainIn = in.getMainFrequency(frequency);
-//                data[i] = mainIn.divide(mainOut);
-//                data[i] = new Complex(mainIn.abs() / mainOut.abs());
-//            } catch (LoadLibraryException ex) {
-//                Logger.getLogger(FrequencyResponsePane.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-        }
-        return data;
-    }
-
     public static void create() {
         FrequencyResponseConfig config = DAQOptionPane.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
         if (config != null) {
             ScreenWave wave = null;
-            wave = new SComplexWave(1000, process(config));
+            wave = new SComplexWave(100, config.process());
             ScreenPanel screen = new ScreenPanel();
             screen.setLocation(0, 0);
             screen.setGrid(new SampleGrid());
