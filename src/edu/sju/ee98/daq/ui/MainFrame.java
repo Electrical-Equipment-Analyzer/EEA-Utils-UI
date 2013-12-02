@@ -5,6 +5,7 @@
 package edu.sju.ee98.daq.ui;
 
 import edu.sju.ee98.daq.ui.menu.SMenuBar;
+import java.awt.BorderLayout;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -23,12 +24,11 @@ public class MainFrame extends JFrame {
     public MainFrame(Manager manager) throws HeadlessException {
         super("SJU Data Acquisition");
 //        this.managet = manager;
-        this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setSize(1366, 768);
+        this.setSize(1020, 760);
 //        this.setResizable(false);
-        this.setLayout(null);
+//        this.setLayout(null);
 
         
         menuBar = new SMenuBar();
@@ -37,10 +37,11 @@ public class MainFrame extends JFrame {
         
 //        Oscilloscope o = new Oscilloscope();
         work = new MainPanel();
-        work.setLocation(0, 0);
-        this.add(work);
+//        work.setLocation(0, 0);
+        this.getContentPane().add(work, BorderLayout.CENTER);
 
-        this.repaint();
+//        this.repaint();
+        this.setVisible(true);
         
     }
 }

@@ -19,7 +19,6 @@ import javax.swing.event.ChangeListener;
 public class MainPanel extends JTabbedPane {
 
     public MainPanel() {
-        this.setSize(1366, 655);
         this.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {

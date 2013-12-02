@@ -19,7 +19,7 @@ public class ScreenPanel extends WorkPanel {
 //    private ScreenWave wave;
 
     public ScreenPanel() {
-        this.setSize(1366, 300);
+//        this.setSize(1020, 300);
         this.setBackground(Color.white);
         this.setLayout(null);
     }

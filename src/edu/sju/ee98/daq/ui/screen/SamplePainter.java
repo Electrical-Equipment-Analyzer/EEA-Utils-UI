@@ -23,7 +23,7 @@ public class SamplePainter extends JPanel implements ScreenPainter {
     public SamplePainter(Wave wave) {
         super(null);
         this.setLocation(0, 0);
-        this.setSize(1366, 50);
+        this.setSize(1020, 50);
         this.horizontal = new Axis("horizontal".toUpperCase());
         this.vertical = new Axis("vertical".toUpperCase());
         this.vertical.setLocation(0, 0);
