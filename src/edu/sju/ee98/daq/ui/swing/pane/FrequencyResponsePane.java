@@ -9,6 +9,7 @@ import edu.sju.ee.daq.core.math.MathArray;
 import edu.sju.ee98.daq.core.data.Wave;
 import edu.sju.ee98.daq.core.function.FrequencyResponse;
 import edu.sju.ee98.daq.ui.Manager;
+import edu.sju.ee98.daq.ui.screen.BodePlotPainter;
 import edu.sju.ee98.daq.ui.screen.SamplePainter;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.swing.SLabelInput;
@@ -44,8 +45,8 @@ public class FrequencyResponsePane extends SOptionPane implements ActionListener
     private void testValue() {
         generateChannel.setText("Dev1/ao0");
         responseChannel.setText("Dev1/ai0:1");
-        minFrequency.setText("40");
-        maxFrequrncy.setText("4000");
+        minFrequency.setText("200");
+        maxFrequrncy.setText("200000");
         voltage.setText("2");
         length.setText("100");
     }
@@ -92,7 +93,7 @@ public class FrequencyResponsePane extends SOptionPane implements ActionListener
             Complex[] process = config.process();
             ScreenPanel screen = new ScreenPanel();
             screen.setLocation(0, 0);
-            screen.setGrid(new SamplePainter(new Wave(100, process)));
+            screen.setGrid(new BodePlotPainter(new Wave(100, process)));
             screen.setDropTarget(null);
             screen.repaint();
             Manager.MANAGER.getMainFrame().work.addTab(screen);

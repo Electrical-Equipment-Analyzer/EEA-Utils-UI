@@ -5,6 +5,7 @@
 package edu.sju.ee98.daq.ui.screen;
 
 import edu.sju.ee98.daq.ui.WorkPanel;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -21,14 +22,12 @@ public class ScreenPanel extends WorkPanel {
     public ScreenPanel() {
 //        this.setSize(1020, 300);
         this.setBackground(Color.white);
-        this.setLayout(null);
+//        this.setLayout(null);
     }
 
     public void setGrid(ScreenPainter grid) {
         this.grid = grid;
-        if (this.grid instanceof Component) {
-            this.add((Component) this.grid);
-        }
+        this.grid.addComponent(this);
     }
 
     public ScreenPainter getGrid() {

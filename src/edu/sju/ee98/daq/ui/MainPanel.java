@@ -47,7 +47,7 @@ public class MainPanel extends JTabbedPane {
 
     private void tabSource() {
         ScreenPanel screen = new ScreenPanel();
-        screen.setLocation(0, 0);
+//        screen.setLocation(0, 0);
         screen.setGrid(new SamplePainter(null));
         screen.setDropTarget(null);
         this.addTab(screen);
@@ -56,7 +56,7 @@ public class MainPanel extends JTabbedPane {
     private void tabFastFourierTransform() {
         ScreenPanel screen = new ScreenPanel();
         screen.saved = true;
-        screen.setLocation(0, 0);
+//        screen.setLocation(0, 0);
 //        screen.setGrid(new SampleGrid());
         this.addTab(screen);
     }

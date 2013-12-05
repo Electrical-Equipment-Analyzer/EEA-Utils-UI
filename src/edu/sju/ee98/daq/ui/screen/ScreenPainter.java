@@ -12,10 +12,12 @@ import java.awt.Graphics;
  */
 public interface ScreenPainter {
 
+    public void addComponent(ScreenPanel screen);
+
     public void paintGrid(Graphics g);
 
     public void paintWave(Graphics g);
-    
+
     public Object getData();
 //    public void paintData(Graphics g, Integer[] data);
 
