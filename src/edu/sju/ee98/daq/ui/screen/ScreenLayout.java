@@ -10,7 +10,7 @@ import java.awt.Graphics;
  *
  * @author Leo
  */
-public interface ScreenPainter {
+public interface ScreenLayout {
 
     public void addComponent(ScreenPanel screen);
 

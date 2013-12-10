@@ -8,7 +8,7 @@ import edu.sju.ee.daq.core.math.ComplexArray;
 import edu.sju.ee98.daq.core.data.Wave;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.screen.SamplePainter;
+import edu.sju.ee98.daq.ui.screen.SampleLayout;
 import edu.sju.ee98.daq.ui.text.Format;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -57,7 +57,7 @@ public class EditMenu extends JMenu implements ActionListener {
                 Wave wave = (Wave) ((ScreenPanel) selectedComponent).getGrid().getData();
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
-                fft.setGrid(new SamplePainter(new Wave(wave.getRate(),
+                fft.setGrid(new SampleLayout(new Wave(wave.getRate(),
                         transform(wave.getComplex(), TransformType.FORWARD))));
 //                fft.setWave(new Wave(wave.getRate(),
 //                        transform(wave.getData(), TransformType.FORWARD)));
@@ -74,7 +74,7 @@ public class EditMenu extends JMenu implements ActionListener {
                 System.out.println(wave);
                 ScreenPanel fft = new ScreenPanel();
                 fft.setLocation(0, 0);
-                fft.setGrid(new SamplePainter(new Wave(wave.getRate(),
+                fft.setGrid(new SampleLayout(new Wave(wave.getRate(),
                         transform(wave.getComplex(), TransformType.INVERSE))));
 //                fft.setWave(new SComplexWave(wave.getRate(),
 //                        transform(wave.getData(), TransformType.INVERSE)));

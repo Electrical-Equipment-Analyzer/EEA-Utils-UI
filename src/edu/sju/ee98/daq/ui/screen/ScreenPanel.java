@@ -16,7 +16,7 @@ import java.awt.Graphics;
  */
 public class ScreenPanel extends WorkPanel {
 
-    private ScreenPainter grid;
+    private ScreenLayout grid;
 //    private ScreenWave wave;
 
     public ScreenPanel() {
@@ -25,12 +25,12 @@ public class ScreenPanel extends WorkPanel {
 //        this.setLayout(null);
     }
 
-    public void setGrid(ScreenPainter grid) {
+    public void setGrid(ScreenLayout grid) {
         this.grid = grid;
         this.grid.addComponent(this);
     }
 
-    public ScreenPainter getGrid() {
+    public ScreenLayout getGrid() {
         return grid;
     }
 

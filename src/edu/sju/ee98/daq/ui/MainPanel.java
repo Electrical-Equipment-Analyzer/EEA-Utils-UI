@@ -4,8 +4,9 @@
  */
 package edu.sju.ee98.daq.ui;
 
+import edu.sju.ee98.daq.ui.screen.BodePlotLayout;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.screen.SamplePainter;
+import edu.sju.ee98.daq.ui.screen.SampleLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTabbedPane;
@@ -48,16 +49,16 @@ public class MainPanel extends JTabbedPane {
     private void tabSource() {
         ScreenPanel screen = new ScreenPanel();
 //        screen.setLocation(0, 0);
-        screen.setGrid(new SamplePainter(null));
+        screen.setGrid(new SampleLayout(null));
         screen.setDropTarget(null);
         this.addTab(screen);
     }
 
     private void tabFastFourierTransform() {
         ScreenPanel screen = new ScreenPanel();
-        screen.saved = true;
+//        screen.saved = true;
 //        screen.setLocation(0, 0);
-//        screen.setGrid(new SampleGrid());
+        screen.setGrid(new BodePlotLayout(null));
         this.addTab(screen);
     }
 }

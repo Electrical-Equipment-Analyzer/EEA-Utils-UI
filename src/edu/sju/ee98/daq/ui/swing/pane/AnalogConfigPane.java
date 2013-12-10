@@ -7,7 +7,7 @@ package edu.sju.ee98.daq.ui.swing.pane;
 import edu.sju.ee98.daq.core.function.AnalogVoltage;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
-import edu.sju.ee98.daq.ui.screen.SamplePainter;
+import edu.sju.ee98.daq.ui.screen.SampleLayout;
 import edu.sju.ee98.daq.ui.swing.SLabelInput;
 import edu.sju.ee98.daq.ui.swing.SOptionPane;
 import edu.sju.ee98.daq.core.data.Wave;
@@ -96,7 +96,7 @@ public class AnalogConfigPane extends SOptionPane implements ActionListener {
             }
             ScreenPanel screen = new ScreenPanel();
             screen.setLocation(0, 0);
-            screen.setGrid(new SamplePainter(wave));
+            screen.setGrid(new SampleLayout(wave));
 //            screen.setWave(wave);
             screen.setDropTarget(null);
             screen.repaint();
