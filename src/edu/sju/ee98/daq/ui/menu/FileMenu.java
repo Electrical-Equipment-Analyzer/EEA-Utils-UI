@@ -5,7 +5,7 @@
 package edu.sju.ee98.daq.ui.menu;
 
 import edu.sju.ee98.daq.ui.Manager;
-import edu.sju.ee98.daq.ui.swing.SOptionPane;
+import edu.sju.ee98.daq.ui.swing.SOptionDialog;
 import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
 import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponsePane;
 import edu.sju.ee98.daq.ui.text.Format;
@@ -57,7 +57,7 @@ public class FileMenu extends JMenu implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(newItem)) {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "new");
-            String file = SOptionPane.showNewFileDialog(Manager.MANAGER.getMainFrame());
+            String file = SOptionDialog.showNewFileDialog(Manager.MANAGER.getMainFrame());
             System.out.println(file);
             if (file.equals(AnalogConfigPane.NAME)) {
                 AnalogConfigPane.create();

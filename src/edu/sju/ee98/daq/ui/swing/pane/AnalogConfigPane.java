@@ -9,19 +9,19 @@ import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.screen.SampleLayout;
 import edu.sju.ee98.daq.ui.swing.SLabelInput;
-import edu.sju.ee98.daq.ui.swing.SOptionPane;
+import edu.sju.ee98.daq.ui.swing.SOptionDialog;
 import edu.sju.ee98.daq.core.data.Wave;
 import edu.sju.ee.ni.math.WaveGenerator;
+import edu.sju.ee98.daq.ui.swing.SOptionPanel;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author 102m05008
+ * @author 薛聿明
  */
-public class AnalogConfigPane extends SOptionPane implements ActionListener {
+public class AnalogConfigPane extends SOptionPanel<AnalogVoltage> {
 
     public static final String NAME = "Analog Input";
     private SLabelInput physicalChannel = new SLabelInput("Physical Channel");
@@ -29,11 +29,16 @@ public class AnalogConfigPane extends SOptionPane implements ActionListener {
     private SLabelInput maxVoltage = new SLabelInput("Max Voltage");
     private SLabelInput rate = new SLabelInput("Rate");
     private SLabelInput length = new SLabelInput("Length");
-    private JButton finishButton;
 
     public AnalogConfigPane() {
-        this.setSize(600, 450);
+        this.setLayout(null);
+        this.setBackground(Color.ORANGE);
         initComponents();
+    }
+
+    @Override
+    public String getText() {
+        return "Finish";
     }
 
     private void testValue() {
@@ -56,11 +61,6 @@ public class AnalogConfigPane extends SOptionPane implements ActionListener {
         this.add(rate);
         length.setLocation(50, 250);
         this.add(length);
-
-        finishButton = new JButton("Finish");
-        finishButton.setBounds(100, 300, 100, 30);
-        finishButton.addActionListener(this);
-        this.add(finishButton);
     }
 
     @Override
@@ -74,11 +74,10 @@ public class AnalogConfigPane extends SOptionPane implements ActionListener {
             JOptionPane.showMessageDialog(AnalogConfigPane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        getDialog().dispose();
     }
 
     public static void create() {
-        AnalogVoltage config = SOptionPane.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
+        AnalogVoltage config = SOptionDialog.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
         if (config != null) {
             Wave wave = null;

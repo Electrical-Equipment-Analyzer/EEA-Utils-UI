@@ -1,21 +1,17 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2013, St. John's University and/or its affiliates. All rights reserved.
+ * Department of Electrical Engineering.
  */
 package edu.sju.ee98.daq.ui.swing;
 
-import java.awt.Color;
-import java.awt.Container;
-import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 /**
  *
- * @author Leo
+ * @author 薛聿明
  */
 public class SLabelInput extends JComponent {
 
@@ -23,22 +19,17 @@ public class SLabelInput extends JComponent {
     private JTextField textField;
 
     public SLabelInput(String text) {
-//        this.setLayout(new FlowLayout());
-//        this.setBackground(Color.red);
         this.setSize(500, 30);
         this.label = new JLabel(text);
         this.textField = new JTextField(10);
-//                this.label.setSize(100, 25);
-//                this.textField.setSize(100, 25);
+
+        this.add(this.label);
+        this.add(this.textField);
+
         SpringLayout layout = new SpringLayout();
         this.setLayout(layout);
-        this.add(this.label);
-//        this.updateUI();
-        this.add(this.textField);
         layout.putConstraint(SpringLayout.WEST, label, 5, SpringLayout.WEST, this);
-//        layout.putConstraint(SpringLayout.NORTH, label, 5, SpringLayout.NORTH, this);
         layout.putConstraint(SpringLayout.WEST, textField, 150, SpringLayout.WEST, this);
-//        layout.putConstraint(SpringLayout.NORTH, textField, 5, SpringLayout.NORTH, this);
     }
 
     public void setText(String text) {

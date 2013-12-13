@@ -4,8 +4,8 @@
  */
 package edu.sju.ee98.daq.ui.swing;
 
+import edu.sju.ee98.daq.core.frequency.response.FrequencyResponse;
 import edu.sju.ee98.daq.core.function.AnalogVoltage;
-import edu.sju.ee98.daq.core.function.FrequencyResponse;
 import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
 import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponsePane;
 import edu.sju.ee98.daq.ui.swing.pane.NewFilePane;
@@ -15,6 +15,9 @@ import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 
@@ -22,34 +25,51 @@ import javax.swing.JDialog;
  *
  * @author 102m05008
  */
-public class SOptionPane extends JComponent {
+public class SOptionDialog extends JComponent implements ActionListener {
 
-    protected Object value;
     private JDialog dialog;
+    private SOptionPanel panel;
+    private JButton finishButton;
+
+    public SOptionDialog(SOptionPanel panel) {
+        this.setSize(600, 450);
+        this.panel = panel;
+        this.panel.setBounds(0, 0, 600, 350);
+        this.add(panel);
+        finishButton = new JButton("Finish");
+        finishButton.setBounds(450, 380, 100, 30);
+        finishButton.addActionListener(this);
+        this.add(finishButton);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.panel.actionPerformed(e);
+        getDialog().dispose();
+    }
 
     public static String showNewFileDialog(Component parentComponent) {
-        SOptionPane pane = new NewFilePane();
+        NewFilePane panel = new NewFilePane();
+        SOptionDialog pane = new SOptionDialog(panel);
         pane.dialog = pane.createDialog(parentComponent, "New File");
         pane.dialog.show();
-        return (String) pane.getValue();
+        return panel.getValue();
     }
 
     public static AnalogVoltage showAnalogConfigDialog(Component parentComponent) {
-        SOptionPane pane = new AnalogConfigPane();
+        AnalogConfigPane panel = new AnalogConfigPane();
+        SOptionDialog pane = new SOptionDialog(panel);
         pane.dialog = pane.createDialog(parentComponent, AnalogConfigPane.NAME);
         pane.dialog.show();
-        return (AnalogVoltage) pane.getValue();
+        return panel.getValue();
     }
 
     public static FrequencyResponse showFrequencyResponseDialog(Component parentComponent) {
-        SOptionPane pane = new FrequencyResponsePane();
+        FrequencyResponsePane panel = new FrequencyResponsePane();
+        SOptionDialog pane = new SOptionDialog(panel);
         pane.dialog = pane.createDialog(parentComponent, FrequencyResponsePane.NAME);
         pane.dialog.show();
-        return (FrequencyResponse) pane.getValue();
-    }
-
-    public Object getValue() {
-        return value;
+        return panel.getValue();
     }
 
     private JDialog createDialog(Component parentComponent, String title)

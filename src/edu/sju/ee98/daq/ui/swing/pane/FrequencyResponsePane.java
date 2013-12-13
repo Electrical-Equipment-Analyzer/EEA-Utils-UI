@@ -1,32 +1,26 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2013, St. John's University and/or its affiliates. All rights reserved.
+ * Department of Electrical Engineering.
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
-import edu.sju.ee.daq.core.math.ComplexArray;
-import edu.sju.ee.daq.core.math.MathArray;
-import edu.sju.ee98.daq.core.data.Wave;
-import edu.sju.ee98.daq.core.function.FrequencyResponse;
+import edu.sju.ee98.daq.core.frequency.response.FrequencyResponse;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.BodePlotLayout;
-import edu.sju.ee98.daq.ui.screen.SampleLayout;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.swing.SLabelInput;
-import edu.sju.ee98.daq.ui.swing.SOptionPane;
+import edu.sju.ee98.daq.ui.swing.SOptionDialog;
+import edu.sju.ee98.daq.ui.swing.SOptionPanel;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import org.apache.commons.math3.complex.Complex;
-import org.apache.commons.math3.util.MathArrays;
 
 /**
  *
- * @author Leo
+ * @author 薛聿明
  */
-public class FrequencyResponsePane extends SOptionPane implements ActionListener {
+public class FrequencyResponsePane extends SOptionPanel<FrequencyResponse> {
 
     public static final String NAME = "Frequency Response";
     private SLabelInput generateChannel = new SLabelInput("Generate Channel");
@@ -35,11 +29,16 @@ public class FrequencyResponsePane extends SOptionPane implements ActionListener
     private SLabelInput maxFrequrncy = new SLabelInput("Max Frequency");
     private SLabelInput voltage = new SLabelInput("Voltage");
     private SLabelInput length = new SLabelInput("Length");
-    private JButton finishButton;
 
     public FrequencyResponsePane() {
-        this.setSize(600, 450);
+        this.setLayout(null);
+        this.setBackground(Color.red);
         initComponents();
+    }
+
+    @Override
+    public String getText() {
+        return "Finish";
     }
 
     private void testValue() {
@@ -53,23 +52,20 @@ public class FrequencyResponsePane extends SOptionPane implements ActionListener
 
     private void initComponents() {
         testValue();
-        generateChannel.setLocation(50, 50);
         this.add(generateChannel);
-        responseChannel.setLocation(50, 100);
         this.add(responseChannel);
-        minFrequency.setLocation(50, 150);
         this.add(minFrequency);
-        maxFrequrncy.setLocation(50, 200);
         this.add(maxFrequrncy);
-        voltage.setLocation(50, 250);
         this.add(voltage);
-        length.setLocation(50, 300);
         this.add(length);
-
-        finishButton = new JButton("Finish");
-        finishButton.setBounds(450, 350, 100, 30);
-        finishButton.addActionListener(this);
-        this.add(finishButton);
+        generateChannel.setLocation(50, 50);
+        responseChannel.setLocation(50, 100);
+        minFrequency.setLocation(50, 150);
+        maxFrequrncy.setLocation(50, 200);
+        voltage.setLocation(50, 250);
+        length.setLocation(50, 300);
+        
+        
     }
 
     @Override
@@ -83,22 +79,21 @@ public class FrequencyResponsePane extends SOptionPane implements ActionListener
             JOptionPane.showMessageDialog(FrequencyResponsePane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        getDialog().dispose();
     }
 
     public static void create() {
-        FrequencyResponse config = SOptionPane.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
+        FrequencyResponse config = SOptionDialog.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
         System.out.println(config);
         if (config != null) {
             Complex[] process = config.process();
             ScreenPanel screen = new ScreenPanel();
             screen.setLocation(0, 0);
-            screen.setGrid(new BodePlotLayout(new Wave(100, process)));
+            screen.setGrid(new BodePlotLayout(null));
             screen.setDropTarget(null);
             screen.repaint();
             Manager.MANAGER.getMainFrame().work.addTab(screen);
             Manager.MANAGER.getMainFrame().work.setSelectedComponent(screen);
-            
+
         }
     }
 }

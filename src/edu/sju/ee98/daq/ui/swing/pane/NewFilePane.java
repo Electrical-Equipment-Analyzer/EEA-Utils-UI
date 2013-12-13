@@ -4,27 +4,31 @@
  */
 package edu.sju.ee98.daq.ui.swing.pane;
 
-import edu.sju.ee98.daq.ui.swing.SOptionPane;
+import edu.sju.ee98.daq.ui.swing.SOptionPanel;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 /**
  *
- * @author 102m05008
+ * @author 薛聿明
  */
-public class NewFilePane extends SOptionPane implements ActionListener {
+public class NewFilePane extends SOptionPanel<String> {
 
+    public static final String NAME = "New File";
     private JLabel label = new JLabel("File Type");
     private JComboBox file = new JComboBox(
             new String[]{AnalogConfigPane.NAME, FrequencyResponsePane.NAME});
-    private JButton finishButton;
 
     public NewFilePane() {
+        this.setLayout(null);
         this.setSize(600, 450);
         initComponents();
+    }
+
+    @Override
+    public String getText() {
+        return "Next";
     }
 
     private void testValue() {
@@ -39,16 +43,10 @@ public class NewFilePane extends SOptionPane implements ActionListener {
         this.file.setLocation(150, 50);
         this.file.setSize(200, 25);
         this.add(this.file);
-
-        finishButton = new JButton("Next");
-        finishButton.setBounds(450, 350, 100, 30);
-        finishButton.addActionListener(this);
-        this.add(finishButton);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         value = this.file.getSelectedItem().toString();
-        getDialog().dispose();
     }
 }
