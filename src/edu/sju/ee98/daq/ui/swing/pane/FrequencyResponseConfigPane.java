@@ -5,6 +5,7 @@
 package edu.sju.ee98.daq.ui.swing.pane;
 
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponse;
+import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseConfig;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.BodePlotLayout;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
@@ -13,6 +14,8 @@ import edu.sju.ee98.daq.ui.swing.SOptionDialog;
 import edu.sju.ee98.daq.ui.swing.SOptionPanel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.JOptionPane;
 import org.apache.commons.math3.complex.Complex;
 
@@ -20,7 +23,7 @@ import org.apache.commons.math3.complex.Complex;
  *
  * @author 薛聿明
  */
-public class FrequencyResponsePane extends SOptionPanel<FrequencyResponse> {
+public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponse> {
 
     public static final String NAME = "Frequency Response";
     private SLabelInput generateChannel = new SLabelInput("Generate Channel");
@@ -30,10 +33,22 @@ public class FrequencyResponsePane extends SOptionPanel<FrequencyResponse> {
     private SLabelInput voltage = new SLabelInput("Voltage");
     private SLabelInput length = new SLabelInput("Length");
 
-    public FrequencyResponsePane() {
-        this.setLayout(null);
+    public FrequencyResponseConfigPane() {
+//        this.setLayout(null);
         this.setBackground(Color.red);
+        this.setBorder(BorderFactory.createTitledBorder("Configure"));
         initComponents();
+    }
+
+    public FrequencyResponseConfigPane(FrequencyResponseConfig config) {
+
+    }
+
+    public FrequencyResponseConfig getConfig() {
+        return new FrequencyResponseConfig(
+                    generateChannel.getText(), responseChannel.getText(), Double.parseDouble(voltage.getText()),
+                    Double.parseDouble(minFrequency.getText()), Double.parseDouble(maxFrequrncy.getText()),
+                    Integer.parseInt(length.getText()));
     }
 
     @Override
@@ -58,14 +73,39 @@ public class FrequencyResponsePane extends SOptionPanel<FrequencyResponse> {
         this.add(maxFrequrncy);
         this.add(voltage);
         this.add(length);
-        generateChannel.setLocation(50, 50);
-        responseChannel.setLocation(50, 100);
-        minFrequency.setLocation(50, 150);
-        maxFrequrncy.setLocation(50, 200);
-        voltage.setLocation(50, 250);
-        length.setLocation(50, 300);
-        
-        
+//        generateChannel.setLocation(50, 50);
+//        responseChannel.setLocation(50, 100);
+//        minFrequency.setLocation(50, 150);
+//        maxFrequrncy.setLocation(50, 200);
+//        voltage.setLocation(50, 250);
+//        length.setLocation(50, 300);
+
+        GroupLayout layout = new GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createSequentialGroup()
+                .addGap(20)
+                .addGroup(layout.createParallelGroup()
+                        .addComponent(generateChannel)
+                        .addComponent(responseChannel)
+                        .addComponent(minFrequency)
+                        .addComponent(maxFrequrncy)
+                        .addComponent(voltage)
+                        .addComponent(length))
+                .addGap(20)
+        );
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                .addGap(20)
+                .addComponent(generateChannel, 20, 25, 30)
+                .addComponent(responseChannel, 20, 25, 30)
+                .addComponent(minFrequency, 20, 25, 30)
+                .addComponent(maxFrequrncy, 20, 25, 30)
+                .addComponent(voltage, 20, 25, 30)
+                .addComponent(length, 20, 25, 30)
+                .addGap(20)
+        );
+
     }
 
     @Override
@@ -76,7 +116,7 @@ public class FrequencyResponsePane extends SOptionPanel<FrequencyResponse> {
                     Double.parseDouble(minFrequency.getText()), Double.parseDouble(maxFrequrncy.getText()),
                     Integer.parseInt(length.getText()));
         } catch (java.lang.NumberFormatException ex) {
-            JOptionPane.showMessageDialog(FrequencyResponsePane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(FrequencyResponseConfigPane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
     }

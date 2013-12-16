@@ -6,11 +6,16 @@ package edu.sju.ee98.daq.ui.screen;
 
 import edu.sju.ee98.daq.core.data.Wave;
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseFile;
-import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponsePane;
+import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponseConfigPane;
 import java.awt.Color;
 import java.awt.Graphics;
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.LayoutStyle;
 
 /**
  *
@@ -44,12 +49,70 @@ public class BodePlotLayout implements ScreenLayout {
     }
 
     private void config() {
-        this.config = new FrequencyResponsePane();
+        this.config = new FrequencyResponseConfigPane();
 //        this.config.setBackground(Color.red);
 //        this.config.setBorder(BorderFactory.createTitledBorder("Configure"));
 
         this.data = new JPanel();
-        this.data.setBackground(Color.BLUE);
+        data.setBackground(Color.BLUE);
+
+        Data abs = new Data("abs");
+        Data arg = new Data("arg");
+        Data hor = new Data("hor");
+        abs.setBackground(Color.GREEN);
+        arg.setBackground(Color.ORANGE);
+        hor.setBackground(Color.YELLOW);
+
+        GroupLayout layout = new GroupLayout(data);
+        data.setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(abs)
+                .addComponent(arg)
+                .addComponent(hor)
+                .addContainerGap()
+        );
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup()
+                        .addComponent(abs)
+                        .addComponent(arg)
+                        .addComponent(hor))
+                .addContainerGap()
+        );
+
+    }
+
+    public class Data extends JPanel {
+
+        private JCheckBox enableCheckBox;
+        private Color color;
+        private JButton colorChooser;
+
+        public Data(String title) {
+            this.setBorder(BorderFactory.createTitledBorder(title));
+
+            enableCheckBox = new JCheckBox("Enable");
+
+            this.add(enableCheckBox);
+
+            GroupLayout layout = new GroupLayout(this);
+            this.setLayout(layout);
+            layout.setHorizontalGroup(
+                    layout.createSequentialGroup()
+                    .addComponent(enableCheckBox)
+                    .addGap(0, 0, Short.MAX_VALUE)
+            );
+            layout.setVerticalGroup(
+                    layout.createSequentialGroup()
+                    .addComponent(enableCheckBox)
+                    .addGap(0, 0, Short.MAX_VALUE)
+            );
+
+        }
+
     }
 
     @Override
@@ -58,28 +121,29 @@ public class BodePlotLayout implements ScreenLayout {
         screen.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
-                .addGap(0, 5, 5)
+                .addGap(5)
                 .addGroup(layout.createParallelGroup()
-                        .addGap(0, 5, 5)
-                        .addComponent(grid, 700, 700, 700)
-                        .addGap(0, 5, 5))
-                .addGap(0, 5, 5)
+                        .addGap(5)
+                        .addComponent(grid, 800, 800, 800)
+                        .addGap(5))
+                .addGap(5)
                 .addGroup(layout.createParallelGroup()
-                        .addGap(0, 5, 5)
-                        .addComponent(config)
-                        .addComponent(data)
-                        .addGap(0, 5, 5))
-                .addGap(0, 5, 5)
+                        .addGap(5)
+                        .addComponent(config, 300, 350, 400)
+                        .addComponent(data, 300, 350, 400)
+                        .addGap(5))
+                .addGap(5)
         );
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                .addGap(0, 5, 5)
+                .addGap(5)
                 .addGroup(layout.createParallelGroup()
                         .addComponent(grid, 700, 700, 700)
+                        .addGap(5)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(config, 200, 350, 400)
-                                .addComponent(data, 200, 350, 400)))
-                .addGap(0, 5, 5)
+                                .addComponent(config)
+                                .addComponent(data, 100, 150, 200)))
+                .addGap(5)
         );
     }
 

@@ -19,7 +19,7 @@ public class SLabelInput extends JComponent {
     private JTextField textField;
 
     public SLabelInput(String text) {
-        this.setSize(500, 30);
+        this.setSize(300, 20);
         this.label = new JLabel(text);
         this.textField = new JTextField(10);
 

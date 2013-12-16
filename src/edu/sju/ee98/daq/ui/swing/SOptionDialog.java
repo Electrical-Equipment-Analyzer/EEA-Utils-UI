@@ -7,9 +7,10 @@ package edu.sju.ee98.daq.ui.swing;
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponse;
 import edu.sju.ee98.daq.core.function.AnalogVoltage;
 import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
-import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponsePane;
+import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponseConfigPane;
 import edu.sju.ee98.daq.ui.swing.pane.NewFilePane;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dialog;
@@ -17,6 +18,7 @@ import java.awt.Frame;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -29,17 +31,42 @@ public class SOptionDialog extends JComponent implements ActionListener {
 
     private JDialog dialog;
     private SOptionPanel panel;
-    private JButton finishButton;
+    private JButton button;
 
     public SOptionDialog(SOptionPanel panel) {
         this.setSize(600, 450);
         this.panel = panel;
-        this.panel.setBounds(0, 0, 600, 350);
+        button = new JButton(panel.getText());
+        button.addActionListener(this);
+        initComponents();
+    }
+
+    private void initComponents() {
         this.add(panel);
-        finishButton = new JButton("Finish");
-        finishButton.setBounds(450, 380, 100, 30);
-        finishButton.addActionListener(this);
-        this.add(finishButton);
+        this.add(button);
+
+        GroupLayout layout = new GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup()
+                .addGroup(layout.createSequentialGroup()
+                        .addGap(10)
+                        .addComponent(panel)
+                        .addGap(10))
+                .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button)
+                        .addGap(30))
+        );
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                        .addGap(10)
+                        .addComponent(panel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, 20)
+//                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, 50)
+                        .addComponent(button)
+                        .addGap(20)
+        );
     }
 
     @Override
@@ -65,9 +92,9 @@ public class SOptionDialog extends JComponent implements ActionListener {
     }
 
     public static FrequencyResponse showFrequencyResponseDialog(Component parentComponent) {
-        FrequencyResponsePane panel = new FrequencyResponsePane();
+        FrequencyResponseConfigPane panel = new FrequencyResponseConfigPane();
         SOptionDialog pane = new SOptionDialog(panel);
-        pane.dialog = pane.createDialog(parentComponent, FrequencyResponsePane.NAME);
+        pane.dialog = pane.createDialog(parentComponent, FrequencyResponseConfigPane.NAME);
         pane.dialog.show();
         return panel.getValue();
     }
