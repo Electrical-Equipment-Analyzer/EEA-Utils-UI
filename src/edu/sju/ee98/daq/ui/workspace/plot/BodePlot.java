@@ -4,27 +4,19 @@
  * and open the template in the editor.
  */
 
-package edu.sju.ee98.daq.ui.screen;
-
-import javax.swing.JPanel;
+package edu.sju.ee98.daq.ui.workspace.plot;
 
 /**
  *
  * @author Leo
  */
-public class GridPanel extends JPanel {
+public class BodePlot extends javax.swing.JPanel {
 
-    private GridConfigure conf;
-    
     /**
-     * Creates new form NewBeanForm
+     * Creates new form BodePlot
      */
-    public GridPanel() {
+    public BodePlot() {
         initComponents();
-    }
-
-    public void setConf(GridConfigure conf) {
-        this.conf = conf;
     }
 
     /**
@@ -35,6 +27,17 @@ public class GridPanel extends JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
     }// </editor-fold>//GEN-END:initComponents
 
 

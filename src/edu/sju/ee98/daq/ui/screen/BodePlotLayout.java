@@ -25,7 +25,7 @@ public class BodePlotLayout implements ScreenLayout {
 
     private Axis vertical;
     private Axis horizontal;
-    private GridPanel grid;
+    private GridConfigure grid;
 
     private JPanel config;
     private JPanel data;
@@ -43,7 +43,7 @@ public class BodePlotLayout implements ScreenLayout {
 //        this.horizontal.setLocation(500, 0);
 //        this.add(this.vertical);
 //        this.add(this.horizontal);
-        this.grid = new GridPanel(50, 50, 480, 600, 40, 50, 5);
+        this.grid = new GridConfigure(50, 50, 480, 600, 40, 50, 5);
         this.wave = wave;
         this.config();
     }

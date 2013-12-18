@@ -7,6 +7,7 @@ package edu.sju.ee98.daq.ui;
 import edu.sju.ee98.daq.ui.screen.BodePlotLayout;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.screen.SampleLayout;
+import edu.sju.ee98.daq.ui.workspace.data.FrequencyResponsePanel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTabbedPane;
@@ -40,6 +41,7 @@ public class MainPanel extends JTabbedPane {
 
         tabSource();
         tabFastFourierTransform();
+        tabFrequencyResponse();
     }
 
     public void addTab(WorkPanel work) {
@@ -60,5 +62,12 @@ public class MainPanel extends JTabbedPane {
 //        screen.setLocation(0, 0);
         screen.setGrid(new BodePlotLayout(null));
         this.addTab(screen);
+    }
+
+    private void tabFrequencyResponse() {
+        WorkPanel tab = new FrequencyResponsePanel(null);
+//        screen.saved = true;
+//        screen.setLocation(0, 0);
+        this.addTab(tab);
     }
 }

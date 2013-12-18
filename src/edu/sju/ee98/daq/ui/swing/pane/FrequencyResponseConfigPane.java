@@ -6,12 +6,14 @@ package edu.sju.ee98.daq.ui.swing.pane;
 
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponse;
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseConfig;
+import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseFile;
 import edu.sju.ee98.daq.ui.Manager;
 import edu.sju.ee98.daq.ui.screen.BodePlotLayout;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.swing.SLabelInput;
 import edu.sju.ee98.daq.ui.swing.SOptionDialog;
 import edu.sju.ee98.daq.ui.swing.SOptionPanel;
+import edu.sju.ee98.daq.ui.workspace.data.FrequencyResponsePanel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
@@ -23,7 +25,7 @@ import org.apache.commons.math3.complex.Complex;
  *
  * @author 薛聿明
  */
-public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponse> {
+public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponseConfig> {
 
     public static final String NAME = "Frequency Response";
     private SLabelInput generateChannel = new SLabelInput("Generate Channel");
@@ -111,10 +113,7 @@ public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponse>
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            value = new FrequencyResponse(
-                    generateChannel.getText(), responseChannel.getText(), Double.parseDouble(voltage.getText()),
-                    Double.parseDouble(minFrequency.getText()), Double.parseDouble(maxFrequrncy.getText()),
-                    Integer.parseInt(length.getText()));
+            value = this.getConfig();
         } catch (java.lang.NumberFormatException ex) {
             JOptionPane.showMessageDialog(FrequencyResponseConfigPane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -122,17 +121,18 @@ public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponse>
     }
 
     public static void create() {
-        FrequencyResponse config = SOptionDialog.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
-        System.out.println(config);
-        if (config != null) {
-            Complex[] process = config.process();
-            ScreenPanel screen = new ScreenPanel();
-            screen.setLocation(0, 0);
-            screen.setGrid(new BodePlotLayout(null));
-            screen.setDropTarget(null);
-            screen.repaint();
-            Manager.MANAGER.getMainFrame().work.addTab(screen);
-            Manager.MANAGER.getMainFrame().work.setSelectedComponent(screen);
+        FrequencyResponse process = SOptionDialog.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
+        System.out.println(process);
+        if (process != null) {
+            FrequencyResponseFile file = process.process();
+//            ScreenPanel screen = new ScreenPanel();
+//            screen.setLocation(0, 0);
+//            screen.setGrid(new BodePlotLayout(file));
+//            screen.setDropTarget(null);
+//            screen.repaint();
+            FrequencyResponsePanel frequencyResponsePanel = new FrequencyResponsePanel(file);
+            Manager.MANAGER.getMainFrame().work.addTab(frequencyResponsePanel);
+            Manager.MANAGER.getMainFrame().work.setSelectedComponent(frequencyResponsePanel);
 
         }
     }
