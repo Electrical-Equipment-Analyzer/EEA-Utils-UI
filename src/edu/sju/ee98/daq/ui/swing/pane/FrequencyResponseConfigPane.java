@@ -121,10 +121,10 @@ public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponseC
     }
 
     public static void create() {
-        FrequencyResponse process = SOptionDialog.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
-        System.out.println(process);
-        if (process != null) {
-            FrequencyResponseFile file = process.process();
+        FrequencyResponseConfig config = SOptionDialog.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
+        System.out.println(config);
+        if (config != null) {
+            FrequencyResponseFile file = new FrequencyResponse(config).process();
 //            ScreenPanel screen = new ScreenPanel();
 //            screen.setLocation(0, 0);
 //            screen.setGrid(new BodePlotLayout(file));

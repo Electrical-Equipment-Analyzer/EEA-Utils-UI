@@ -5,6 +5,7 @@
 package edu.sju.ee98.daq.ui.swing;
 
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponse;
+import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseConfig;
 import edu.sju.ee98.daq.core.function.AnalogVoltage;
 import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
 import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponseConfigPane;
@@ -91,7 +92,7 @@ public class SOptionDialog extends JComponent implements ActionListener {
         return panel.getValue();
     }
 
-    public static FrequencyResponse showFrequencyResponseDialog(Component parentComponent) {
+    public static FrequencyResponseConfig showFrequencyResponseDialog(Component parentComponent) {
         FrequencyResponseConfigPane panel = new FrequencyResponseConfigPane();
         SOptionDialog pane = new SOptionDialog(panel);
         pane.dialog = pane.createDialog(parentComponent, FrequencyResponseConfigPane.NAME);

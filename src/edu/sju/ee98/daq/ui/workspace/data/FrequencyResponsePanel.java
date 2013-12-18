@@ -3,11 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package edu.sju.ee98.daq.ui.workspace.data;
 
+import edu.sju.ee.daq.core.math.ComplexArray;
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseFile;
 import edu.sju.ee98.daq.ui.WorkPanel;
+import java.awt.Color;
+import org.apache.commons.math3.complex.Complex;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.LogarithmicAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
@@ -16,12 +28,51 @@ import edu.sju.ee98.daq.ui.WorkPanel;
 public class FrequencyResponsePanel extends WorkPanel {
 
     private FrequencyResponseFile file;
+    private JFreeChart chart;
+
     /**
      * Creates new form FrequencyResponsePanel
      */
     public FrequencyResponsePanel(FrequencyResponseFile file) {
         this.file = file;
+        initChart();
         initComponents();
+    }
+
+    private void initChart() {
+        Complex[] H = new Complex[file.getConfig().getLength()];
+        for (int i = 0; i < H.length; i++) {
+            H[i] = file.getOut()[i].divide(file.getIn()[i]);
+        }
+
+        Color color1 = Color.RED;
+        Color color2 = Color.GREEN;
+        
+        chart = ChartFactory.createXYLineChart("title", "Frequency", "H", createXYSeriesCollection(file, ComplexArray.getAbsolute(H)));
+        XYPlot plot = chart.getXYPlot();
+        plot.setDomainAxis(new LogarithmicAxis("df"));
+        
+        
+        NumberAxis axis2 = new NumberAxis("Range Axis 2");
+        axis2.setLabelPaint(color2);
+        axis2.setTickLabelPaint(color2);
+        plot.setRangeAxis(1, axis2);
+
+        plot.setDataset(1, createXYSeriesCollection(file, ComplexArray.getArgument(H)));
+        plot.mapDatasetToRangeAxis(1, 1);
+        XYItemRenderer renderer2 = new StandardXYItemRenderer();
+        renderer2.setSeriesPaint(0, color2);
+        plot.setRenderer(1, renderer2);
+    }
+    
+    private static XYSeriesCollection createXYSeriesCollection(FrequencyResponseFile file, double[] data) {
+        XYSeries series1 = new XYSeries("Average Weight");
+        for (int i = 0; i < file.getConfig().getLength(); i++) {
+            series1.add(file.getConfig().getFrequency(i), data[i]);
+        }
+        XYSeriesCollection collection = new XYSeriesCollection();
+        collection.addSeries(series1);
+        return collection;
     }
 
     /**
@@ -34,7 +85,7 @@ public class FrequencyResponsePanel extends WorkPanel {
     private void initComponents() {
 
         frequencyResponseConfigPane1 = new edu.sju.ee98.daq.ui.swing.pane.FrequencyResponseConfigPane();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new ChartPanel(chart);
 
         setBackground(new java.awt.Color(51, 255, 51));
 
