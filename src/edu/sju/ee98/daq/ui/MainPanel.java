@@ -6,7 +6,6 @@ package edu.sju.ee98.daq.ui;
 
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseConfig;
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseFile;
-import edu.sju.ee98.daq.ui.screen.BodePlotLayout;
 import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.screen.SampleLayout;
 import edu.sju.ee98.daq.ui.workspace.data.FrequencyResponsePanel;
@@ -60,11 +59,11 @@ public class MainPanel extends JTabbedPane {
     }
 
     private void tabFastFourierTransform() {
-        ScreenPanel screen = new ScreenPanel();
-//        screen.saved = true;
-//        screen.setLocation(0, 0);
-        screen.setGrid(new BodePlotLayout(null));
-        this.addTab(screen);
+//        ScreenPanel screen = new ScreenPanel();
+////        screen.saved = true;
+////        screen.setLocation(0, 0);
+//        screen.setGrid(new BodePlotLayout(null));
+//        this.addTab(screen);
     }
 
     private void tabFrequencyResponse() {

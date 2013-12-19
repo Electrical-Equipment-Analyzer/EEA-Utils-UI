@@ -8,8 +8,6 @@ import edu.sju.ee98.daq.core.frequency.response.FrequencyResponse;
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseConfig;
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseFile;
 import edu.sju.ee98.daq.ui.Manager;
-import edu.sju.ee98.daq.ui.screen.BodePlotLayout;
-import edu.sju.ee98.daq.ui.screen.ScreenPanel;
 import edu.sju.ee98.daq.ui.swing.SLabelInput;
 import edu.sju.ee98.daq.ui.swing.SOptionDialog;
 import edu.sju.ee98.daq.ui.swing.SOptionPanel;
@@ -19,7 +17,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JOptionPane;
-import org.apache.commons.math3.complex.Complex;
 
 /**
  *

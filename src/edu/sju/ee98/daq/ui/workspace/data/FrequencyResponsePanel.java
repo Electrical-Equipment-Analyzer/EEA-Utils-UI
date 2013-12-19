@@ -29,6 +29,7 @@ public class FrequencyResponsePanel extends WorkPanel {
 
     private FrequencyResponseFile file;
     private JFreeChart chart;
+    private ChartPanel chartPanel;
 
     /**
      * Creates new form FrequencyResponsePanel
@@ -52,7 +53,6 @@ public class FrequencyResponsePanel extends WorkPanel {
         XYPlot plot = chart.getXYPlot();
         plot.setDomainAxis(new LogarithmicAxis("df"));
         
-        
         NumberAxis axis2 = new NumberAxis("Range Axis 2");
         axis2.setLabelPaint(color2);
         axis2.setTickLabelPaint(color2);
@@ -63,6 +63,13 @@ public class FrequencyResponsePanel extends WorkPanel {
         XYItemRenderer renderer2 = new StandardXYItemRenderer();
         renderer2.setSeriesPaint(0, color2);
         plot.setRenderer(1, renderer2);
+        
+        
+        
+        chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(600, 270));
+        chartPanel.setDomainZoomable(true);
+        chartPanel.setRangeZoomable(true);
     }
     
     private static XYSeriesCollection createXYSeriesCollection(FrequencyResponseFile file, double[] data) {
@@ -85,7 +92,7 @@ public class FrequencyResponsePanel extends WorkPanel {
     private void initComponents() {
 
         frequencyResponseConfigPane1 = new edu.sju.ee98.daq.ui.swing.pane.FrequencyResponseConfigPane();
-        jPanel1 = new ChartPanel(chart);
+        jPanel1 = chartPanel;
 
         setBackground(new java.awt.Color(51, 255, 51));
 
