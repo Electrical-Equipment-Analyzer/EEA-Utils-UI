@@ -7,7 +7,7 @@ package edu.sju.ee98.daq.ui.workspace.data;
 
 import edu.sju.ee.daq.core.math.ComplexArray;
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseFile;
-import edu.sju.ee98.daq.ui.WorkPanel;
+import edu.sju.ee98.daq.ui.WorkspacePanel;
 import java.awt.Color;
 import org.apache.commons.math3.complex.Complex;
 import org.jfree.chart.ChartFactory;
@@ -25,9 +25,9 @@ import org.jfree.data.xy.XYSeriesCollection;
  *
  * @author Leo
  */
-public class FrequencyResponsePanel extends WorkPanel {
+public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile> {
 
-    private FrequencyResponseFile file;
+//    private FrequencyResponseFile file;
     private JFreeChart chart;
     private ChartPanel chartPanel;
 
@@ -35,21 +35,22 @@ public class FrequencyResponsePanel extends WorkPanel {
      * Creates new form FrequencyResponsePanel
      */
     public FrequencyResponsePanel(FrequencyResponseFile file) {
-        this.file = file;
+        super("new Frequency Response");
+        this.data = file;
         initChart();
         initComponents();
     }
 
     private void initChart() {
-        Complex[] H = new Complex[file.getConfig().getLength()];
+        Complex[] H = new Complex[data.getConfig().getLength()];
         for (int i = 0; i < H.length; i++) {
-            H[i] = file.getOut()[i].divide(file.getIn()[i]);
+            H[i] = data.getOut()[i].divide(data.getIn()[i]);
         }
 
         Color color1 = Color.RED;
         Color color2 = Color.GREEN;
         
-        chart = ChartFactory.createXYLineChart("title", "Frequency", "H", createXYSeriesCollection(file, ComplexArray.getAbsolute(H)));
+        chart = ChartFactory.createXYLineChart("title", "Frequency", "H", createXYSeriesCollection(data, ComplexArray.getAbsolute(H)));
         XYPlot plot = chart.getXYPlot();
         plot.setDomainAxis(new LogarithmicAxis("df"));
         
@@ -58,7 +59,7 @@ public class FrequencyResponsePanel extends WorkPanel {
         axis2.setTickLabelPaint(color2);
         plot.setRangeAxis(1, axis2);
 
-        plot.setDataset(1, createXYSeriesCollection(file, ComplexArray.getArgument(H)));
+        plot.setDataset(1, createXYSeriesCollection(data, ComplexArray.getArgument(H)));
         plot.mapDatasetToRangeAxis(1, 1);
         XYItemRenderer renderer2 = new StandardXYItemRenderer();
         renderer2.setSeriesPaint(0, color2);

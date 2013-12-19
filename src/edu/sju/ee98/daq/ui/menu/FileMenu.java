@@ -4,16 +4,23 @@
  */
 package edu.sju.ee98.daq.ui.menu;
 
+import edu.sju.ee98.daq.core.data.DAQData;
+import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseFile;
 import edu.sju.ee98.daq.ui.Manager;
+import edu.sju.ee98.daq.ui.WorkspacePanel;
 import edu.sju.ee98.daq.ui.swing.SOptionDialog;
 import edu.sju.ee98.daq.ui.swing.pane.AnalogConfigPane;
 import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponseConfigPane;
 import edu.sju.ee98.daq.ui.text.Format;
+import edu.sju.ee98.daq.ui.workspace.data.FrequencyResponsePanel;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
@@ -66,8 +73,16 @@ public class FileMenu extends JMenu implements ActionListener {
             }
         } else if (e.getSource().equals(openItem)) {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "open");
+            DAQData open = DAQData.open(openDialog(Manager.MANAGER.getMainFrame()));
+            if (open instanceof FrequencyResponseFile) {
+                FrequencyResponsePanel frequencyResponsePanel = new FrequencyResponsePanel((FrequencyResponseFile) open);
+                Manager.MANAGER.getMainFrame().work.addTab(frequencyResponsePanel);
+                Manager.MANAGER.getMainFrame().work.setSelectedComponent(frequencyResponsePanel);
+            }
         } else if (e.getSource().equals(saveItem)) {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "save");
+            WorkspacePanel work = (WorkspacePanel) Manager.MANAGER.getMainFrame().work.getSelectedComponent();
+            work.save();
         } else if (e.getSource().equals(saveasItem)) {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "saveas");
         } else if (e.getSource().equals(closeItem)) {
@@ -77,5 +92,17 @@ public class FileMenu extends JMenu implements ActionListener {
         } else if (e.getSource().equals(exitItem)) {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "exit");
         }
+    }
+
+    private static File openDialog(Component parent) {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setSelectedFile(new File(System.getProperty("user.dir")));
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int show = chooser.showOpenDialog(parent);
+        if (show == JFileChooser.APPROVE_OPTION) {
+            return chooser.getSelectedFile();
+        }
+        return null;
     }
 }

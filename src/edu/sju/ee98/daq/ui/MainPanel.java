@@ -27,7 +27,7 @@ public class MainPanel extends JTabbedPane {
             @Override
             public void stateChanged(ChangeEvent e) {
                 Logger.getLogger(MainPanel.class.getName()).log(Level.FINE, String.valueOf(getSelectedIndex()));
-                WorkPanel work = (WorkPanel) getSelectedComponent();
+                WorkspacePanel work = (WorkspacePanel) getSelectedComponent();
                 if (work != null) {
                     work.init();
                 } else {
@@ -46,7 +46,7 @@ public class MainPanel extends JTabbedPane {
         tabFrequencyResponse();
     }
 
-    public void addTab(WorkPanel work) {
+    public void addTab(WorkspacePanel work) {
         super.addTab(work.name, work);
     }
 
@@ -75,7 +75,7 @@ public class MainPanel extends JTabbedPane {
         for (int i = 0; i < output.length; i++) {
             output[i] = new Complex(-i, -i);
         }
-        WorkPanel tab = new FrequencyResponsePanel(new FrequencyResponseFile(
+        WorkspacePanel tab = new FrequencyResponsePanel(new FrequencyResponseFile(
                 new FrequencyResponseConfig("dev/ao0", "dev/ai0:1", 2, 100, 10000, 1000), input, output));
 //        screen.saved = true;
 //        screen.setLocation(0, 0);

@@ -4,7 +4,7 @@
  */
 package edu.sju.ee98.daq.ui.screen;
 
-import edu.sju.ee98.daq.ui.WorkPanel;
+import edu.sju.ee98.daq.ui.WorkspacePanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -14,12 +14,13 @@ import java.awt.Graphics;
  *
  * @author Leo
  */
-public class ScreenPanel extends WorkPanel {
+public class ScreenPanel extends WorkspacePanel {
 
     private ScreenLayout grid;
 //    private ScreenWave wave;
 
     public ScreenPanel() {
+        super("new");
 //        this.setSize(1020, 300);
         this.setBackground(Color.white);
 //        this.setLayout(null);
