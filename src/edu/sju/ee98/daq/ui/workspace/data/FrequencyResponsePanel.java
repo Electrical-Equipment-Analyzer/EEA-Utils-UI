@@ -8,7 +8,9 @@ package edu.sju.ee98.daq.ui.workspace.data;
 import edu.sju.ee.daq.core.math.ComplexArray;
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseFile;
 import edu.sju.ee98.daq.ui.WorkspacePanel;
+import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponseConfigPane;
 import java.awt.Color;
+import java.io.File;
 import org.apache.commons.math3.complex.Complex;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -31,14 +33,19 @@ public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile
     private JFreeChart chart;
     private ChartPanel chartPanel;
 
+    public FrequencyResponsePanel(File file, FrequencyResponseFile data) {
+        super(file);
+        this.data = data;
+        
+        initChart();
+        initComponents();
+    }
+
     /**
      * Creates new form FrequencyResponsePanel
      */
-    public FrequencyResponsePanel(FrequencyResponseFile file) {
-        super("new Frequency Response");
-        this.data = file;
-        initChart();
-        initComponents();
+    public FrequencyResponsePanel(FrequencyResponseFile data) {
+        this(new File("new Frequency Response"), data);
     }
 
     private void initChart() {
@@ -48,18 +55,18 @@ public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile
         }
 
         Color color1 = Color.RED;
-        Color color2 = Color.GREEN;
+        Color color2 = Color.BLUE;
         
-        chart = ChartFactory.createXYLineChart("title", "Frequency", "H", createXYSeriesCollection(data, ComplexArray.getAbsolute(H)));
+        chart = ChartFactory.createXYLineChart("Bode Plot", null, "Magnitude(dB)", createXYSeriesCollection("Magnitude", data, toBode(ComplexArray.getAbsolute(H))));
         XYPlot plot = chart.getXYPlot();
-        plot.setDomainAxis(new LogarithmicAxis("df"));
+        plot.setDomainAxis(new LogarithmicAxis("Frequency"));
         
-        NumberAxis axis2 = new NumberAxis("Range Axis 2");
+        NumberAxis axis2 = new NumberAxis("Phase(Degrees)");
         axis2.setLabelPaint(color2);
         axis2.setTickLabelPaint(color2);
         plot.setRangeAxis(1, axis2);
 
-        plot.setDataset(1, createXYSeriesCollection(data, ComplexArray.getArgument(H)));
+        plot.setDataset(1, createXYSeriesCollection("Phase", data, ComplexArray.getArgument(H)));
         plot.mapDatasetToRangeAxis(1, 1);
         XYItemRenderer renderer2 = new StandardXYItemRenderer();
         renderer2.setSeriesPaint(0, color2);
@@ -73,14 +80,22 @@ public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile
         chartPanel.setRangeZoomable(true);
     }
     
-    private static XYSeriesCollection createXYSeriesCollection(FrequencyResponseFile file, double[] data) {
-        XYSeries series1 = new XYSeries("Average Weight");
+    private static XYSeriesCollection createXYSeriesCollection( String name, FrequencyResponseFile file, double[] data) {
+        XYSeries series1 = new XYSeries(name);
         for (int i = 0; i < file.getConfig().getLength(); i++) {
             series1.add(file.getConfig().getFrequency(i), data[i]);
         }
         XYSeriesCollection collection = new XYSeriesCollection();
         collection.addSeries(series1);
         return collection;
+    }
+    
+    private double[] toBode( double [] data) {
+        double bode[] = new double[data.length];
+        for (int i = 0; i < data.length; i++) {
+            bode[i] = 20 * Math.log(data[i]);
+        }
+        return bode;
     }
 
     /**
@@ -92,16 +107,19 @@ public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        frequencyResponseConfigPane1 = new edu.sju.ee98.daq.ui.swing.pane.FrequencyResponseConfigPane();
+        frequencyResponseConfigPane1 = new FrequencyResponseConfigPane(this.data.getConfig());
         jPanel1 = chartPanel;
 
-        setBackground(new java.awt.Color(51, 255, 51));
+        setPreferredSize(new java.awt.Dimension(1280, 720));
+
+        frequencyResponseConfigPane1.setMinimumSize(new java.awt.Dimension(300, 200));
+        frequencyResponseConfigPane1.setPreferredSize(new java.awt.Dimension(300, 250));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 681, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +134,7 @@ public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(frequencyResponseConfigPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(frequencyResponseConfigPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -126,8 +144,8 @@ public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(frequencyResponseConfigPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 332, Short.MAX_VALUE)))
+                        .addComponent(frequencyResponseConfigPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

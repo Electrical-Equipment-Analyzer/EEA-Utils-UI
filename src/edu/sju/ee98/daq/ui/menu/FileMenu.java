@@ -73,9 +73,10 @@ public class FileMenu extends JMenu implements ActionListener {
             }
         } else if (e.getSource().equals(openItem)) {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "open");
-            DAQData open = DAQData.open(openDialog(Manager.MANAGER.getMainFrame()));
+            File file = openDialog(Manager.MANAGER.getMainFrame());
+            DAQData open = DAQData.open(file);
             if (open instanceof FrequencyResponseFile) {
-                FrequencyResponsePanel frequencyResponsePanel = new FrequencyResponsePanel((FrequencyResponseFile) open);
+                FrequencyResponsePanel frequencyResponsePanel = new FrequencyResponsePanel(file, (FrequencyResponseFile) open);
                 Manager.MANAGER.getMainFrame().work.addTab(frequencyResponsePanel);
                 Manager.MANAGER.getMainFrame().work.setSelectedComponent(frequencyResponsePanel);
             }

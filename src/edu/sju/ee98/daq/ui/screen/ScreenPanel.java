@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.io.File;
 
 /**
  *
@@ -20,7 +21,7 @@ public class ScreenPanel extends WorkspacePanel {
 //    private ScreenWave wave;
 
     public ScreenPanel() {
-        super("new");
+        super(new File("new"));
 //        this.setSize(1020, 300);
         this.setBackground(Color.white);
 //        this.setLayout(null);

@@ -19,7 +19,7 @@ public class SLabelInput extends JComponent {
     private JTextField textField;
 
     public SLabelInput(String text) {
-        this.setSize(300, 20);
+//        this.setSize(300, 20);
         this.label = new JLabel(text);
         this.textField = new JTextField(10);
 
@@ -28,7 +28,7 @@ public class SLabelInput extends JComponent {
 
         SpringLayout layout = new SpringLayout();
         this.setLayout(layout);
-        layout.putConstraint(SpringLayout.WEST, label, 5, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.WEST, label, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.WEST, textField, 150, SpringLayout.WEST, this);
     }
 

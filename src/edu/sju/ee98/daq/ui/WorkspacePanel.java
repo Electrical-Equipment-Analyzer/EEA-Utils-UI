@@ -17,14 +17,17 @@ import javax.swing.JPanel;
  */
 public class WorkspacePanel<T extends DAQData> extends JPanel {
 
-    protected String name;
     protected File file;
     protected boolean saved;
     protected T data;
 
-    public WorkspacePanel(String name) {
-        this.name = name;
+    public WorkspacePanel(File file) {
+        this.file = file;
         saved = false;
+    }
+    
+    public String getName() {
+        return this.file.getName();
     }
 
     public void init() {
@@ -38,7 +41,7 @@ public class WorkspacePanel<T extends DAQData> extends JPanel {
 
     public void save() {
         if (this.file == null) {
-            this.file = saveDialog(this, this.name);
+            this.file = saveDialog(this, this.getName());
         }
         this.data.save(this.file);
     }

@@ -27,27 +27,29 @@ public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponseC
     public static final String NAME = "Frequency Response";
     private SLabelInput generateChannel = new SLabelInput("Generate Channel");
     private SLabelInput responseChannel = new SLabelInput("Response Channel");
+    private SLabelInput voltage = new SLabelInput("Voltage");
     private SLabelInput minFrequency = new SLabelInput("Min Frequency");
     private SLabelInput maxFrequrncy = new SLabelInput("Max Frequency");
-    private SLabelInput voltage = new SLabelInput("Voltage");
     private SLabelInput length = new SLabelInput("Length");
 
     public FrequencyResponseConfigPane() {
-//        this.setLayout(null);
-        this.setBackground(Color.red);
         this.setBorder(BorderFactory.createTitledBorder("Configure"));
+        setValue("Dev1/ao0", "Dev1/ai0:1", "2", "200", "200000", "100");
         initComponents();
     }
 
     public FrequencyResponseConfigPane(FrequencyResponseConfig config) {
-
+        this.setBorder(BorderFactory.createTitledBorder("Configure"));
+        setValue(config.getGenerateChannel(), config.getResponseChannel(), String.valueOf(config.getVoltage()),
+                String.valueOf(config.getMinFrequency()), String.valueOf(config.getMaxFrequrncy()), String.valueOf(config.getLength()));
+        initComponents();
     }
 
     public FrequencyResponseConfig getConfig() {
         return new FrequencyResponseConfig(
-                    generateChannel.getText(), responseChannel.getText(), Double.parseDouble(voltage.getText()),
-                    Double.parseDouble(minFrequency.getText()), Double.parseDouble(maxFrequrncy.getText()),
-                    Integer.parseInt(length.getText()));
+                generateChannel.getText(), responseChannel.getText(), Double.parseDouble(voltage.getText()),
+                Double.parseDouble(minFrequency.getText()), Double.parseDouble(maxFrequrncy.getText()),
+                Integer.parseInt(length.getText()));
     }
 
     @Override
@@ -55,17 +57,16 @@ public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponseC
         return "Finish";
     }
 
-    private void testValue() {
-        generateChannel.setText("Dev1/ao0");
-        responseChannel.setText("Dev1/ai0:1");
-        minFrequency.setText("200");
-        maxFrequrncy.setText("200000");
-        voltage.setText("2");
-        length.setText("100");
+    private void setValue(String generateChannel, String responseChannel, String voltage, String minFrequency, String maxFrequrncy, String length) {
+        this.generateChannel.setText(generateChannel);
+        this.responseChannel.setText(responseChannel);
+        this.minFrequency.setText(minFrequency);
+        this.maxFrequrncy.setText(maxFrequrncy);
+        this.voltage.setText(voltage);
+        this.length.setText(length);
     }
 
     private void initComponents() {
-        testValue();
         this.add(generateChannel);
         this.add(responseChannel);
         this.add(minFrequency);
@@ -76,14 +77,14 @@ public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponseC
 //        responseChannel.setLocation(50, 100);
 //        minFrequency.setLocation(50, 150);
 //        maxFrequrncy.setLocation(50, 200);
-//        voltage.setLocation(50, 250);
+//        voltage.setLocation(50, 300);
 //        length.setLocation(50, 300);
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
-                .addGap(20)
+                .addGap(10)
                 .addGroup(layout.createParallelGroup()
                         .addComponent(generateChannel)
                         .addComponent(responseChannel)
@@ -91,17 +92,17 @@ public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponseC
                         .addComponent(maxFrequrncy)
                         .addComponent(voltage)
                         .addComponent(length))
-                .addGap(20)
+                .addGap(10)
         );
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
                 .addGap(20)
-                .addComponent(generateChannel, 20, 25, 30)
-                .addComponent(responseChannel, 20, 25, 30)
-                .addComponent(minFrequency, 20, 25, 30)
-                .addComponent(maxFrequrncy, 20, 25, 30)
-                .addComponent(voltage, 20, 25, 30)
-                .addComponent(length, 20, 25, 30)
+                .addComponent(generateChannel, 30, 30, 30)
+                .addComponent(responseChannel, 30, 30, 30)
+                .addComponent(minFrequency, 30, 30, 30)
+                .addComponent(maxFrequrncy, 30, 30, 30)
+                .addComponent(voltage, 30, 30, 30)
+                .addComponent(length, 30, 30, 30)
                 .addGap(20)
         );
 
