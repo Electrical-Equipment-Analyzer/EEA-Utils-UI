@@ -10,6 +10,7 @@ import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseFile;
 import edu.sju.ee98.daq.ui.WorkspacePanel;
 import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponseConfigPane;
 import java.awt.Color;
+import java.awt.Font;
 import java.io.File;
 import org.apache.commons.math3.complex.Complex;
 import org.jfree.chart.ChartFactory;
@@ -17,6 +18,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -36,7 +38,7 @@ public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile
     public FrequencyResponsePanel(File file, FrequencyResponseFile data) {
         super(file);
         this.data = data;
-        
+
         initChart();
         initComponents();
     }
@@ -54,33 +56,41 @@ public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile
             H[i] = data.getOut()[i].divide(data.getIn()[i]);
         }
 
+        Font font = new Font(Font.DIALOG, Font.BOLD, 14);
         Color color1 = Color.RED;
         Color color2 = Color.BLUE;
-        
+
         chart = ChartFactory.createXYLineChart("Bode Plot", null, "Magnitude(dB)", createXYSeriesCollection("Magnitude", data, toBode(ComplexArray.getAbsolute(H))));
         XYPlot plot = chart.getXYPlot();
-        plot.setDomainAxis(new LogarithmicAxis("Frequency"));
         
+        LogarithmicAxis domainAxis = new LogarithmicAxis("Frequency");
+        domainAxis.setLabelFont(font);
+        plot.setDomainAxis(domainAxis);
+        
+        ValueAxis axis1 = plot.getRangeAxis();
+        axis1.setLabelFont(font);
+        axis1.setLabelPaint(color1);
+        axis1.setTickLabelPaint(color1);
+
         NumberAxis axis2 = new NumberAxis("Phase(Degrees)");
+        axis2.setLabelFont(font);
         axis2.setLabelPaint(color2);
         axis2.setTickLabelPaint(color2);
         plot.setRangeAxis(1, axis2);
 
-        plot.setDataset(1, createXYSeriesCollection("Phase", data, ComplexArray.getArgument(H)));
+        plot.setDataset(1, createXYSeriesCollection("Phase", data, toDegree(ComplexArray.getArgument(H))));
         plot.mapDatasetToRangeAxis(1, 1);
         XYItemRenderer renderer2 = new StandardXYItemRenderer();
         renderer2.setSeriesPaint(0, color2);
         plot.setRenderer(1, renderer2);
-        
-        
-        
+
         chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new java.awt.Dimension(600, 270));
         chartPanel.setDomainZoomable(true);
         chartPanel.setRangeZoomable(true);
     }
-    
-    private static XYSeriesCollection createXYSeriesCollection( String name, FrequencyResponseFile file, double[] data) {
+
+    private static XYSeriesCollection createXYSeriesCollection(String name, FrequencyResponseFile file, double[] data) {
         XYSeries series1 = new XYSeries(name);
         for (int i = 0; i < file.getConfig().getLength(); i++) {
             series1.add(file.getConfig().getFrequency(i), data[i]);
@@ -89,13 +99,21 @@ public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile
         collection.addSeries(series1);
         return collection;
     }
-    
-    private double[] toBode( double [] data) {
+
+    private double[] toBode(double[] data) {
         double bode[] = new double[data.length];
         for (int i = 0; i < data.length; i++) {
             bode[i] = 20 * Math.log(data[i]);
         }
         return bode;
+    }
+
+    private double[] toDegree(double[] data) {
+        double degree[] = new double[data.length];
+        for (int i = 0; i < data.length; i++) {
+            degree[i] = Math.toDegrees(data[i]);
+        }
+        return degree;
     }
 
     /**

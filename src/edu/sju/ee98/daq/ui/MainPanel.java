@@ -47,7 +47,7 @@ public class MainPanel extends JTabbedPane {
     }
 
     public void addTab(WorkspacePanel work) {
-        super.addTab(work.getName(), work);
+        super.addTab(work.getFileName(), work);
     }
 
     private void tabSource() {

@@ -26,7 +26,7 @@ public class WorkspacePanel<T extends DAQData> extends JPanel {
         saved = false;
     }
     
-    public String getName() {
+    public String getFileName() {
         return this.file.getName();
     }
 
@@ -41,7 +41,7 @@ public class WorkspacePanel<T extends DAQData> extends JPanel {
 
     public void save() {
         if (this.file == null) {
-            this.file = saveDialog(this, this.getName());
+            this.file = saveDialog(this, this.getFileName());
         }
         this.data.save(this.file);
     }
