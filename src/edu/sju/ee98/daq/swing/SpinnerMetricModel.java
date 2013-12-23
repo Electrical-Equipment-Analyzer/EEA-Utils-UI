@@ -4,74 +4,66 @@
  */
 package edu.sju.ee98.daq.swing;
 
-import edu.sju.ee.daq.core.math.MetricNumber;
-import java.io.Serializable;
-import javax.swing.AbstractSpinnerModel;
+import edu.sju.ee.daq.core.math.MetricPrefixFormat;
+import java.text.NumberFormat;
+import javax.swing.JFormattedTextField;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.DocumentFilter.FilterBypass;
+import javax.swing.text.InternationalFormatter;
 
 /**
  *
  * @author Leo
  */
-public class SpinnerMetricModel extends AbstractSpinnerModel implements Serializable {
+public class SpinnerMetricModel extends SpinnerNumberModel {
 
-    private MetricNumber value;
-    private double minimum, maximum;
-
-    public SpinnerMetricModel(MetricNumber value, double minimum, double maximum) {
-        this.value = value;
-        this.minimum = minimum;
-        this.maximum = maximum;
-    }
+//    public static final MetricPrefixFormat FORMAT = new MetricPrefixFormat("0.###");
 
     public SpinnerMetricModel(double value, double minimum, double maximum) {
-        this(new MetricNumber(value), minimum, maximum);
+        super(value, minimum, maximum, 0);
     }
 
-    public double getDouble() {
-        return value.doubleValue();
-    }
-
-    @Override
-    public Object getValue() {
-        return value.toString();
-    }
-
-    @Override
-    public void setValue(Object value) {
-        if ((value == null) || !(value instanceof MetricNumber)) {
-            throw new IllegalArgumentException("illegal value");
+    private static int getFirst(double value) {
+        if (value > 1) {
+            while (value >= 10) {
+                value /= 10;
+            }
+        } else {
+            while (value < 1) {
+                value *= 10;
+            }
         }
-        if (!value.equals(this.value)) {
-            this.value = (MetricNumber) value;
-            fireStateChanged();
-        }
+        return (int) value;
     }
 
-    private MetricNumber incrValue(boolean up) {
-
-        int s = value.getFirst() % 10;
-        double v = 0;
+    private Number incrValue(boolean up) {
+        double value = (double) super.getValue();
+        int s = getFirst(value) % 10;
+        double newValue = 0;
         switch (s) {
             case 1:
-                v = (up ? value.doubleValue() * 2 : value.doubleValue() / 2);
+                newValue = (up ? value * 2 : value / 2);
                 break;
             case 2:
-                v = (up ? value.doubleValue() / 2 * 5 : value.doubleValue() / 2);
+                newValue = (up ? value / 2 * 5 : value / 2);
                 break;
             case 5:
-                v = (up ? value.doubleValue() * 2 : value.doubleValue() / 5 * 2);
+                newValue = (up ? value * 2 : value / 5 * 2);
                 break;
-            default:
-                System.out.println(s);
         }
 
-        if (v > maximum) {
+        if ((super.getMaximum() != null) && (super.getMaximum().compareTo(newValue) < 0)) {
             return null;
-        }
-        if (v < minimum) {
+        } else if ((super.getMinimum() != null) && (super.getMinimum().compareTo(newValue) > 0)) {
             return null;
         } else {
-            return new MetricNumber(v);
+            System.out.println(newValue);
+            return newValue;
         }
     }
 

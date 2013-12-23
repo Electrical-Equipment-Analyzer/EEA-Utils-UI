@@ -48,7 +48,7 @@ public class Axis extends JPanel implements ChangeListener {
     }
 
     public double getDiv() {
-        return ((SpinnerMetricModel) div.getModel()).getDouble();
+        return (double) div.getModel().getValue();
     }
 
     @Override

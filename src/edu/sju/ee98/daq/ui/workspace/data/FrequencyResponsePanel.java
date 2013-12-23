@@ -6,6 +6,7 @@
 package edu.sju.ee98.daq.ui.workspace.data;
 
 import edu.sju.ee.daq.core.math.ComplexArray;
+import edu.sju.ee.daq.core.math.MetricPrefixFormat;
 import edu.sju.ee98.daq.core.frequency.response.FrequencyResponseFile;
 import edu.sju.ee98.daq.ui.WorkspacePanel;
 import edu.sju.ee98.daq.ui.swing.pane.FrequencyResponseConfigPane;
@@ -16,6 +17,8 @@ import org.apache.commons.math3.complex.Complex;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.Axis;
+import org.jfree.chart.axis.LogAxis;
 import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
@@ -62,11 +65,12 @@ public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile
 
         chart = ChartFactory.createXYLineChart("Bode Plot", null, "Magnitude(dB)", createXYSeriesCollection("Magnitude", data, toBode(ComplexArray.getAbsolute(H))));
         XYPlot plot = chart.getXYPlot();
-        
-        LogarithmicAxis domainAxis = new LogarithmicAxis("Frequency");
+
+        LogAxis domainAxis = new LogAxis("Frequency");
         domainAxis.setLabelFont(font);
+        domainAxis.setNumberFormatOverride(new MetricPrefixFormat("0.###"));
         plot.setDomainAxis(domainAxis);
-        
+
         ValueAxis axis1 = plot.getRangeAxis();
         axis1.setLabelFont(font);
         axis1.setLabelPaint(color1);

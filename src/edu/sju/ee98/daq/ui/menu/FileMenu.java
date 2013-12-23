@@ -84,6 +84,7 @@ public class FileMenu extends JMenu implements ActionListener {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "save");
             WorkspacePanel work = (WorkspacePanel) Manager.MANAGER.getMainFrame().work.getSelectedComponent();
             work.save();
+            Manager.MANAGER.getMainFrame().work.setTitleAt(Manager.MANAGER.getMainFrame().work.getSelectedIndex(), work.getFileName());
         } else if (e.getSource().equals(saveasItem)) {
             Logger.getLogger(FileMenu.class.getName()).log(Level.FINER, "saveas");
         } else if (e.getSource().equals(closeItem)) {

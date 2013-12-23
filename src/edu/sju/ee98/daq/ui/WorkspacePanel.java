@@ -40,7 +40,7 @@ public class WorkspacePanel<T extends DAQData> extends JPanel {
     }
 
     public void save() {
-        if (this.file == null) {
+        if (!this.file.exists()) {
             this.file = saveDialog(this, this.getFileName());
         }
         this.data.save(this.file);
