@@ -14,7 +14,7 @@ import javax.swing.JMenuBar;
  */
 public class SMenuBar extends JMenuBar {
 
-    private static final ResourceBundle resource = ResourceBundle.getBundle("edu.sju.ee98.daq.ui.text.menu");
+    private static final ResourceBundle resource = ResourceBundle.getBundle("menu");
     public final FileMenu fileMenu;
     public final EditMenu editMenu;
 
