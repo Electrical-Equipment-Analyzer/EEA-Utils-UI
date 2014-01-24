@@ -11,6 +11,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -39,23 +40,22 @@ public class JFree {
         for (int i = 0; i < generateLength; i++) {
             series1.add(i, analogGenerator.getData()[i]);
         }
-        
+
         XYSeriesCollection collection = new XYSeriesCollection();
         collection.addSeries(series1);
-        
-        
+
         XYSeries series2 = new XYSeries("Average Weight");
         for (int i = 0; i < generateLength; i++) {
             series2.add(i, analogGenerator2.getData()[i]);
         }
-        
+
         XYSeriesCollection result2 = new XYSeriesCollection();
         result2.addSeries(series2);
 
 // create a chart...
-        JFreeChart chart = ChartFactory.createXYLineChart("title", "Frequency", "H", collection);
+        JFreeChart chart = ChartFactory.createXYLineChart("title", "Frequency", "H", collection, PlotOrientation.VERTICAL, true, true, false);
         XYPlot plot = chart.getXYPlot();
-        
+
         NumberAxis axis2 = new NumberAxis("Range Axis 2");
 //        axis2.setFixedDimension(10.0);
 //        axis2.setAutoRangeIncludesZero(false);
@@ -64,7 +64,6 @@ public class JFree {
         plot.setRangeAxis(1, axis2);
 //        plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_LEFT);
 
-        
         plot.setDataset(1, result2);
         plot.mapDatasetToRangeAxis(1, 1);
         XYItemRenderer renderer2 = new StandardXYItemRenderer();

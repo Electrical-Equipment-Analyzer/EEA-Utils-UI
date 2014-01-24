@@ -20,6 +20,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.LogAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -61,7 +62,7 @@ public class FrequencyResponsePanel extends WorkspacePanel<FrequencyResponseFile
         Color color1 = Color.RED;
         Color color2 = Color.BLUE;
 
-        chart = ChartFactory.createXYLineChart("Bode Plot", null, "Magnitude(dB)", createXYSeriesCollection("Magnitude", data, toBode(ComplexArray.getAbsolute(H))));
+        chart = ChartFactory.createXYLineChart("Bode Plot", null, "Magnitude(dB)", createXYSeriesCollection("Magnitude", data, toBode(ComplexArray.getAbsolute(H))), PlotOrientation.VERTICAL, true, true, false);
         XYPlot plot = chart.getXYPlot();
 
         LogAxis domainAxis = new LogAxis("Frequency");
