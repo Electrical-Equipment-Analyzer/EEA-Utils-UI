@@ -40,17 +40,16 @@ import tw.edu.sju.ee.eea.core.math.MetricPrefixFormat;
  *
  * @author Leo
  */
-public class BodePlotChart extends ChartPanel {
+public class BodePlot extends ChartPanel {
 
-    public BodePlotChart(Map<Double, Complex> gain) {
-        super(initChart(gain));
+    private BodePlot(JFreeChart chart) {
+        super(chart);
         this.setPreferredSize(new java.awt.Dimension(600, 270));
         this.setDomainZoomable(true);
         this.setRangeZoomable(true);
     }
 
-    private static JFreeChart initChart(Map<Double, Complex> gain) {
-
+    public static BodePlot createMagnitudePhase(Map<Double, Complex> gain) {
         Font font = new Font(Font.DIALOG, Font.BOLD, 14);
         Color color1 = Color.RED;
         Color color2 = Color.BLUE;
@@ -80,9 +79,42 @@ public class BodePlotChart extends ChartPanel {
         renderer2.setSeriesPaint(0, color2);
         plot.setRenderer(1, renderer2);
 
-        return chart;
+        return new BodePlot(chart);
     }
 
+    public static BodePlot createDiffMagnitude(Map<Double, Complex> gain1, Map<Double, Complex> gain2) {
+        Font font = new Font(Font.DIALOG, Font.BOLD, 14);
+        Color color1 = Color.RED;
+        Color color2 = Color.BLUE;
+
+        JFreeChart chart = ChartFactory.createXYLineChart("Diff Bode Plot", null, "Magnitude(dB)",
+                createXYSeriesCollection("A", gain1, true), PlotOrientation.VERTICAL, true, true, false);
+        XYPlot plot = chart.getXYPlot();
+
+        LogAxis domainAxis = new LogAxis("Frequency");
+        domainAxis.setLabelFont(font);
+        domainAxis.setNumberFormatOverride(new MetricPrefixFormat("0.###"));
+        plot.setDomainAxis(domainAxis);
+
+        ValueAxis axis1 = plot.getRangeAxis();
+        axis1.setLabelFont(font);
+        axis1.setLabelPaint(color1);
+        axis1.setTickLabelPaint(color1);
+
+//        NumberAxis axis2 = new NumberAxis("Magnitude(dB)");
+//        axis2.setLabelFont(font);
+//        axis2.setLabelPaint(color2);
+//        axis2.setTickLabelPaint(color2);
+        plot.setRangeAxis(1, axis1);
+
+        plot.setDataset(1, createXYSeriesCollection("B", gain2, true));
+        plot.mapDatasetToRangeAxis(1, 1);
+        XYItemRenderer renderer2 = new StandardXYItemRenderer();
+        renderer2.setSeriesPaint(0, color2);
+        plot.setRenderer(1, renderer2);
+
+        return new BodePlot(chart);
+    }
     private static XYSeriesCollection createXYSeriesCollection(String name, Map<Double, Complex> gain, boolean abs) {
         XYSeries series1 = new XYSeries(name);
         Iterator it = gain.entrySet().iterator();
