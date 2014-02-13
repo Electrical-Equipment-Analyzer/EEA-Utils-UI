@@ -4,14 +4,8 @@
  */
 package tw.edu.sju.ee.eea.ui.swing.pane;
 
-import tw.edu.sju.ee.eea.core.data.Wave;
 import tw.edu.sju.ee.eea.core.function.AnalogVoltage;
-import tw.edu.sju.ee.eea.math.WaveGenerator;
-import tw.edu.sju.ee.eea.ui.Manager;
-import tw.edu.sju.ee.eea.ui.screen.SampleLayout;
-import tw.edu.sju.ee.eea.ui.screen.ScreenPanel;
 import tw.edu.sju.ee.eea.ui.swing.SLabelInput;
-import tw.edu.sju.ee.eea.ui.swing.SOptionDialog;
 import tw.edu.sju.ee.eea.ui.swing.SOptionPanel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -76,31 +70,4 @@ public class AnalogConfigPane extends SOptionPanel<AnalogVoltage> {
         }
     }
 
-    public static void create() {
-        AnalogVoltage config = SOptionDialog.showAnalogConfigDialog(Manager.MANAGER.getMainFrame());
-        System.out.println(config);
-        if (config != null) {
-            Wave wave = null;
-            try {
-                wave = config.process();
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(Manager.MANAGER.getMainFrame(), ex.getMessage(), ex.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
-                int simulator = JOptionPane.showConfirmDialog(Manager.MANAGER.getMainFrame(), "Do you want to use the simulator?", "Qustion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (simulator == JOptionPane.YES_OPTION) {
-                    WaveGenerator analogGenerator = new WaveGenerator(1024, 1024, 1, 100);
-                    wave = new Wave(analogGenerator.getRate(), analogGenerator.getData());
-                } else {
-                    return;
-                }
-            }
-            ScreenPanel screen = new ScreenPanel();
-            screen.setLocation(0, 0);
-            screen.setGrid(new SampleLayout(wave));
-//            screen.setWave(wave);
-            screen.setDropTarget(null);
-            screen.repaint();
-            Manager.MANAGER.getMainFrame().work.addTab(screen);
-            Manager.MANAGER.getMainFrame().work.setSelectedComponent(screen);
-        }
-    }
 }

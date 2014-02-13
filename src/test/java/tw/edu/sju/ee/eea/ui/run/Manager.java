@@ -4,17 +4,14 @@
  */
 package tw.edu.sju.ee.eea.ui.run;
 
-import tw.edu.sju.ee.eea.ui.MainFrame;
-
 
 /**
  *
  * @author Leo
  */
-public class Manager extends tw.edu.sju.ee.eea.ui.Manager {
+public class Manager {
 
     public Manager() {
-        this.mainFrame = new MainFrame(this);
     }
     
 }

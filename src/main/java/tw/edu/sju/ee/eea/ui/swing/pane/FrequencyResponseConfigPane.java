@@ -4,14 +4,9 @@
  */
 package tw.edu.sju.ee.eea.ui.swing.pane;
 
-import tw.edu.sju.ee.eea.core.frequency.response.FrequencyResponse;
 import tw.edu.sju.ee.eea.core.frequency.response.FrequencyResponseConfig;
-import tw.edu.sju.ee.eea.core.frequency.response.FrequencyResponseFile;
-import tw.edu.sju.ee.eea.ui.Manager;
 import tw.edu.sju.ee.eea.ui.swing.SLabelInput;
-import tw.edu.sju.ee.eea.ui.swing.SOptionDialog;
 import tw.edu.sju.ee.eea.ui.swing.SOptionPanel;
-import tw.edu.sju.ee.eea.ui.workspace.data.FrequencyResponsePanel;
 import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -33,7 +28,7 @@ public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponseC
 
     public FrequencyResponseConfigPane() {
         this.setBorder(BorderFactory.createTitledBorder("Configure"));
-        setValue("Dev1/ao0", "Dev1/ai0:1", "2", "200", "200000", "100");
+        setValue("PXI1Slot3", "Dev1/ai0:1", "2", "200", "200000", "100");
         initComponents();
     }
 
@@ -114,23 +109,6 @@ public class FrequencyResponseConfigPane extends SOptionPanel<FrequencyResponseC
         } catch (java.lang.NumberFormatException ex) {
             JOptionPane.showMessageDialog(FrequencyResponseConfigPane.this.getRootPane(), "Please input a Integer!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
-        }
-    }
-
-    public static void create() {
-        FrequencyResponseConfig config = SOptionDialog.showFrequencyResponseDialog(Manager.MANAGER.getMainFrame());
-        System.out.println(config);
-        if (config != null) {
-            FrequencyResponseFile file = new FrequencyResponse(config).process();
-//            ScreenPanel screen = new ScreenPanel();
-//            screen.setLocation(0, 0);
-//            screen.setGrid(new BodePlotLayout(file));
-//            screen.setDropTarget(null);
-//            screen.repaint();
-            FrequencyResponsePanel frequencyResponsePanel = new FrequencyResponsePanel(file);
-            Manager.MANAGER.getMainFrame().work.addTab(frequencyResponsePanel);
-            Manager.MANAGER.getMainFrame().work.setSelectedComponent(frequencyResponsePanel);
-
         }
     }
 }
