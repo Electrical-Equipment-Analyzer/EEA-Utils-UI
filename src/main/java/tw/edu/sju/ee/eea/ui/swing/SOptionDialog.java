@@ -7,7 +7,6 @@ package tw.edu.sju.ee.eea.ui.swing;
 import tw.edu.sju.ee.eea.core.frequency.response.FrequencyResponseConfig;
 import tw.edu.sju.ee.eea.core.function.AnalogVoltage;
 import tw.edu.sju.ee.eea.ui.swing.pane.AnalogConfigPane;
-import tw.edu.sju.ee.eea.ui.swing.pane.FrequencyResponseConfigPane;
 import tw.edu.sju.ee.eea.ui.swing.pane.NewFilePane;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -86,14 +85,6 @@ public class SOptionDialog extends JComponent implements ActionListener {
         AnalogConfigPane panel = new AnalogConfigPane();
         SOptionDialog pane = new SOptionDialog(panel);
         pane.dialog = pane.createDialog(parentComponent, AnalogConfigPane.NAME);
-        pane.dialog.show();
-        return panel.getValue();
-    }
-
-    public static FrequencyResponseConfig showFrequencyResponseDialog(Component parentComponent) {
-        FrequencyResponseConfigPane panel = new FrequencyResponseConfigPane();
-        SOptionDialog pane = new SOptionDialog(panel);
-        pane.dialog = pane.createDialog(parentComponent, FrequencyResponseConfigPane.NAME);
         pane.dialog.show();
         return panel.getValue();
     }

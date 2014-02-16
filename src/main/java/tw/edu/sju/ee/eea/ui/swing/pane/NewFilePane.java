@@ -18,7 +18,7 @@ public class NewFilePane extends SOptionPanel<String> {
     public static final String NAME = "New File";
     private JLabel label = new JLabel("File Type");
     private JComboBox file = new JComboBox(
-            new String[]{AnalogConfigPane.NAME, FrequencyResponseConfigPane.NAME});
+            new String[]{AnalogConfigPane.NAME});
 
     public NewFilePane() {
         this.setLayout(null);
