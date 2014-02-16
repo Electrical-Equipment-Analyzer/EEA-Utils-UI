@@ -19,19 +19,22 @@ package tw.edu.sju.ee.eea.ui.workspace.plot;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.Map;
 import org.apache.commons.math3.complex.Complex;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.LogAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import tw.edu.sju.ee.eea.core.math.MetricPrefixFormat;
@@ -40,91 +43,71 @@ import tw.edu.sju.ee.eea.core.math.MetricPrefixFormat;
  *
  * @author Leo
  */
-public class BodePlot extends ChartPanel {
+public class BodePlot extends JFreeChart {
 
-    private BodePlot(JFreeChart chart) {
-        super(chart);
-        this.setPreferredSize(new java.awt.Dimension(600, 270));
-        this.setDomainZoomable(true);
-        this.setRangeZoomable(true);
+    private static final DecimalFormat FORMAT = new MetricPrefixFormat("0.###");
+    private Font font = new Font(Font.DIALOG, Font.BOLD, 14);
+    private Color color1 = Color.RED;
+    private Color color2 = Color.BLUE;
+
+    public BodePlot(String title) {
+        super(title, new XYPlot());
+        super.getXYPlot().setDomainAxis(createAxisX());
+        super.getXYPlot().setOrientation(PlotOrientation.VERTICAL);
+        ChartFactory.getChartTheme().apply(this);
     }
 
-    public static BodePlot createMagnitudePhase(Map<Double, Complex> gain) {
-        Font font = new Font(Font.DIALOG, Font.BOLD, 14);
-        Color color1 = Color.RED;
-        Color color2 = Color.BLUE;
-
-        JFreeChart chart = ChartFactory.createXYLineChart("Bode Plot", null, "Magnitude(dB)", createXYSeriesCollection("Magnitude", gain, true), PlotOrientation.VERTICAL, true, true, false);
-        XYPlot plot = chart.getXYPlot();
-
-        LogAxis domainAxis = new LogAxis("Frequency");
-        domainAxis.setLabelFont(font);
-        domainAxis.setNumberFormatOverride(new MetricPrefixFormat("0.###"));
-        plot.setDomainAxis(domainAxis);
-
-        ValueAxis axis1 = plot.getRangeAxis();
-        axis1.setLabelFont(font);
-        axis1.setLabelPaint(color1);
-        axis1.setTickLabelPaint(color1);
-
-        NumberAxis axis2 = new NumberAxis("Phase(Degrees)");
-        axis2.setLabelFont(font);
-        axis2.setLabelPaint(color2);
-        axis2.setTickLabelPaint(color2);
-        plot.setRangeAxis(1, axis2);
-
-        plot.setDataset(1, createXYSeriesCollection("Phase", gain, false));
-        plot.mapDatasetToRangeAxis(1, 1);
-        XYItemRenderer renderer2 = new StandardXYItemRenderer();
-        renderer2.setSeriesPaint(0, color2);
-        plot.setRenderer(1, renderer2);
-
-        return new BodePlot(chart);
+    private ValueAxis createAxisX() {
+        LogAxis axis = new LogAxis("Frequency");
+        axis.setLabelFont(font);
+        axis.setNumberFormatOverride(FORMAT);
+        return axis;
     }
 
-    public static BodePlot createDiffMagnitude(Map<Double, Complex> gain1, Map<Double, Complex> gain2) {
-        Font font = new Font(Font.DIALOG, Font.BOLD, 14);
-        Color color1 = Color.RED;
-        Color color2 = Color.BLUE;
-
-        JFreeChart chart = ChartFactory.createXYLineChart("Diff Bode Plot", null, "Magnitude(dB)",
-                createXYSeriesCollection("A", gain1, true), PlotOrientation.VERTICAL, true, true, false);
-        XYPlot plot = chart.getXYPlot();
-
-        LogAxis domainAxis = new LogAxis("Frequency");
-        domainAxis.setLabelFont(font);
-        domainAxis.setNumberFormatOverride(new MetricPrefixFormat("0.###"));
-        plot.setDomainAxis(domainAxis);
-
-        ValueAxis axis1 = plot.getRangeAxis();
-        axis1.setLabelFont(font);
-        axis1.setLabelPaint(color1);
-        axis1.setTickLabelPaint(color1);
-
-//        NumberAxis axis2 = new NumberAxis("Magnitude(dB)");
-//        axis2.setLabelFont(font);
-//        axis2.setLabelPaint(color2);
-//        axis2.setTickLabelPaint(color2);
-        plot.setRangeAxis(1, axis1);
-
-        plot.setDataset(1, createXYSeriesCollection("B", gain2, true));
-        plot.mapDatasetToRangeAxis(1, 1);
-        XYItemRenderer renderer2 = new StandardXYItemRenderer();
-        renderer2.setSeriesPaint(0, color2);
-        plot.setRenderer(1, renderer2);
-
-        return new BodePlot(chart);
+    private NumberAxis createAxisY(String label) {
+        NumberAxis axis = new NumberAxis(label);
+        axis.setLabelFont(font);
+        return axis;
     }
+
+    public static final int SHOW_DATA_BOTH = 0;
+    public static final int SHOW_DATA_MAGNITUDE = 1;
+    public static final int SHOW_DATA_PHASE = 2;
+
+    public void setData(Map<Double, Complex> gain, int showData) {
+        int i = 0;
+        if (showData != SHOW_DATA_PHASE) {
+            addData(i++, "Magnitude(dB)", color1, createXYSeriesCollection("Magnitude", gain, true));
+        }
+        if (showData != SHOW_DATA_MAGNITUDE) {
+            addData(i++, "Phase(Degrees)", color2, createXYSeriesCollection("Phase", gain, false));
+        }
+    }
+
+    private void addData(int index, String label, Color color, XYDataset dataset) {
+        NumberAxis axis = createAxisY(label);
+        axis.setLabelPaint(color);
+        axis.setTickLabelPaint(color);
+        XYItemRenderer renderer = new XYLineAndShapeRenderer(true, false);
+        renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(
+                StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, FORMAT, NumberFormat.getNumberInstance()));
+        renderer.setSeriesPaint(0, color);
+        super.getXYPlot().setRangeAxis(index, axis);
+        super.getXYPlot().setDataset(index, dataset);
+        super.getXYPlot().mapDatasetToRangeAxis(index, index);
+        super.getXYPlot().setRenderer(index, renderer);
+    }
+
     private static XYSeriesCollection createXYSeriesCollection(String name, Map<Double, Complex> gain, boolean abs) {
-        XYSeries series1 = new XYSeries(name);
+        XYSeries series = new XYSeries(name);
         Iterator it = gain.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<Double, Complex> entry = (Map.Entry<Double, Complex>) it.next();
-            series1.add((double) entry.getKey(),
+            series.add((double) entry.getKey(),
                     abs ? 20 * Math.log(entry.getValue().abs()) : Math.toDegrees(entry.getValue().getArgument()));
         }
         XYSeriesCollection collection = new XYSeriesCollection();
-        collection.addSeries(series1);
+        collection.addSeries(series);
         return collection;
     }
 }
