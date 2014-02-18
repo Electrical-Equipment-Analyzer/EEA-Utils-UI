@@ -45,16 +45,27 @@ import tw.edu.sju.ee.eea.core.math.MetricPrefixFormat;
  */
 public class BodePlot extends JFreeChart {
 
+    public static final int SHOW_DATA_BOTH = 0;
+    public static final int SHOW_DATA_MAGNITUDE = 1;
+    public static final int SHOW_DATA_PHASE = 2;
+
     private static final DecimalFormat FORMAT = new MetricPrefixFormat("0.###");
     private Font font = new Font(Font.DIALOG, Font.BOLD, 14);
-    private Color color1 = Color.RED;
-    private Color color2 = Color.BLUE;
+    private Color seriesColors[] = new Color[]{Color.RED, Color.BLUE, Color.ORANGE, Color.GREEN, Color.YELLOW};
 
     public BodePlot(String title) {
         super(title, new XYPlot());
         super.getXYPlot().setDomainAxis(createAxisX());
         super.getXYPlot().setOrientation(PlotOrientation.VERTICAL);
         ChartFactory.getChartTheme().apply(this);
+    }
+
+    public Color getSeriesColor(int i) {
+        try {
+            return seriesColors[i];
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            return new Color(i);
+        }
     }
 
     private ValueAxis createAxisX() {
@@ -64,41 +75,48 @@ public class BodePlot extends JFreeChart {
         return axis;
     }
 
-    private NumberAxis createAxisY(String label) {
+    public void createAxisY(int index, String label) {
         NumberAxis axis = new NumberAxis(label);
         axis.setLabelFont(font);
-        return axis;
+        axis.setLabelPaint(getSeriesColor(index));
+        axis.setTickLabelPaint(getSeriesColor(index));
+        super.getXYPlot().setRangeAxis(index, axis);
     }
 
-    public static final int SHOW_DATA_BOTH = 0;
-    public static final int SHOW_DATA_MAGNITUDE = 1;
-    public static final int SHOW_DATA_PHASE = 2;
+    private void creatrRenderer(int index) {
+        XYItemRenderer renderer = new XYLineAndShapeRenderer(true, false);
+        renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(
+                StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, FORMAT, NumberFormat.getNumberInstance()));
+        renderer.setSeriesPaint(0, getSeriesColor(index));
+        super.getXYPlot().setRenderer(index, renderer);
+    }
+
+    public void setSeriesColors(Color[] seriesColors) {
+        this.seriesColors = seriesColors;
+    }
 
     public void setData(Map<Double, Complex> gain, int showData) {
         int i = 0;
         if (showData != SHOW_DATA_PHASE) {
-            addData(i++, "Magnitude(dB)", color1, createXYSeriesCollection("Magnitude", gain, true));
+            addData(i++, "Magnitude(dB)", createXYSeriesCollection("Magnitude", gain, true));
         }
         if (showData != SHOW_DATA_MAGNITUDE) {
-            addData(i++, "Phase(Degrees)", color2, createXYSeriesCollection("Phase", gain, false));
+            addData(i++, "Phase(Degrees)", createXYSeriesCollection("Phase", gain, false));
         }
     }
 
-    private void addData(int index, String label, Color color, XYDataset dataset) {
-        NumberAxis axis = createAxisY(label);
-        axis.setLabelPaint(color);
-        axis.setTickLabelPaint(color);
-        XYItemRenderer renderer = new XYLineAndShapeRenderer(true, false);
-        renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(
-                StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, FORMAT, NumberFormat.getNumberInstance()));
-        renderer.setSeriesPaint(0, color);
-        super.getXYPlot().setRangeAxis(index, axis);
-        super.getXYPlot().setDataset(index, dataset);
-        super.getXYPlot().mapDatasetToRangeAxis(index, index);
-        super.getXYPlot().setRenderer(index, renderer);
+    public void addData(int index, String label, XYDataset dataset) {
+        createAxisY(index, label);
+        addData(index, index, dataset);
     }
 
-    private static XYSeriesCollection createXYSeriesCollection(String name, Map<Double, Complex> gain, boolean abs) {
+    public void addData(int index, int axisIndex, XYDataset dataset) {
+        super.getXYPlot().setDataset(index, dataset);
+        super.getXYPlot().mapDatasetToRangeAxis(index, axisIndex);
+        creatrRenderer(index);
+    }
+
+    public static XYSeriesCollection createXYSeriesCollection(String name, Map<Double, Complex> gain, boolean abs) {
         XYSeries series = new XYSeries(name);
         Iterator it = gain.entrySet().iterator();
         while (it.hasNext()) {
