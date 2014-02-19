@@ -45,10 +45,6 @@ import tw.edu.sju.ee.eea.core.math.MetricPrefixFormat;
  */
 public class BodePlot extends JFreeChart {
 
-    public static final int SHOW_DATA_BOTH = 0;
-    public static final int SHOW_DATA_MAGNITUDE = 1;
-    public static final int SHOW_DATA_PHASE = 2;
-
     private static final DecimalFormat FORMAT = new MetricPrefixFormat("0.###");
     private Font font = new Font(Font.DIALOG, Font.BOLD, 14);
     private Color seriesColors[] = new Color[]{Color.RED, Color.BLUE, Color.ORANGE, Color.GREEN, Color.YELLOW};
@@ -69,7 +65,7 @@ public class BodePlot extends JFreeChart {
     }
 
     private ValueAxis createAxisX() {
-        LogAxis axis = new LogAxis("Frequency");
+        LogAxis axis = new LogAxis("Frequency(Hz)");
         axis.setLabelFont(font);
         axis.setNumberFormatOverride(FORMAT);
         return axis;
@@ -93,16 +89,6 @@ public class BodePlot extends JFreeChart {
 
     public void setSeriesColors(Color[] seriesColors) {
         this.seriesColors = seriesColors;
-    }
-
-    public void setData(Map<Double, Complex> gain, int showData) {
-        int i = 0;
-        if (showData != SHOW_DATA_PHASE) {
-            addData(i++, "Magnitude(dB)", createXYSeriesCollection("Magnitude", gain, true));
-        }
-        if (showData != SHOW_DATA_MAGNITUDE) {
-            addData(i++, "Phase(Degrees)", createXYSeriesCollection("Phase", gain, false));
-        }
     }
 
     public void addData(int index, String label, XYDataset dataset) {
