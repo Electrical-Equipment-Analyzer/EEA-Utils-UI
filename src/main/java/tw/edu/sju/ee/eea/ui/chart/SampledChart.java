@@ -19,16 +19,13 @@ package tw.edu.sju.ee.eea.ui.chart;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.text.DecimalFormat;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
-import java.util.Map;
-import org.apache.commons.math3.complex.Complex;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.LogAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.labels.StandardXYToolTipGenerator;
@@ -40,7 +37,8 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import tw.edu.sju.ee.eea.core.math.MetricPrefixFormat;
+import org.openide.util.Exceptions;
+import tw.edu.sju.ee.eea.util.iepe.VoltageInputStream;
 
 /**
  *
@@ -81,7 +79,7 @@ public class SampledChart extends JFreeChart {
         axis.setLabelFont(font);
         return axis;
     }
-    
+
     public void addMarker(Marker mark) {
         super.getXYPlot().addDomainMarker(mark);
     }
@@ -101,11 +99,39 @@ public class SampledChart extends JFreeChart {
 //    public void addData(int index, String label, XYDataset dataset) {
 //        addData(index, index, dataset);
 //    }
-
     public void addData(int index, XYDataset dataset) {
         super.getXYPlot().setDataset(index, dataset);
         super.getXYPlot().mapDatasetToRangeAxis(index, 0);
         creatrRenderer(index);
     }
 
+    public static XYSeriesCollection createSampledSeriesCollection(String name, InputStream in, int pos, int bps, int length) {
+        XYSeries series = new XYSeries(name);
+        double tmp = 0;
+        try {
+            VoltageInputStream vi = new VoltageInputStream(in);
+            int bpms = bps / 1000;
+            vi.skip(pos * bpms);
+            int end = pos + length;
+            int spms = length / 1000;
+            spms = (spms < 1 ? 1 : spms);
+            int spms2 = 2 * spms;
+            for (double i = pos; i < end; i++) {
+                for (int j = 0; j < bpms; j++) {
+                    tmp = Math.max(tmp, vi.readVoltage());
+                }
+                if (i % spms == 0) {
+                    series.add(i, (i % spms2 == 0 ? -tmp : tmp));
+                    tmp = 0;
+                }
+            }
+        } catch (java.io.EOFException ex) {
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+
+        XYSeriesCollection collection = new XYSeriesCollection();
+        collection.addSeries(series);
+        return collection;
+    }
 }

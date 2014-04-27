@@ -49,5 +49,10 @@
             <artifactId>jfreechart</artifactId>
             <version>1.0.15</version>
         </dependency>
+        <dependency>
+            <groupId>tw.edu.sju.ee.eea.util</groupId>
+            <artifactId>sju-eea-util.iepe</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>
