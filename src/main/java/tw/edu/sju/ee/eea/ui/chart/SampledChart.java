@@ -39,6 +39,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.openide.util.Exceptions;
 import tw.edu.sju.ee.eea.util.iepe.io.IepeInputStream;
+import tw.edu.sju.ee.eea.util.iepe.io.SampledStream;
 
 /**
  *
@@ -115,15 +116,12 @@ public class SampledChart extends JFreeChart {
             int end = pos + length;
             int spms = length / 1000;
             spms = (spms < 1 ? 1 : spms);
-            int spms2 = 2 * spms;
-            for (double i = pos; i < end; i++) {
-                for (int j = 0; j < bpms; j++) {
-                    tmp = Math.max(tmp, vi.readValue());
-                }
-                if (i % spms == 0) {
-                    series.add(i, (i % spms2 == 0 ? -tmp : tmp));
-                    tmp = 0;
-                }
+
+            int ff = bpms * spms;
+            
+            SampledStream ss = new SampledStream(vi, ff);
+            for (int i = pos; i < end && ss.available() > ff; i+=spms) {
+                series.add(i, ss.readSampled());
             }
         } catch (java.io.EOFException ex) {
         } catch (IOException ex) {
