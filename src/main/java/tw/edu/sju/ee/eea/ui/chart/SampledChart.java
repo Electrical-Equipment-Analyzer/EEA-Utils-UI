@@ -106,7 +106,7 @@ public class SampledChart extends JFreeChart {
         creatrRenderer(index);
     }
 
-    private XYSeriesCollection createSampledSeriesCollection(String name) {
+    public static XYSeriesCollection createSampledSeriesCollection(String name) {
         XYSeries series = new XYSeries(name);
         XYSeriesCollection collection = new XYSeriesCollection();
         collection.addSeries(series);
