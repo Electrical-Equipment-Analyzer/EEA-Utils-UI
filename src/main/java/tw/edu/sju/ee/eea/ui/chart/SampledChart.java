@@ -106,7 +106,22 @@ public class SampledChart extends JFreeChart {
         creatrRenderer(index);
     }
 
+    private XYSeriesCollection createSampledSeriesCollection(String name) {
+        XYSeries series = new XYSeries(name);
+        XYSeriesCollection collection = new XYSeriesCollection();
+        collection.addSeries(series);
+        return collection;
+    }
+
     public static XYSeriesCollection createSampledSeriesCollection(String name, InputStream in, int pos, int bps, int length) {
+//        XYSeries series = new XYSeries(name);
+//        series(name, in, pos, bps, length);
+        XYSeriesCollection collection = new XYSeriesCollection();
+        collection.addSeries(series(name, in, pos, bps, length));
+        return collection;
+    }
+
+    public static XYSeries series(String name, InputStream in, int pos, int bps, int length) {
         XYSeries series = new XYSeries(name);
         double tmp = 0;
         try {
@@ -118,18 +133,15 @@ public class SampledChart extends JFreeChart {
             spms = (spms < 1 ? 1 : spms);
 
             int ff = bpms * spms;
-            
+
             SampledStream ss = new SampledStream(vi, ff);
-            for (int i = pos; i < end && ss.available() > ff; i+=spms) {
+            for (int i = pos; i < end && ss.available() > ff; i += spms) {
                 series.add(i, ss.readSampled());
             }
         } catch (java.io.EOFException ex) {
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
-
-        XYSeriesCollection collection = new XYSeriesCollection();
-        collection.addSeries(series);
-        return collection;
+        return series;
     }
 }
