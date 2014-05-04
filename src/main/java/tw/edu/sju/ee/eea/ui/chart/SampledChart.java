@@ -38,7 +38,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.openide.util.Exceptions;
-import tw.edu.sju.ee.eea.util.iepe.VoltageInputStream;
+import tw.edu.sju.ee.eea.util.iepe.io.IepeInputStream;
 
 /**
  *
@@ -109,7 +109,7 @@ public class SampledChart extends JFreeChart {
         XYSeries series = new XYSeries(name);
         double tmp = 0;
         try {
-            VoltageInputStream vi = new VoltageInputStream(in);
+            IepeInputStream vi = new IepeInputStream(in);
             int bpms = bps / 1000;
             vi.skip(pos * bpms);
             int end = pos + length;
@@ -118,7 +118,7 @@ public class SampledChart extends JFreeChart {
             int spms2 = 2 * spms;
             for (double i = pos; i < end; i++) {
                 for (int j = 0; j < bpms; j++) {
-                    tmp = Math.max(tmp, vi.readVoltage());
+                    tmp = Math.max(tmp, vi.readValue());
                 }
                 if (i % spms == 0) {
                     series.add(i, (i % spms2 == 0 ? -tmp : tmp));
