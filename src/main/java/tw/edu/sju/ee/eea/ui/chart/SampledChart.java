@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -37,7 +39,6 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.openide.util.Exceptions;
 import tw.edu.sju.ee.eea.util.iepe.io.IepeInputStream;
 import tw.edu.sju.ee.eea.util.iepe.io.SampledStream;
 
@@ -85,12 +86,13 @@ public class SampledChart extends JFreeChart {
         super.getXYPlot().addDomainMarker(mark);
     }
 
-    private void creatrRenderer(int index) {
+    public static XYItemRenderer creatrRenderer() {
         XYItemRenderer renderer = new XYLineAndShapeRenderer(true, false);
         renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(
                 StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, FORMAT, NumberFormat.getNumberInstance()));
-        renderer.setSeriesPaint(0, getSeriesColor(index));
-        super.getXYPlot().setRenderer(index, renderer);
+        return renderer;
+//        renderer.setSeriesPaint(0, getSeriesColor(index));
+//        super.getXYPlot().setRenderer(index, renderer);
     }
 
     public void setSeriesColors(Color[] seriesColors) {
@@ -103,7 +105,15 @@ public class SampledChart extends JFreeChart {
     public void addData(int index, XYDataset dataset) {
         super.getXYPlot().setDataset(index, dataset);
         super.getXYPlot().mapDatasetToRangeAxis(index, 0);
-        creatrRenderer(index);
+        XYItemRenderer creatrRenderer = creatrRenderer();
+        creatrRenderer.setSeriesPaint(0, getSeriesColor(index));
+        super.getXYPlot().setRenderer(index, creatrRenderer);
+    }
+
+    public void addData(int index, XYDataset dataset, XYItemRenderer renderer) {
+        super.getXYPlot().setDataset(index, dataset);
+        super.getXYPlot().setRenderer(index, renderer);
+        super.getXYPlot().mapDatasetToRangeAxis(index, 0);
     }
 
     public static XYSeriesCollection createSampledSeriesCollection(String name) {
@@ -140,7 +150,7 @@ public class SampledChart extends JFreeChart {
             }
         } catch (java.io.EOFException ex) {
         } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
+            Logger.getLogger(SampledChart.class.getName()).log(Level.INFO, null, ex);
         }
         return series;
     }
