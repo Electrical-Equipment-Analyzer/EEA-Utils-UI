@@ -79,16 +79,21 @@ public class BodePlot extends JFreeChart {
         super.getXYPlot().setRangeAxis(index, axis);
     }
 
-    private void creatrRenderer(int index) {
+    public static XYItemRenderer creatrRenderer() {
         XYItemRenderer renderer = new XYLineAndShapeRenderer(true, false);
         renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(
                 StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, FORMAT, NumberFormat.getNumberInstance()));
-        renderer.setSeriesPaint(0, getSeriesColor(index));
-        super.getXYPlot().setRenderer(index, renderer);
+        return renderer;
     }
 
     public void setSeriesColors(Color[] seriesColors) {
         this.seriesColors = seriesColors;
+    }
+
+    public void addData(int index, XYDataset dataset, XYItemRenderer renderer) {
+        super.getXYPlot().setDataset(index, dataset);
+        super.getXYPlot().setRenderer(index, renderer);
+        super.getXYPlot().mapDatasetToRangeAxis(index, 0);
     }
 
     public void addData(int index, String label, XYDataset dataset) {
@@ -99,7 +104,7 @@ public class BodePlot extends JFreeChart {
     public void addData(int index, int axisIndex, XYDataset dataset) {
         super.getXYPlot().setDataset(index, dataset);
         super.getXYPlot().mapDatasetToRangeAxis(index, axisIndex);
-        creatrRenderer(index);
+        super.getXYPlot().setRenderer(index, creatrRenderer());
     }
 
     public static XYSeriesCollection createXYSeriesCollection(String name, Map<Double, Complex> gain, boolean abs) {
