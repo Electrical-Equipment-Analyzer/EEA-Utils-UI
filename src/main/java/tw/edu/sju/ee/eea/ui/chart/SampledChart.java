@@ -139,13 +139,12 @@ public class SampledChart extends JFreeChart {
             int bpms = bps / 1000;
             vi.skip(pos * bpms);
             int end = pos + length;
-            int spms = length / 1000;
-            spms = (spms < 1 ? 1 : spms);
+            double spms = length * 0.001;
+            spms = (spms < 1 ? 1.0 / bpms : (int) spms);
 
-            int ff = bpms * spms;
-
+            int ff = (int) (bpms * spms);
             SampledStream ss = new SampledStream(vi, ff);
-            for (int i = pos; i < end && ss.available() > ff; i += spms) {
+            for (double i = pos; i < end && ss.available() > ff; i += spms) {
                 series.add(i, ss.readSampled());
             }
         } catch (java.io.EOFException ex) {
