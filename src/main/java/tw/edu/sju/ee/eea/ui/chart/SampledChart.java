@@ -39,8 +39,8 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import tw.edu.sju.ee.eea.util.iepe.io.IepeInputStream;
-import tw.edu.sju.ee.eea.util.iepe.io.SampledStream;
+import tw.edu.sju.ee.eea.util.iepe.io.VoltageInputStream;
+import tw.edu.sju.ee.eea.util.iepe.io.SampledInputStream;
 
 /**
  *
@@ -91,29 +91,22 @@ public class SampledChart extends JFreeChart {
         renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(
                 StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, FORMAT, NumberFormat.getNumberInstance()));
         return renderer;
-//        renderer.setSeriesPaint(0, getSeriesColor(index));
-//        super.getXYPlot().setRenderer(index, renderer);
     }
 
     public void setSeriesColors(Color[] seriesColors) {
         this.seriesColors = seriesColors;
     }
 
-//    public void addData(int index, String label, XYDataset dataset) {
-//        addData(index, index, dataset);
-//    }
     public void addData(int index, XYDataset dataset) {
-        super.getXYPlot().setDataset(index, dataset);
-        super.getXYPlot().mapDatasetToRangeAxis(index, 0);
         XYItemRenderer creatrRenderer = creatrRenderer();
         creatrRenderer.setSeriesPaint(0, getSeriesColor(index));
-        super.getXYPlot().setRenderer(index, creatrRenderer);
+        addData(index, dataset, creatrRenderer);
     }
 
     public void addData(int index, XYDataset dataset, XYItemRenderer renderer) {
         super.getXYPlot().setDataset(index, dataset);
-        super.getXYPlot().setRenderer(index, renderer);
         super.getXYPlot().mapDatasetToRangeAxis(index, 0);
+        super.getXYPlot().setRenderer(index, renderer);
     }
 
     public static XYSeriesCollection createSampledSeriesCollection(String name) {
@@ -124,8 +117,6 @@ public class SampledChart extends JFreeChart {
     }
 
     public static XYSeriesCollection createSampledSeriesCollection(String name, InputStream in, int pos, int bps, int length) {
-//        XYSeries series = new XYSeries(name);
-//        series(name, in, pos, bps, length);
         XYSeriesCollection collection = new XYSeriesCollection();
         collection.addSeries(series(name, in, pos, bps, length));
         return collection;
@@ -135,7 +126,7 @@ public class SampledChart extends JFreeChart {
         XYSeries series = new XYSeries(name);
         double tmp = 0;
         try {
-            IepeInputStream vi = new IepeInputStream(in);
+            VoltageInputStream vi = new VoltageInputStream(in);
             int bpms = bps / 1000;
             vi.skip(pos * bpms);
             int end = pos + length;
@@ -143,7 +134,7 @@ public class SampledChart extends JFreeChart {
             spms = (spms < 1 ? 1.0 / bpms : (int) spms);
 
             int ff = (int) (bpms * spms);
-            SampledStream ss = new SampledStream(vi, ff);
+            SampledInputStream ss = new SampledInputStream(vi, ff);
             for (double i = pos; i < end && ss.available() > ff; i += spms) {
                 series.add(i, ss.readSampled());
             }
