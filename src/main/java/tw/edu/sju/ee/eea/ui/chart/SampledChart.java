@@ -39,8 +39,8 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import tw.edu.sju.ee.eea.util.iepe.io.VoltageInputStream;
-import tw.edu.sju.ee.eea.util.iepe.io.SampledInputStream;
+import tw.edu.sju.ee.eea.utils.io.ValueInputStream;
+import tw.edu.sju.ee.eea.utils.io.SampledInputStream;
 
 /**
  *
@@ -126,7 +126,7 @@ public class SampledChart extends JFreeChart {
         XYSeries series = new XYSeries(name);
         double tmp = 0;
         try {
-            VoltageInputStream vi = new VoltageInputStream(in);
+            ValueInputStream vi = new ValueInputStream(in);
             int bpms = bps / 1000;
             vi.skip(pos * bpms);
             int end = pos + length;
