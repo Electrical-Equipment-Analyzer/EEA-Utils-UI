@@ -39,6 +39,8 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import sun.security.jgss.spi.MechanismFactory;
+import tw.edu.sju.ee.eea.core.math.MetricPrefixFormat;
 import tw.edu.sju.ee.eea.utils.io.ValueInputStream;
 import tw.edu.sju.ee.eea.utils.io.SampledInputStream;
 
@@ -69,16 +71,17 @@ public class SampledChart extends JFreeChart {
     }
 
     private ValueAxis createAxisX() {
-        DateAxis axis = new DateAxis("Time(mm:ss)");
+        NumberAxis axis = new NumberAxis("Time(mm:ss)");
         axis.setLabelFont(font);
 //        axis.setNumberFormatOverride(FORMAT);
-        axis.setDateFormatOverride(FORMAT);
+        axis.setNumberFormatOverride(new MetricPrefixFormat("#.##"));
         return axis;
     }
 
     private ValueAxis createAxisY() {
         NumberAxis axis = new NumberAxis("Magnitude(Voltage)");
         axis.setLabelFont(font);
+        axis.setNumberFormatOverride(new MetricPrefixFormat("#.##"));
         return axis;
     }
 
@@ -89,7 +92,7 @@ public class SampledChart extends JFreeChart {
     public static XYItemRenderer creatrRenderer() {
         XYItemRenderer renderer = new XYLineAndShapeRenderer(true, false);
         renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(
-                StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, FORMAT, NumberFormat.getNumberInstance()));
+                StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, new MetricPrefixFormat("#.##"), new MetricPrefixFormat("#.##")));
         return renderer;
     }
 
