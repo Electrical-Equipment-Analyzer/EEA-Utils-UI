@@ -71,7 +71,7 @@ public class SampledChart extends JFreeChart {
     }
 
     private ValueAxis createAxisX() {
-        NumberAxis axis = new NumberAxis("Time(mm:ss)");
+        NumberAxis axis = new NumberAxis("Time(us)");
         axis.setLabelFont(font);
 //        axis.setNumberFormatOverride(FORMAT);
         axis.setNumberFormatOverride(new MetricPrefixFormat("#.##"));
