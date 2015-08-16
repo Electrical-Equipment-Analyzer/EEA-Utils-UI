@@ -52,7 +52,6 @@ public class SpinnerMetricModel extends SpinnerNumberModel {
         } else if ((super.getMinimum() != null) && (super.getMinimum().compareTo(newValue) > 0)) {
             return null;
         } else {
-            System.out.println(newValue);
             return newValue;
         }
     }
