@@ -18,6 +18,7 @@
 package tw.edu.sju.ee.eea.ui.io;
 
 import java.io.IOException;
+import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.xy.XYSeries;
 
 /**
@@ -53,5 +54,9 @@ public class SeriesOutputStream extends XYSeries implements SeriesOutput {
     @Override
     public void writeXY(Number x, Number y) throws IOException {
         super.add(x, y);
+    }
+    
+    public void changed() {
+            notifyListeners(new SeriesChangeEvent(this));
     }
 }
